@@ -4,7 +4,7 @@
     <section v-for="(group, groupName) in colorGroups" :key="groupName" class="color-group">
       <h2>{{ formatGroupName(String(groupName)) }}</h2>
       <div class="color-grid">
-        <div v-for="(color, name) in group" :key="name" class="color-item">
+        <div v-for="name in Object.keys(group)" :key="name" class="color-item">
           <div class="color-preview" :style="{ backgroundColor: `var(${String(name)})` }"></div>
           <div class="color-info">
             <div class="color-name">{{ formatColorName(String(name)) }}</div>
