@@ -85,7 +85,7 @@ const inputClasses = computed(() => ({
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   line-height: 1.2;
-  color: rgba(120, 151, 166, 0.6);
+  color: var(--color-text-primary);
   transition: all 0.3s ease;
 }
 
