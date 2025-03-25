@@ -1,17 +1,40 @@
 import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-
-import Button from './Button.vue';
+import Button from '../components/Button/Button.vue';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
-  title: 'Example/Button',
+  title: 'UI/Button',
   component: Button,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
-    size: { control: 'select', options: ['small', 'medium', 'large'] },
-    backgroundColor: { control: 'color' },
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'text'],
+      description: 'Вариант кнопки',
+    },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+      description: 'Размер кнопки',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Отключена ли кнопка',
+    },
+    default: {
+      control: 'text',
+      description: 'Текст кнопки',
+    },
+    'icon-left': {
+      control: 'text',
+      description: 'Слот для иконки слева',
+    },
+    'icon-right': {
+      control: 'text',
+      description: 'Слот для иконки справа',
+    },
   },
   args: {
     primary: false,
@@ -29,28 +52,50 @@ type Story = StoryObj<typeof meta>;
  */
 export const Primary: Story = {
   args: {
-    primary: true,
-    label: 'Button',
+    variant: 'primary',
+    default: 'Кнопка',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    primary: false,
-    label: 'Button',
+    variant: 'secondary',
+    default: 'Кнопка',
   },
 };
 
-export const Large: Story = {
+export const Text: Story = {
   args: {
-    label: 'Button',
-    size: 'large',
+    variant: 'text',
+    default: 'Кнопка',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    default: 'Кнопка',
   },
 };
 
 export const Small: Story = {
   args: {
-    label: 'Button',
     size: 'small',
+    default: 'Кнопка',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'large',
+    default: 'Кнопка',
+  },
+};
+
+export const WithIcons: Story = {
+  args: {
+    default: 'Кнопка',
+    'icon-left': '👈',
+    'icon-right': '👉',
   },
 };
