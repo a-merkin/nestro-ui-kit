@@ -8,7 +8,10 @@
           <div class="color-preview" :style="{ backgroundColor: `var(${String(name)})` }"></div>
           <div class="color-info">
             <div class="color-name">{{ formatColorName(String(name)) }}</div>
-            <div class="color-value">{{ String(name) }}</div>
+            <div class="color-value" @click="copyToClipboard(name)" :class="{ 'copied': copiedValue === name }">
+              {{ String(name) }}
+              <span v-if="copiedValue === name" class="copy-indicator">Скопировано!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -17,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import '../styles/colors.css'
 
 interface ColorGroups {
@@ -29,6 +32,20 @@ interface ColorGroups {
 export default defineComponent({
   name: 'ColorPalette',
   setup() {
+    const copiedValue = ref<string>('')
+
+    const copyToClipboard = async (value: string) => {
+      try {
+        await navigator.clipboard.writeText(value)
+        copiedValue.value = value
+        setTimeout(() => {
+          copiedValue.value = ''
+        }, 2000)
+      } catch (err) {
+        console.error('Failed to copy text: ', err)
+      }
+    }
+
     const colorGroups: ColorGroups = {
       base: {
         '--color-white': '--color-white',
@@ -124,6 +141,8 @@ export default defineComponent({
       colorGroups,
       formatGroupName,
       formatColorName,
+      copyToClipboard,
+      copiedValue,
     }
   },
 })
@@ -181,5 +200,45 @@ export default defineComponent({
   font-family: monospace;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
+  cursor: pointer;
+  position: relative;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.color-value:hover {
+  background-color: var(--color-blue-70);
+}
+
+.color-value.copied {
+  background-color: var(--color-green-80);
+  color: var(--color-white);
+}
+
+.copy-indicator {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-grey-70);
+  color: var(--color-white);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 </style> 
