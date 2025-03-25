@@ -51,17 +51,17 @@ const iconClasses = computed(() => ({
   justify-content: center;
 }
 
-.icon--small {
+.icon--small :deep(svg) {
   width: 16px;
   height: 16px;
 }
 
-.icon--medium {
+.icon--medium :deep(svg) {
   width: 24px;
   height: 24px;
 }
 
-.icon--large {
+.icon--large :deep(svg) {
   width: 32px;
   height: 32px;
 }
@@ -73,5 +73,6 @@ const iconClasses = computed(() => ({
 :deep(svg) {
   width: 100%;
   height: 100%;
+  padding: 0;
 }
 </style> 
