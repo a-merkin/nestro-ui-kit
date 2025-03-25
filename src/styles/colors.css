@@ -1,0 +1,65 @@
+:root {
+  /* Base colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* Green palette */
+  --color-green-100: #097F2D;
+  --color-green-90: #009639;
+  --color-green-80: #72CA94;
+  --color-green-50: #009639;
+
+  /* Blue palette */
+  --color-blue-70: #E2E9EC;
+  --color-blue-60: #F4F7F8;
+  --color-blue-50: #AABDC7;
+  --color-blue-40: #D3DDE2;
+  --color-blue-30: #CFD7DB;
+
+  /* Grey palette */
+  --color-grey-100: #000000;
+  --color-grey-80: #999999;
+  --color-grey-70: #464E56;
+  --color-grey-50: #F9F9F9;
+  --color-grey-40: #CDCDCD;
+  --color-grey-20: #D9D9D9;
+
+  /* Orange */
+  --color-orange: #ED6E1C;
+
+  /* Semantic colors */
+  --color-background-primary: var(--color-white);
+  --color-background-secondary: var(--color-blue-60);
+  --color-background-tertiary: var(--color-blue-70);
+
+  /* Text colors */
+  --color-text-primary: var(--color-grey-100);
+  --color-text-secondary: var(--color-blue-50);
+  --color-text-tertiary: var(--color-grey-70);
+  --color-text-accent: var(--color-orange);
+  --color-text-disabled: var(--color-grey-50);
+  --color-text-white: var(--color-white);
+
+  /* Icon colors */
+  --color-icon-primary: var(--color-green-100);
+  --color-icon-secondary: var(--color-blue-50);
+  --color-icon-accent: var(--color-orange);
+  --color-icon-stroke: var(--color-grey-100);
+  --color-icon-stroke-secondary: var(--color-grey-80);
+
+  /* Stroke colors */
+  --color-stroke-primary: var(--color-blue-30);
+  --color-stroke-error: var(--color-orange);
+  --color-stroke-secondary: var(--color-white);
+  --color-stroke-tertiary: var(--color-grey-100);
+  --color-stroke-disabled: var(--color-grey-20);
+
+  /* Button colors */
+  --color-button-primary: var(--color-green-90);
+  --color-button-primary-hover: var(--color-green-80);
+  --color-button-primary-pressed: var(--color-green-100);
+  --color-button-primary-disabled: var(--color-grey-40);
+  --color-button-secondary: var(--color-white);
+  --color-button-tertiary: var(--color-blue-40);
+  --color-button-light: var(--color-blue-30);
+} 
