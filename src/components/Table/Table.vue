@@ -74,7 +74,7 @@ interface Props {
   data: Record<string, any>[];
 }
 
-const props = defineProps<Props>();
+const { columns, data } = defineProps<Props>();
 
 const sortKey = ref('');
 const sortOrder = ref<'asc' | 'desc'>('asc');
@@ -91,9 +91,9 @@ const handleSort = (column: Column) => {
 };
 
 const sortedData = computed(() => {
-  if (!sortKey.value) return props.data;
+  if (!sortKey.value) return data;
 
-  return [...props.data].sort((a, b) => {
+  return [...data].sort((a, b) => {
     const aValue = a[sortKey.value];
     const bValue = b[sortKey.value];
 

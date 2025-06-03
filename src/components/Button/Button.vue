@@ -27,7 +27,7 @@ interface Props {
   type?: 'button' | 'submit' | 'reset';
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const { variant, size, disabled, type } = withDefaults(defineProps<Props>(), {
   variant: 'primary',
   size: 'medium',
   disabled: false,
@@ -39,16 +39,16 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (event: MouseEvent) => {
-  if (!props.disabled) {
+  if (!disabled) {
     emit('click', event);
   }
 };
 
 const buttonClasses = computed(() => ({
   'button': true,
-  [`button--${props.variant}`]: true,
-  [`button--${props.size}`]: true,
-  'button--disabled': props.disabled,
+  [`button--${variant}`]: true,
+  [`button--${size}`]: true,
+  'button--disabled': disabled,
 }));
 </script>
 

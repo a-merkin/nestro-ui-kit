@@ -31,7 +31,7 @@ interface Props {
   required?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const { type, disabled, error, required } = withDefaults(defineProps<Props>(), {
   type: 'text',
   disabled: false,
   error: false,
@@ -48,21 +48,21 @@ const handleInput = (event: Event) => {
 };
 
 const handleFocus = () => {
-  if (!props.disabled) {
+  if (!disabled) {
     // Можно добавить дополнительную логику при фокусе
   }
 };
 
 const handleBlur = () => {
-  if (!props.disabled) {
+  if (!disabled) {
     // Можно добавить дополнительную логику при потере фокуса
   }
 };
 
 const inputClasses = computed(() => ({
   'input': true,
-  'input--error': props.error,
-  'input--disabled': props.disabled,
+  'input--error': error,
+  'input--disabled': disabled,
 }));
 </script>
 

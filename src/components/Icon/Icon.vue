@@ -20,7 +20,7 @@ interface Props {
   color?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const { name, size, color } = withDefaults(defineProps<Props>(), {
   size: 'medium',
 });
 
@@ -34,13 +34,13 @@ const iconComponents = {
 };
 
 const iconComponent = computed(() => {
-  return iconComponents[props.name];
+  return iconComponents[name];
 });
 
 const iconClasses = computed(() => ({
   'icon': true,
-  [`icon--${props.size}`]: true,
-  'icon--custom-color': !!props.color,
+  [`icon--${size}`]: true,
+  'icon--custom-color': !!color,
 }));
 </script>
 

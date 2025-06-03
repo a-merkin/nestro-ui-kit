@@ -57,7 +57,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const { options, modelValue, placeholder, disabled } = withDefaults(defineProps<Props>(), {
   placeholder: 'Выберите значение',
   disabled: false,
 });
@@ -69,12 +69,12 @@ const emit = defineEmits<{
 const isOpen = ref(false);
 
 const selectedLabel = computed(() => {
-  const selected = props.options.find(option => option.value === props.modelValue);
-  return selected ? selected.label : props.placeholder;
+  const selected = options.find(option => option.value === modelValue);
+  return selected ? selected.label : placeholder;
 });
 
 const toggleDropdown = () => {
-  if (!props.disabled) {
+  if (!disabled) {
     isOpen.value = !isOpen.value;
   }
 };
