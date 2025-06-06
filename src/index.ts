@@ -1,3 +1,6 @@
+import './styles/typography.css'
+import './styles/colors.css'
+
 export { default as Button } from './components/Button/Button.vue'
 export { default as Icon } from './components/Icon/Icon.vue'
 export { default as Table } from './components/Table/Table.vue'
