@@ -82,11 +82,9 @@ const inputClasses = computed(() => ({
   border-radius: 60px;
   border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
   background: rgba(182, 199, 207, 0.15);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  line-height: 1.2;
   color: var(--color-text-primary);
   transition: all 0.3s ease;
+  @apply .typography-label;
 }
 
 .input::placeholder {

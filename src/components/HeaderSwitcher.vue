@@ -35,8 +35,6 @@ const emit = defineEmits(['update:modelValue']);
 }
 .header-switcher__tab {
   background: #fff;
-  font-size: 18px;
-  font-weight: 400;
   color: rgba(46, 57, 67, 0.80);
   border: none;
   border-radius: 12px;
@@ -50,6 +48,7 @@ const emit = defineEmits(['update:modelValue']);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @apply .typography-base;
 }
 .header-switcher__tab:last-child {
   margin-right: 0;

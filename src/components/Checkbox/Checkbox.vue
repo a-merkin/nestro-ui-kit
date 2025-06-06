@@ -90,10 +90,8 @@ const handleChange = (event: Event) => {
 }
 
 .checkbox__label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  line-height: 1.2;
   color: #000000;
+  @apply .typography-label;
 }
 
 .checkbox__input:disabled ~ .checkbox__label {

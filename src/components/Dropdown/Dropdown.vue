@@ -107,7 +107,6 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   max-width: 300px;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .dropdown__trigger {
@@ -120,10 +119,10 @@ onUnmounted(() => {
   background: rgba(182, 199, 207, 0.15);
   border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
   border-radius: 60px;
-  font-size: 14px;
   color: var(--color-text-primary, #000000);
   cursor: pointer;
   transition: all 0.3s ease;
+  @apply .typography-label;
 }
 
 .dropdown__trigger:hover:not(.dropdown__trigger--disabled) {
@@ -165,10 +164,10 @@ onUnmounted(() => {
 
 .dropdown__item {
   padding: 8px 16px;
-  font-size: 14px;
   color: var(--color-text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
+  @apply .typography-label;
 }
 
 .dropdown__item:hover {

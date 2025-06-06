@@ -1,0 +1,87 @@
+:root {
+  --font-family-base: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --line-height-base: 1.2;
+  --line-height-title: 1.1;
+}
+
+html, body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+}
+
+.typography-base {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+}
+
+.typography-title {
+  font-family: var(--font-family-base);
+  font-size: 3.2em;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-title);
+}
+
+.typography-label {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+}
+
+.text-h1 {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.219;
+}
+
+.text-h1-regular {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.219;
+}
+
+.text-h2 {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.219;
+}
+
+.text-m {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.219;
+}
+
+.text-s {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.text-s-bold {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.text-xs {
+  font-family: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.219;
+} 

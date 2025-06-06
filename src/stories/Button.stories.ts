@@ -11,17 +11,16 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'text'],
+      options: ['primary', 'secondary', 'text', 'circle'],
       description: 'Вариант кнопки',
-    },
-    size: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
-      description: 'Размер кнопки',
     },
     disabled: {
       control: 'boolean',
       description: 'Отключена ли кнопка',
+    },
+    loading: {
+      control: 'boolean',
+      description: 'Показывать индикатор загрузки',
     },
     default: {
       control: 'text',
@@ -77,24 +76,25 @@ export const Disabled: Story = {
   },
 };
 
-export const Small: Story = {
-  args: {
-    size: 'small',
-    default: 'Кнопка',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    size: 'large',
-    default: 'Кнопка',
-  },
-};
-
 export const WithIcons: Story = {
   args: {
     default: 'Кнопка',
     'icon-left': '👈',
     'icon-right': '👉',
+  },
+};
+
+export const Circle: Story = {
+  args: {
+    variant: 'circle',
+    'icon-left': '⭐',
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'primary',
+    loading: true,
+    default: 'Загрузка',
   },
 };

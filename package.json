@@ -1,7 +1,6 @@
 {
   "name": "nestro-ui-kit",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -54,6 +53,7 @@
     ".": {
       "import": "./dist/nestro-ui-kit.es.js",
       "require": "./dist/nestro-ui-kit.umd.js"
-    }
+    },
+    "./nestro-ui-kit.css": "./dist/nestro-ui-kit.css"
   }
 }
