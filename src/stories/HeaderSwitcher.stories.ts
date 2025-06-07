@@ -49,6 +49,6 @@ export const Default: Story = {
       { label: 'Исходные данные ФЭМ', value: 'fem-source' },
       { label: 'Исторические данные ФЭМ', value: 'fem-history' },
     ],
-    modelValue: 'scenarios',
+    modelValue: 'macro',
   },
 };

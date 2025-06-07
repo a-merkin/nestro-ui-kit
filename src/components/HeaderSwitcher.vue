@@ -1,14 +1,19 @@
 <template>
-  <div class="header-switcher-bg">
-    <div class="header-switcher">
-      <button
-        v-for="tab in tabs"
-        :key="tab.value"
-        :class="['header-switcher__tab', { 'header-switcher__tab--active': tab.value === modelValue }]"
-        @click="$emit('update:modelValue', tab.value)"
-      >
-        {{ tab.label }}
-      </button>
+  <div class="workplace-container">
+    <div class="header-switcher-bg">
+      <div class="header-switcher">
+        <button
+          v-for="tab in tabs"
+          :key="tab.value"
+          :class="['header-switcher__tab', { 'header-switcher__tab--active': tab.value === modelValue }]"
+          @click="$emit('update:modelValue', tab.value)"
+        >
+          {{ tab.label }}
+        </button>
+      </div>
+    </div>
+    <div class="workplace-content">
+      <slot />
     </div>
   </div>
 </template>
@@ -24,31 +29,37 @@ const emit = defineEmits(['update:modelValue']);
 </script>
 
 <style scoped>
+.workplace-container {
+  width: 100%;
+}
 .header-switcher-bg {
-  padding: 8px 0 0 8px;
+  background: none;
 }
 .header-switcher {
   display: flex;
   background: none;
   border-radius: 12px 12px 0 0;
   align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  gap: 8px;
 }
 .header-switcher__tab {
   background: #fff;
   color: rgba(46, 57, 67, 0.80);
   border: none;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   padding: 16px 32px 16px 32px;
-  margin-right: 16px;
-  margin-bottom: 0;
+  margin: 0;
+  margin-bottom: 8px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   @apply .typography-base;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
 }
 .header-switcher__tab:last-child {
   margin-right: 0;
@@ -59,8 +70,34 @@ const emit = defineEmits(['update:modelValue']);
   border-top: 1px solid #b3d3f9;
   border-left: 1px solid #b3d3f9;
   border-right: 1px solid #b3d3f9;
+  border-bottom: none;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.03);
-  z-index: 2;
+  z-index: 3;
+  background: #fff;
+}
+.header-switcher__tab--active::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  bottom: -7.3px;
+  height: 8px;
+  background: #fff;
+  border-left: 1px solid #b3d3f9;
+  border-right: 1px solid #b3d3f9;
+  z-index: 4;
+}
+.workplace-content {
+  background: #fff;
+  border: 1px solid #b3d3f9;
+  /* border-top: none; */
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
+  padding: 24px;
+  margin-top: -2px;
+  position: relative;
+  z-index: 1;
 }
 </style> 
