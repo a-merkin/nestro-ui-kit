@@ -35,6 +35,9 @@ const isFirstTabActive = computed(() => {
 <style scoped>
 .workplace-container {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .header-switcher-bg {
   background: none;
@@ -86,8 +89,8 @@ const isFirstTabActive = computed(() => {
   position: absolute;
   left: -1px;
   right: -1px;
-  bottom: -7.3px;
-  height: 8px;
+  bottom: -9px;
+  height: 9px;
   background: #fff;
   border-left: 1px solid #b3d3f9;
   border-right: 1px solid #b3d3f9;
@@ -96,16 +99,14 @@ const isFirstTabActive = computed(() => {
 .workplace-content {
   flex: 1 1 auto;
   overflow: auto;
-  height: 100%;
   min-height: 0;
+  height: 100%;
 
   background: #fff;
   border: 1px solid #b3d3f9;
   /* border-top: none; */
   border-radius: 15px;
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
-  padding: 24px;
-  margin-top: -2px;
   position: relative;
   z-index: 1;
 }

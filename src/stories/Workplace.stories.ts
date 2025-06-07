@@ -31,7 +31,7 @@ export default {
   decorators: [
     () => ({
       template: `
-        <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);">
+        <div style="min-height: 100vh; max-height: 100vh; height: 100vh; overflow: auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);">
           <story />
         </div>
       `,
