@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import ColorPalette from '../components/ColorPalette.vue'
+import type { Meta, StoryObj } from '@storybook/vue3';
+import ColorPalette from '../components/ColorPalette.vue';
 
 const meta = {
   title: 'Design System/Colors',
@@ -9,15 +9,16 @@ const meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Цветовая палитра дизайн-системы Nestro UI Kit. Включает в себя основные цвета, семантические цвета для текста, иконок, фонов и кнопок.'
-      }
-    }
-  }
-} satisfies Meta<typeof ColorPalette>
+        component:
+          'Цветовая палитра дизайн-системы Nestro UI Kit. Включает в себя основные цвета, семантические цвета для текста, иконок, фонов и кнопок.',
+      },
+    },
+  },
+} satisfies Meta<typeof ColorPalette>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {}
-} 
+  args: {},
+};

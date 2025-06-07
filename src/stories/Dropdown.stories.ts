@@ -72,4 +72,19 @@ export const WithManyOptions: Story = {
     ],
     placeholder: 'Выберите из списка',
   },
-}; 
+};
+
+export const WithClearButton: Story = {
+  args: {
+    modelValue: '1',
+    options: defaultOptions,
+    placeholder: 'Выберите опцию',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Дропдаун с выбранным значением и возможностью сброса через крестик.',
+      },
+    },
+  },
+};

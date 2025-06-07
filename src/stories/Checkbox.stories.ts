@@ -58,4 +58,4 @@ export const WithoutLabel: Story = {
   args: {
     modelValue: false,
   },
-}; 
+};

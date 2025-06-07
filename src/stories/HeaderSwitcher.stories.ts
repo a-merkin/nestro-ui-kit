@@ -9,9 +9,10 @@ const meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Компонент хедера-переключателя для страниц Nestro UI Kit. Позволяет переключаться между разделами.'
-      }
-    }
+        component:
+          'Компонент хедера-переключателя для страниц Nestro UI Kit. Позволяет переключаться между разделами.',
+      },
+    },
   },
   argTypes: {
     tabs: {
@@ -50,4 +51,4 @@ export const Default: Story = {
     ],
     modelValue: 'scenarios',
   },
-}; 
+};

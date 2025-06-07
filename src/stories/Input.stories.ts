@@ -78,4 +78,4 @@ export const Required: Story = {
     placeholder: 'Обязательное поле',
     required: true,
   },
-}; 
+};
