@@ -52,3 +52,37 @@ export const Default: Story = {
     modelValue: 'scenarios',
   },
 };
+
+export const WithManyContent: Story = {
+  render: (args) => ({
+    components: { Workplace },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Workplace v-bind="args">
+        <div>
+          <h2>Большой контент</h2>
+          <p>Это пример большого количества контента внутри слота Workplace.</p>
+          <ul>
+            <li v-for="i in 30" :key="i">Элемент {{ i }}</li>
+          </ul>
+          <p>Ниже — еще больше текста для проверки скролла и отображения:</p>
+          <div style="height: 600px; background: #f0f4fa; margin: 16px 0; display: flex; align-items: center; justify-content: center;">
+            <span>Контент с высотой 600px</span>
+          </div>
+          <p>Финальный блок текста.</p>
+        </div>
+      </Workplace>
+    `,
+  }),
+  args: {
+    tabs: [
+      { label: 'Сценарии', value: 'scenarios' },
+      { label: 'Макропараметры', value: 'macro' },
+      { label: 'Исходные данные ФЭМ', value: 'fem-source' },
+      { label: 'Исторические данные ФЭМ', value: 'fem-history' },
+    ],
+    modelValue: 'scenarios',
+  },
+};

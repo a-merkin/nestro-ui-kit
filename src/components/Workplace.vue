@@ -94,6 +94,11 @@ const isFirstTabActive = computed(() => {
   z-index: 4;
 }
 .workplace-content {
+  flex: 1 1 auto;
+  overflow: auto;
+  height: 100%;
+  min-height: 0;
+
   background: #fff;
   border: 1px solid #b3d3f9;
   /* border-top: none; */
