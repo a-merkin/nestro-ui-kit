@@ -106,6 +106,5 @@ const isFirstTabActive = computed(() => {
 }
 .workplace-content--no-top-left {
   border-top-left-radius: 0;
-  border-left: none;
 }
 </style> 
