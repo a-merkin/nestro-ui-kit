@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import HeaderSwitcher from '../components/HeaderSwitcher.vue';
+import Workplace from '../components/Workplace.vue';
 
 const meta = {
-  title: 'UI/HeaderSwitcher',
-  component: HeaderSwitcher,
+  title: 'UI/Workplace',
+  component: Workplace,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -24,7 +24,7 @@ const meta = {
       description: 'Текущая активная вкладка (value)',
     },
   },
-} satisfies Meta<typeof HeaderSwitcher>;
+} satisfies Meta<typeof Workplace>;
 
 export default {
   ...meta,
@@ -49,6 +49,6 @@ export const Default: Story = {
       { label: 'Исходные данные ФЭМ', value: 'fem-source' },
       { label: 'Исторические данные ФЭМ', value: 'fem-history' },
     ],
-    modelValue: 'macro',
+    modelValue: 'scenarios',
   },
 };

@@ -12,20 +12,24 @@
         </button>
       </div>
     </div>
-    <div class="workplace-content">
+    <div class="workplace-content" :class="{ 'workplace-content--no-top-left': isFirstTabActive }">
       <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
   modelValue: string;
   tabs: { label: string; value: string }[];
 }>();
 const emit = defineEmits(['update:modelValue']);
+
+const isFirstTabActive = computed(() => {
+  return props.tabs.length > 0 && props.modelValue === props.tabs[0].value;
+});
 </script>
 
 <style scoped>
@@ -48,7 +52,7 @@ const emit = defineEmits(['update:modelValue']);
   background: #fff;
   color: rgba(46, 57, 67, 0.80);
   border: none;
-  border-radius: 12px 12px 0 0;
+  border-radius: 10px;
   padding: 16px 32px 16px 32px;
   margin: 0;
   margin-bottom: 8px;
@@ -93,11 +97,15 @@ const emit = defineEmits(['update:modelValue']);
   background: #fff;
   border: 1px solid #b3d3f9;
   /* border-top: none; */
-  border-radius: 0 0 12px 12px;
+  border-radius: 15px;
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
   padding: 24px;
   margin-top: -2px;
   position: relative;
   z-index: 1;
+}
+.workplace-content--no-top-left {
+  border-top-left-radius: 0;
+  border-left: none;
 }
 </style> 
