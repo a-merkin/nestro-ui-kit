@@ -61,7 +61,7 @@ const buttonClasses = computed(() => ({
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 24px;
+  padding: 16px 22px;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;

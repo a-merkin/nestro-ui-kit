@@ -102,7 +102,7 @@ onUnmounted(() => {
   justify-content: space-between;
   width: 100%;
   height: 44px;
-  padding: 0 20px;
+  padding: 0 10px;
   background: #F8FAFB;
   border: 1.5px solid var(--color-stroke-primary, #D3E0E6);
   border-radius: 60px;
@@ -173,12 +173,12 @@ onUnmounted(() => {
 
 .dropdown__item:hover {
   background: #F0F7F4;
-  color: var(--color-text-accent, #0F9D3B);
+  color: #0F9D3B;
 }
 
 .dropdown__item--selected {
   background: #E6F4EA;
-  color: var(--color-text-accent, #0F9D3B);
+  color: #0F9D3B;
   font-weight: 500;
 }
 
