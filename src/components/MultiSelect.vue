@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .figma-card {
-  width: 250px;
+  width: 100%;
   height: 85px;
   background: rgba(182, 199, 207, 0.15);
   border: 1px solid rgba(162, 177, 184, 0.51);
