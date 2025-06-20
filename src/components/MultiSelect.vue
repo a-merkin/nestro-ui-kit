@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
 .chip {
   display: flex;
   align-items: center;
-  background: #C0DFEF;
+  background: #c0dfef94;
   border-radius: 5px;
   min-width: 0;
   max-width: 82px;
@@ -115,7 +115,7 @@ onBeforeUnmount(() => {
   padding: 0 8px 0 4px;
   font-family: Montserrat, sans-serif;
   font-size: 10px;
-  color: rgba(120, 151, 166, 0.6);
+  color: rgba(120, 151, 166, 1);
   margin-bottom: 0;
   box-sizing: border-box;
 }
@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
   text-overflow: ellipsis;
   font-family: Montserrat, sans-serif;
   font-size: 10px;
-  color: rgba(120, 151, 166, 0.6);
+  color: rgba(120, 151, 166, 1);
   line-height: 1.22;
   display: flex;
   align-items: center;

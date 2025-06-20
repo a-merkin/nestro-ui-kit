@@ -10,3 +10,4 @@ export { default as Input } from './components/Input/Input.vue';
 export { default as Workplace } from './components/Workplace.vue';
 export { default as ColorPalette } from './components/ColorPalette.vue';
 export { default as MultiSelect } from './components/MultiSelect.vue';
+export {default as CurrentScenario } from './components/CurrentScenario.vue'
