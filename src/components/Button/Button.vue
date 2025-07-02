@@ -55,7 +55,7 @@ const buttonClasses = computed(() => ({
 }));
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
   display: inline-flex;
   align-items: center;
@@ -72,47 +72,51 @@ const buttonClasses = computed(() => ({
 .button--primary {
   background: #0F9D3B;
   color: #FFFFFF;
-}
 
-.button--primary:hover {
-  background: #72CA94;
-}
+  &:hover {
+    background: #72CA94;
+  }
 
-.button--primary:active {
-  background: #097F2D;
+  &:active {
+    background: #097F2D;
+  }
+
+  &.button--disabled {
+    background: #D9D9D9;
+    cursor: not-allowed;
+    border: none;
+  }
 }
 
 .button--secondary {
   background: #fff;
   border: 1px solid #CFD7DB;
   color: #000000;
-}
 
-.button--secondary:hover {
-  border-color: #000;
-  color: #000;
+  &:hover {
+    border-color: #000;
+    color: #000;
+  }
+
+  &.button--disabled {
+    color: #D9D9D9;
+    cursor: not-allowed;
+    border: 1px solid #D9D9D9;
+  }
 }
 
 .button--text {
   background: transparent;
   padding: 8px;
   color: #000000;
-}
 
-.button--text:hover {
-  color: #0F9D3B;
-}
-
-.button--disabled {
-  background: #D9D9D9;
-  color: rgba(0, 0, 0, 0.5);
-  cursor: not-allowed;
-  border: none;
+  &:hover {
+    color: #0F9D3B;
+  }
 }
 
 .button__text {
   white-space: nowrap;
-  @apply .typography-base;
 }
 
 .button--circle {
@@ -123,11 +127,11 @@ const buttonClasses = computed(() => ({
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.button--circle:hover {
-  background: #009639;
-  color: #FFFFFF;
+  &:hover {
+    background: #009639;
+    color: #FFFFFF;
+  }
 }
 
 .button__spinner {
