@@ -89,12 +89,8 @@ const buttonClasses = computed(() => ({
 }
 
 .button--secondary:hover {
-  border-color: #0F9D3B;
-  color: #0F9D3B;
-}
-
-.button--secondary:active {
-  background: rgba(15, 157, 59, 0.1);
+  border-color: #000;
+  color: #000;
 }
 
 .button--text {
@@ -127,6 +123,11 @@ const buttonClasses = computed(() => ({
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.button--circle:hover {
+  background: #009639;
+  color: #FFFFFF;
 }
 
 .button__spinner {
