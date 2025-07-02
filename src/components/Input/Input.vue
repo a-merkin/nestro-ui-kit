@@ -84,17 +84,13 @@ const inputClasses = computed(() => ({
   background: rgba(182, 199, 207, 0.15);
   color: var(--color-text-primary);
   transition: all 0.3s ease;
-  @apply .typography-label;
+  outline: none;
 }
 
 .input::placeholder {
   color: rgba(120, 151, 166, 0.6);
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--color-stroke-secondary);
-}
 
 .input--error {
   border-color: var(--color-stroke-error, #ED6E1C);
