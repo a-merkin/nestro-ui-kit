@@ -8,10 +8,25 @@
       type="button"
       :disabled="disabled"
     >
-      <span class="dropdown__selected">{{ selectedLabel }}</span>
-      <svg class="dropdown__arrow" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.8258 7.35254L11.0067 13.9998L4.18757 7.35254C4.06574 7.23352 3.90219 7.16689 3.73187 7.16689C3.56156 7.16689 3.398 7.23352 3.27617 7.35254C3.21718 7.41034 3.17031 7.47933 3.13832 7.55547C3.10632 7.63161 3.08984 7.71337 3.08984 7.79596C3.08984 7.87855 3.10632 7.9603 3.13832 8.03644C3.17031 8.11259 3.21718 8.18158 3.27617 8.23938L10.5305 15.3123C10.6579 15.4365 10.8288 15.506 11.0067 15.506C11.1846 15.506 11.3555 15.4365 11.4829 15.3123L18.7372 8.24074C18.7966 8.1829 18.8439 8.11374 18.8761 8.03734C18.9083 7.96095 18.925 7.87887 18.925 7.79596C18.925 7.71304 18.9083 7.63096 18.8761 7.55457C18.8439 7.47817 18.7966 7.40901 18.7372 7.35117C18.6154 7.23216 18.4518 7.16553 18.2815 7.16553C18.1112 7.16553 17.9477 7.23216 17.8258 7.35117V7.35254Z" fill="#90A9B6"/>
-</svg>
+      <span 
+        class="dropdown__selected"
+        :class="{ 'dropdown__selected--placeholder': !hasSelectedValue }"
+      >
+        {{ selectedLabel }}
+      </span>
+      <svg 
+        class="dropdown__arrow" 
+        width="22" 
+        height="22" 
+        viewBox="0 0 22 22" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path 
+          d="M17.8258 7.35254L11.0067 13.9998L4.18757 7.35254C4.06574 7.23352 3.90219 7.16689 3.73187 7.16689C3.56156 7.16689 3.398 7.23352 3.27617 7.35254C3.21718 7.41034 3.17031 7.47933 3.13832 7.55547C3.10632 7.63161 3.08984 7.71337 3.08984 7.79596C3.08984 7.87855 3.10632 7.9603 3.13832 8.03644C3.17031 8.11259 3.21718 8.18158 3.27617 8.23938L10.5305 15.3123C10.6579 15.4365 10.8288 15.506 11.0067 15.506C11.1846 15.506 11.3555 15.4365 11.4829 15.3123L18.7372 8.24074C18.7966 8.1829 18.8439 8.11374 18.8761 8.03734C18.9083 7.96095 18.925 7.87887 18.925 7.79596C18.925 7.71304 18.9083 7.63096 18.8761 7.55457C18.8439 7.47817 18.7966 7.40901 18.7372 7.35117C18.6154 7.23216 18.4518 7.16553 18.2815 7.16553C18.1112 7.16553 17.9477 7.23216 17.8258 7.35117V7.35254Z" 
+          fill="#90A9B6"
+        />
+      </svg>
     </button>
     <div v-if="isOpen" class="dropdown__content">
       <ul class="dropdown__list">
@@ -55,8 +70,12 @@ const emit = defineEmits<{
 
 const isOpen = ref(false);
 
+const hasSelectedValue = computed(() => {
+  return options.some((option) => option.value === modelValue);
+});
+
 const selectedLabel = computed(() => {
-  const selected = options.find(option => option.value === modelValue);
+  const selected = options.find((option) => option.value === modelValue);
   return selected ? selected.label : placeholder;
 });
 
@@ -103,20 +122,15 @@ onUnmounted(() => {
   width: 100%;
   height: 44px;
   padding: 0 10px;
-  background: #F8FAFB;
-  border: 1.5px solid var(--color-stroke-primary, #D3E0E6);
+  background: rgba(182, 199, 207, 0.15);
+  border: none;
   border-radius: 60px;
   color: var(--color-text-primary, #222C37);
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 8px rgba(31, 41, 55, 0.06);
-}
-
-.dropdown__trigger:hover:not(.dropdown__trigger--disabled) {
-  border-color: var(--color-stroke-secondary, #0F9D3B);
-  box-shadow: 0 4px 16px rgba(15, 157, 59, 0.08);
 }
 
 .dropdown__trigger--disabled {
@@ -179,7 +193,14 @@ onUnmounted(() => {
 .dropdown__item--selected {
   background: #E6F4EA;
   color: #0F9D3B;
-  font-weight: 500;
+}
+
+.dropdown__selected {
+  color: var(--color-text-primary, #222c37);
+}
+
+.dropdown__selected--placeholder {
+  color: rgba(120, 151, 166, 0.60);
 }
 
 .dropdown__clear {
