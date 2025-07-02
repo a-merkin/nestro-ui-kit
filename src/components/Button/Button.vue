@@ -51,7 +51,7 @@ const handleClick = (event: MouseEvent) => {
 const buttonClasses = computed(() => ({
   'button': true,
   [`button--${variant}`]: true,
-  'button--disabled': disabled || loading,
+  'button--disabled': disabled,
 }));
 </script>
 
