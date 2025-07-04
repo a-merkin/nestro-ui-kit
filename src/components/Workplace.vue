@@ -8,7 +8,7 @@
           :class="['header-switcher__tab', { 'header-switcher__tab--active': tab.value === modelValue }]"
           @click="$emit('update:modelValue', tab.value)"
         >
-          {{ tab.label }}
+          <p class="header-switcher__tab-label">{{ tab.label }}</p>
         </button>
       </div>
     </div>
@@ -65,8 +65,16 @@ const isFirstTabActive = computed(() => {
   z-index: 2;
   white-space: nowrap;
   text-overflow: ellipsis;
-  @apply .typography-base;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+  min-width: 215px;
+  max-width: 215px;
+}
+.header-switcher__tab-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  margin: 0;
 }
 .header-switcher__tab:last-child {
   margin-right: 0;
@@ -109,6 +117,8 @@ const isFirstTabActive = computed(() => {
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
   position: relative;
   z-index: 1;
+
+  padding: 30px;
 }
 .workplace-content--no-top-left {
   border-top-left-radius: 0;
