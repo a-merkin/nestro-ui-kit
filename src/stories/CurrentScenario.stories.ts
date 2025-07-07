@@ -9,10 +9,11 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Компонент текущего сценария из макета Figma. Показывает части сценария, разделённые кружками.'
-      }
-    }
-  }
+        component:
+          'Компонент текущего сценария из макета Figma. Показывает части сценария, разделённые кружками.',
+      },
+    },
+  },
 } satisfies Meta<typeof CurrentScenario>;
 
 export default meta;
@@ -23,4 +24,4 @@ export const Default: Story = {
   args: {
     scenarioParts: ['Зарубежнефть', 'ЗНДХ', 'Харьягинское', 'Иванов И.И', 'Консолидация'],
   },
-}; 
+};

@@ -39,4 +39,4 @@ export const Default: Story = {
     setup: () => ({ args }),
     template: '<MultiSelect v-bind="args" />',
   }),
-}; 
+};

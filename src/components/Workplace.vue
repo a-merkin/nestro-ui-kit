@@ -5,7 +5,11 @@
         <button
           v-for="tab in tabs"
           :key="tab.value"
-          :class="['header-switcher__tab', { 'header-switcher__tab--active': tab.value === modelValue }]"
+          :class="[
+            'header-switcher__tab',
+            { 'header-switcher__tab--active': tab.value === modelValue },
+          ]"
+          :title="tab.label"
           @click="$emit('update:modelValue', tab.value)"
         >
           <p class="header-switcher__tab-label">{{ tab.label }}</p>
@@ -65,7 +69,7 @@ const isFirstTabActive = computed(() => {
   z-index: 2;
   white-space: nowrap;
   text-overflow: ellipsis;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   min-width: 215px;
   max-width: 215px;
 }
@@ -114,7 +118,7 @@ const isFirstTabActive = computed(() => {
   border: 1px solid #b3d3f9;
   /* border-top: none; */
   border-radius: 15px;
-  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.04);
   position: relative;
   z-index: 1;
 
@@ -123,4 +127,4 @@ const isFirstTabActive = computed(() => {
 .workplace-content--no-top-left {
   border-top-left-radius: 0;
 }
-</style> 
+</style>

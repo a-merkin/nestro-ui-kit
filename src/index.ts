@@ -7,7 +7,8 @@ export { default as Table } from './components/Table/Table.vue';
 export { default as Dropdown } from './components/Dropdown/Dropdown.vue';
 export { default as Checkbox } from './components/Checkbox/Checkbox.vue';
 export { default as Input } from './components/Input/Input.vue';
+export { default as RangeSlider } from './components/RangeSlider/RangeSlider.vue';
 export { default as Workplace } from './components/Workplace.vue';
 export { default as ColorPalette } from './components/ColorPalette.vue';
 export { default as MultiSelect } from './components/MultiSelect.vue';
-export {default as CurrentScenario } from './components/CurrentScenario.vue'
+export { default as CurrentScenario } from './components/CurrentScenario.vue';
