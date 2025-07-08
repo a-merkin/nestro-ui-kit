@@ -1,6 +1,6 @@
 {
   "name": "nestro-ui-kit",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -43,6 +43,12 @@ export const TextM: Story = {
   }),
 };
 
+export const TextMBold: Story = {
+  render: () => ({
+    template: `<div class="text-m-bold">Текст M Bold (text-m-bold)</div>`,
+  }),
+};
+
 export const TextS: Story = {
   render: () => ({
     template: `<div class="text-s">Текст S (text-s)</div>`,
