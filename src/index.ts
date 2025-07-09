@@ -9,6 +9,7 @@ export { default as Checkbox } from './components/Checkbox/Checkbox.vue';
 export { default as Switch } from './components/Switch/Switch.vue';
 export { default as Input } from './components/Input/Input.vue';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider.vue';
+export { default as ProgressBar } from './components/ProgressBar/ProgressBar.vue';
 export { default as Workplace } from './components/Workplace.vue';
 export { default as ColorPalette } from './components/ColorPalette.vue';
 export { default as MultiSelect } from './components/MultiSelect.vue';
