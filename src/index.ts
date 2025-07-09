@@ -6,6 +6,7 @@ export { default as Icon } from './components/Icon/Icon.vue';
 export { default as Table } from './components/Table/Table.vue';
 export { default as Dropdown } from './components/Dropdown/Dropdown.vue';
 export { default as Checkbox } from './components/Checkbox/Checkbox.vue';
+export { default as Switch } from './components/Switch/Switch.vue';
 export { default as Input } from './components/Input/Input.vue';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider.vue';
 export { default as Workplace } from './components/Workplace.vue';
