@@ -57,14 +57,17 @@ const isFirstTabActive = computed(() => {
 }
 .header-switcher__tab {
   background: #fff;
-  color: rgba(46, 57, 67, 0.80);
+  color: rgba(46, 57, 67, 0.8);
   border: none;
   border-radius: 10px;
   padding: 16px 32px 16px 32px;
   margin: 0;
   margin-bottom: 8px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
   position: relative;
   z-index: 2;
   white-space: nowrap;
@@ -84,7 +87,8 @@ const isFirstTabActive = computed(() => {
   margin-right: 0;
 }
 .header-switcher__tab--active {
-  color: #2E3943;
+  color: #2e3943;
+  background: #fafafa;
   font-weight: 700;
   border-top: 1px solid #b3d3f9;
   border-left: 1px solid #b3d3f9;
@@ -93,7 +97,6 @@ const isFirstTabActive = computed(() => {
   border-radius: 12px 12px 0 0;
   box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.03);
   z-index: 3;
-  background: #fff;
 }
 .header-switcher__tab--active::after {
   content: '';
@@ -103,7 +106,7 @@ const isFirstTabActive = computed(() => {
   right: -1px;
   bottom: -9px;
   height: 9px;
-  background: #fff;
+  background: #fafafa;
   border-left: 1px solid #b3d3f9;
   border-right: 1px solid #b3d3f9;
   z-index: 4;
@@ -114,7 +117,7 @@ const isFirstTabActive = computed(() => {
   min-height: 0;
   height: 100%;
 
-  background: #fff;
+  background: #fafafa;
   border: 1px solid #b3d3f9;
   /* border-top: none; */
   border-radius: 15px;

@@ -99,7 +99,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: fit-content;
+  width: 100%;
 }
 
 .range-slider__label {
