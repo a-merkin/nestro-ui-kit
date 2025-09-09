@@ -118,6 +118,7 @@ onUnmounted(() => {
 .dropdown__trigger {
   display: flex;
   align-items: center;
+  text-align: start;
   justify-content: space-between;
   width: 100%;
   height: 44px;
