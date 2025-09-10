@@ -38,7 +38,7 @@ const isFirstTabActive = computed(() => {
 
 <style scoped>
 .workplace-container {
-  width: 1862.54px;
+  width: 1900px;
   height: 100%;
   display: flex;
   flex-direction: column;
