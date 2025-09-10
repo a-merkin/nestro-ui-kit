@@ -125,7 +125,7 @@ const isFirstTabActive = computed(() => {
   position: relative;
   z-index: 1;
 
-  padding: 30px;
+  padding: 10px;
 }
 .workplace-content--no-top-left {
   border-top-left-radius: 0;
