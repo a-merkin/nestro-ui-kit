@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
 
 interface Option {
   value: string | number;
@@ -53,16 +53,18 @@ interface Option {
 }
 
 interface Props {
-  modelValue: string | number;
+  modelValue?: string | number | null;
   options: Option[];
   placeholder?: string;
   disabled?: boolean;
 }
 
-const { options, modelValue, placeholder, disabled } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Выберите значение',
   disabled: false,
 });
+
+const { options, modelValue, placeholder, disabled } = toRefs(props);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void;
@@ -71,16 +73,16 @@ const emit = defineEmits<{
 const isOpen = ref(false);
 
 const hasSelectedValue = computed(() => {
-  return options.some((option) => option.value === modelValue);
+  return options.value.some((option) => option.value === modelValue.value);
 });
 
 const selectedLabel = computed(() => {
-  const selected = options.find((option) => option.value === modelValue);
-  return selected ? selected.label : placeholder;
+  const selected = options.value.find((option) => option.value === modelValue.value);
+  return selected ? selected.label : placeholder.value;
 });
 
 const toggleDropdown = () => {
-  if (!disabled) {
+  if (!disabled.value) {
     isOpen.value = !isOpen.value;
   }
 };

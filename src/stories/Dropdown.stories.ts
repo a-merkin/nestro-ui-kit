@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { computed, ref, watch } from 'vue';
 import Dropdown from '../components/Dropdown/Dropdown.vue';
 
 const meta = {
@@ -87,4 +88,54 @@ export const WithClearButton: Story = {
       },
     },
   },
+};
+
+export const InteractiveSelection: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    placeholder: 'Выберите опцию',
+  },
+  render: (args) => ({
+    components: { Dropdown },
+    setup() {
+      const selected = ref<string | number | null>(args.modelValue ?? null);
+
+      watch(
+        () => args.modelValue,
+        (next) => {
+          selected.value = (next !== undefined ? next : null) as string | number | null;
+        }
+      );
+
+      const handleUpdate = (value: string | number) => {
+        selected.value = value;
+      };
+
+      const displayedValue = computed(() => {
+        if (selected.value === null || selected.value === undefined || selected.value === '') {
+          return '—';
+        }
+
+        return String(selected.value);
+      });
+
+      return {
+        args,
+        selected,
+        handleUpdate,
+        displayedValue,
+      };
+    },
+    template: `
+      <div style="display: grid; gap: 12px; max-width: 320px;">
+        <Dropdown
+          v-bind="args"
+          :modelValue="selected"
+          @update:modelValue="handleUpdate"
+        />
+        <div>Текущее значение: {{ displayedValue }}</div>
+      </div>
+    `,
+  }),
 };
