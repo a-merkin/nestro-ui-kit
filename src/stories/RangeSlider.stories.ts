@@ -174,4 +174,48 @@ export const WithCustomLabels: Story = {
     step: 2,
     disabled: false,
   },
-}; 
+};
+
+// New: Discrete values range mode (numbers)
+export const DiscreteRangeNumbers: Story = {
+  render: () => ({
+    components: { RangeSlider },
+    setup() {
+      const values = [0, 10, 20, 30, 40, 50, 60];
+      const selected = ref<[number, number]>([10, 50]);
+      return { values, selected };
+    },
+    template: `
+      <div>
+        <RangeSlider v-model="selected" :values="values" :range="true" />
+        <p style="margin-top: 16px; font-size: 14px;">Диапазон: {{ selected[0] }} — {{ selected[1] }}</p>
+      </div>
+    `,
+  }),
+};
+
+// New: Discrete values range mode (dates)
+export const DiscreteRangeDates: Story = {
+  render: () => ({
+    components: { RangeSlider },
+    setup() {
+      const values = [
+        new Date('2024-01-01'),
+        new Date('2024-02-01'),
+        new Date('2024-03-01'),
+        new Date('2024-04-01'),
+        new Date('2024-05-01'),
+        new Date('2024-06-01'),
+      ];
+      const selected = ref<[Date, Date]>([values[1], values[4]]);
+      const fmt = (d: Date) => d.toLocaleDateString();
+      return { values, selected, fmt };
+    },
+    template: `
+      <div>
+        <RangeSlider v-model="selected" :values="values" :range="true" :label-formatter="fmt" />
+        <p style="margin-top: 16px; font-size: 14px;">Диапазон: {{ fmt(selected[0]) }} — {{ fmt(selected[1]) }}</p>
+      </div>
+    `,
+  }),
+};

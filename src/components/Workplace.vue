@@ -82,6 +82,7 @@ const isFirstTabActive = computed(() => {
   white-space: nowrap;
   width: 100%;
   margin: 0;
+  font-size: 18px;
 }
 .header-switcher__tab:last-child {
   margin-right: 0;
