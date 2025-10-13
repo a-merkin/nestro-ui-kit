@@ -44,6 +44,9 @@ const handleChange = (event: Event) => {
   gap: 8px;
   cursor: pointer;
   user-select: none;
+  border: 1px solid var(--color-stroke-primary);
+  border-radius: 60px;
+  padding: 14px;
 }
 
 .switch__input {
