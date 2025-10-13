@@ -1,8 +1,13 @@
 <!-- RangeSlider.vue -->
 <template>
   <div class="range-slider" :class="{ 'range-slider--disabled': disabled }">
-    <span class="range-slider__label range-slider__label--left">{{ leftEdgeLabel }}</span>
+    <!-- Подписи сверху -->
+    <div class="range-slider__labels-row">
+      <span class="range-slider__label range-slider__label--left">{{ leftEdgeLabel }}</span>
+      <span class="range-slider__label range-slider__label--right">{{ rightEdgeLabel }}</span>
+    </div>
 
+    <!-- Трек с ползунками -->
     <div class="range-slider__track-container" ref="trackContainer" @mousedown="onTrackMouseDown">
       <div class="range-slider__track" />
       <div
@@ -51,8 +56,6 @@
         @keydown.prevent="onThumbKeydownSingle"
       />
     </div>
-
-    <span class="range-slider__label range-slider__label--right">{{ rightEdgeLabel }}</span>
   </div>
 </template>
 
@@ -323,9 +326,18 @@ const rightEdgeLabel = computed(() => {
 <style scoped lang="scss">
 .range-slider {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
   width: 100%;
+  min-width: 280px; // Минимальная ширина для корректного отображения
+}
+
+.range-slider__labels-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 4px;
 }
 
 .range-slider__label {
@@ -334,18 +346,26 @@ const rightEdgeLabel = computed(() => {
   font-size: 12px;
   line-height: 1.25em;
   color: var(--color-black);
-  width: 40px;
-  text-align: center;
-
-  &--left { text-align: left; }
-  &--right { text-align: right; }
+  white-space: nowrap;
+  flex-shrink: 0;
+  
+  &--left { 
+    text-align: left;
+    margin-right: 8px;
+  }
+  &--right { 
+    text-align: right;
+    margin-left: 8px;
+  }
 }
 
 .range-slider__track-container {
   position: relative;
-  width: 200px;
+  width: 100%;
   height: 16px;
   cursor: pointer;
+  flex: 1;
+  margin: 0 8px;
 }
 
 .range-slider__track {
@@ -389,6 +409,32 @@ const rightEdgeLabel = computed(() => {
 .range-slider__thumb--single {
   background-color: var(--color-orange, #ed6e1c);
   border-color: var(--color-orange, #ed6e1c);
+}
+
+// Адаптивные стили для мобильных устройств
+@media (max-width: 480px) {
+  .range-slider {
+    min-width: 240px;
+  }
+  
+  .range-slider__label {
+    font-size: 11px;
+  }
+  
+  .range-slider__track-container {
+    margin: 0 4px;
+  }
+}
+
+// Адаптивные стили для очень маленьких экранов
+@media (max-width: 320px) {
+  .range-slider {
+    min-width: 200px;
+  }
+  
+  .range-slider__label {
+    font-size: 10px;
+  }
 }
 
 .range-slider--disabled {

@@ -46,8 +46,8 @@ export const Default: Story = {
     tabs: [
       { label: 'Сценарии', value: 'scenarios' },
       { label: 'Макропараметры', value: 'macro' },
-      { label: 'Исходные данные ФЭМ', value: 'fem-source' },
-      { label: 'Исторические данные ФЭМ', value: 'fem-history' },
+      { label: 'Графики', value: 'fem-source' },
+      { label: 'Таблица', value: 'fem-history' },
     ],
     modelValue: 'scenarios',
   },
