@@ -1,14 +1,25 @@
 <!-- Dropdown.vue -->
 <template>
   <div class="dropdown" :class="{ 'dropdown--open': isOpen }">
-    <button
+    <div
       class="dropdown__trigger"
       :class="{ 'dropdown__trigger--disabled': disabled }"
-      @click="toggleDropdown"
-      type="button"
-      :disabled="disabled"
+      @click="handleTriggerClick"
     >
+      <input
+        v-if="searchable"
+        ref="searchInputRef"
+        type="text"
+        v-model="searchQuery"
+        :placeholder="selectedLabel"
+        class="dropdown__search-field"
+        :class="{ 'dropdown__search-field--placeholder': !hasSelectedValue && !searchQuery }"
+        :disabled="disabled"
+        @focus="openDropdown"
+        @input="onSearchInput"
+      />
       <span 
+        v-else
         class="dropdown__selected"
         :class="{ 'dropdown__selected--placeholder': !hasSelectedValue }"
       >
@@ -27,17 +38,20 @@
           fill="#90A9B6"
         />
       </svg>
-    </button>
+    </div>
     <div v-if="isOpen" class="dropdown__content">
       <ul class="dropdown__list">
         <li
-          v-for="option in options"
+          v-for="option in filteredOptions"
           :key="option.value"
           class="dropdown__item"
           :class="{ 'dropdown__item--selected': modelValue === option.value }"
           @click="selectOption(option)"
         >
           {{ option.label }}
+        </li>
+        <li v-if="filteredOptions.length === 0" class="dropdown__item--no-results">
+          Ничего не найдено
         </li>
       </ul>
     </div>
@@ -57,20 +71,24 @@ interface Props {
   options: Option[];
   placeholder?: string;
   disabled?: boolean;
+  searchable?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Выберите значение',
   disabled: false,
+  searchable: false,
 });
 
-const { options, modelValue, placeholder, disabled } = toRefs(props);
+const { options, modelValue, placeholder, disabled, searchable } = toRefs(props);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void;
 }>();
 
 const isOpen = ref(false);
+const searchQuery = ref('');
+const searchInputRef = ref<HTMLInputElement | null>(null);
 
 const hasSelectedValue = computed(() => {
   return options.value.some((option) => option.value === modelValue.value);
@@ -81,15 +99,40 @@ const selectedLabel = computed(() => {
   return selected ? selected.label : placeholder.value;
 });
 
-const toggleDropdown = () => {
+const filteredOptions = computed(() => {
+  if (!searchable.value || !searchQuery.value.trim()) {
+    return options.value;
+  }
+  const query = searchQuery.value.toLowerCase();
+  return options.value.filter(option => 
+    option.label.toLowerCase().includes(query)
+  );
+});
+
+const openDropdown = () => {
   if (!disabled.value) {
+    isOpen.value = true;
+  }
+};
+
+const handleTriggerClick = () => {
+  if (searchable.value && searchInputRef.value) {
+    searchInputRef.value.focus();
+  } else if (!disabled.value) {
     isOpen.value = !isOpen.value;
+  }
+};
+
+const onSearchInput = () => {
+  if (!isOpen.value) {
+    isOpen.value = true;
   }
 };
 
 const selectOption = (option: Option) => {
   emit('update:modelValue', option.value);
   isOpen.value = false;
+  searchQuery.value = '';
 };
 
 // Закрываем дропдаун при клике вне компонента
@@ -97,6 +140,7 @@ const handleClickOutside = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
   if (!target.closest('.dropdown')) {
     isOpen.value = false;
+    searchQuery.value = '';
   }
 };
 
@@ -134,6 +178,27 @@ onUnmounted(() => {
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 8px rgba(31, 41, 55, 0.06);
+  position: relative;
+}
+
+.dropdown__search-field {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  color: var(--color-text-primary, #222C37);
+  padding: 0;
+  width: 100%;
+}
+
+.dropdown__search-field::placeholder {
+  color: var(--color-text-primary, #222C37);
+}
+
+.dropdown__search-field--placeholder::placeholder {
+  color: rgba(120, 151, 166, 0.60);
 }
 
 .dropdown__trigger--disabled {
@@ -165,6 +230,10 @@ onUnmounted(() => {
   box-shadow: 0 8px 32px rgba(31, 41, 55, 0.12);
   z-index: 1000;
   animation: dropdown-fade-in 0.18s cubic-bezier(0.4,0,0.2,1);
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 @keyframes dropdown-fade-in {
@@ -176,6 +245,27 @@ onUnmounted(() => {
   margin: 0;
   padding: 8px 0;
   list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.dropdown__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdown__list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.dropdown__list::-webkit-scrollbar-thumb {
+  background: #D3E0E6;
+  border-radius: 4px;
+}
+
+.dropdown__list::-webkit-scrollbar-thumb:hover {
+  background: #90A9B6;
 }
 
 .dropdown__item {
@@ -196,6 +286,20 @@ onUnmounted(() => {
 .dropdown__item--selected {
   background: #E6F4EA;
   color: #0F9D3B;
+}
+
+.dropdown__item--no-results {
+  padding: 20px;
+  text-align: center;
+  color: rgba(120, 151, 166, 0.6);
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  cursor: default;
+}
+
+.dropdown__item--no-results:hover {
+  background: transparent;
+  color: rgba(120, 151, 166, 0.6);
 }
 
 .dropdown__selected {

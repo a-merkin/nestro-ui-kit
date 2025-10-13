@@ -23,6 +23,10 @@ const meta = {
       control: 'boolean',
       description: 'Отключен ли дропдаун',
     },
+    searchable: {
+      control: 'boolean',
+      description: 'Включить поиск в основном поле ввода',
+    },
   },
 } satisfies Meta<typeof Dropdown>;
 
@@ -138,4 +142,79 @@ export const InteractiveSelection: Story = {
       </div>
     `,
   }),
+};
+
+export const WithSearch: Story = {
+  args: {
+    modelValue: '',
+    options: defaultOptions,
+    placeholder: 'Начните печатать...',
+    searchable: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Дропдаун с функцией поиска. Начните печатать в поле для фильтрации опций.',
+      },
+    },
+  },
+};
+
+export const SearchWithManyOptions: Story = {
+  args: {
+    modelValue: '',
+    options: [
+      { value: '1', label: 'Москва' },
+      { value: '2', label: 'Санкт-Петербург' },
+      { value: '3', label: 'Новосибирск' },
+      { value: '4', label: 'Екатеринбург' },
+      { value: '5', label: 'Казань' },
+      { value: '6', label: 'Нижний Новгород' },
+      { value: '7', label: 'Челябинск' },
+      { value: '8', label: 'Самара' },
+      { value: '9', label: 'Омск' },
+      { value: '10', label: 'Ростов-на-Дону' },
+      { value: '11', label: 'Уфа' },
+      { value: '12', label: 'Красноярск' },
+      { value: '13', label: 'Воронеж' },
+      { value: '14', label: 'Пермь' },
+      { value: '15', label: 'Волгоград' },
+    ],
+    placeholder: 'Поиск города...',
+    searchable: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Дропдаун с большим списком городов и поиском. Попробуйте найти "Москва" или "Новосибирск".',
+      },
+    },
+  },
+};
+
+export const SearchSelected: Story = {
+  args: {
+    modelValue: '2',
+    options: [
+      { value: '1', label: 'JavaScript' },
+      { value: '2', label: 'TypeScript' },
+      { value: '3', label: 'Python' },
+      { value: '4', label: 'Java' },
+      { value: '5', label: 'C++' },
+      { value: '6', label: 'C#' },
+      { value: '7', label: 'Ruby' },
+      { value: '8', label: 'Go' },
+      { value: '9', label: 'Rust' },
+      { value: '10', label: 'PHP' },
+    ],
+    placeholder: 'Выберите язык программирования',
+    searchable: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Дропдаун с предварительно выбранным значением и поиском.',
+      },
+    },
+  },
 };

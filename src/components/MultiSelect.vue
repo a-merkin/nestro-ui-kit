@@ -1,5 +1,5 @@
 <template>
-  <div class="figma-card">
+  <div class="figma-card" @click="handleCardClick">
     <div class="chips-container" ref="chipsRef">
       <template v-for="item in selectedItems" :key="item.id">
         <div class="chip">
@@ -7,8 +7,18 @@
           <span class="chip-text">{{ item.name }}</span>
         </div>
       </template>
+      <input
+        v-if="searchable"
+        ref="searchInputRef"
+        type="text"
+        v-model="searchQuery"
+        class="search-input-inline"
+        @focus="openDropdown"
+        @input="onSearchInput"
+        @click.stop
+      />
     </div>
-    <div class="dropdown-arrow" ref="arrowRef" @click="isDropdownOpen = !isDropdownOpen">
+    <div class="dropdown-arrow" ref="arrowRef" @click.stop="toggleDropdown">
       <svg
         :class="{ rotated: isDropdownOpen }"
         width="32"
@@ -21,10 +31,13 @@
     </div>
     <div v-if="isDropdownOpen" class="dropdown-list" ref="dropdownRef">
       <div class="dropdown-chips">
-        <label v-for="item in options" :key="item.id" class="dropdown-chip">
+        <label v-for="item in filteredOptions" :key="item.id" class="dropdown-chip">
           <input type="checkbox" :checked="modelValue.includes(item.id)" @change="toggleSelect(item.id)" />
           <span>{{ item.name }}</span>
         </label>
+        <div v-if="filteredOptions.length === 0" class="no-results">
+          Ничего не найдено
+        </div>
       </div>
     </div>
   </div>
@@ -38,17 +51,38 @@ interface OptionItem {
   name: string;
 }
 
-const props = defineProps<{ modelValue: Array<string | number>, options: OptionItem[] }>();
+interface Props {
+  modelValue: Array<string | number>;
+  options: OptionItem[];
+  searchable?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  searchable: false,
+});
+
 const emit = defineEmits(['update:modelValue']);
 
 const chipsRef = ref<HTMLElement | null>(null);
 const dropdownRef = ref<HTMLElement | null>(null);
 const arrowRef = ref<HTMLElement | null>(null);
+const searchInputRef = ref<HTMLInputElement | null>(null);
 const isDropdownOpen = ref(false);
+const searchQuery = ref('');
 
 const selectedItems = computed(() =>
   props.options.filter(item => props.modelValue.includes(item.id))
 );
+
+const filteredOptions = computed(() => {
+  if (!props.searchable || !searchQuery.value.trim()) {
+    return props.options;
+  }
+  const query = searchQuery.value.toLowerCase();
+  return props.options.filter(item => 
+    item.name.toLowerCase().includes(query)
+  );
+});
 
 function toggleSelect(id: string | number) {
   const newValue = props.modelValue.includes(id)
@@ -62,6 +96,32 @@ function removeSelected(id: string | number) {
   emit('update:modelValue', newValue);
 }
 
+function openDropdown() {
+  isDropdownOpen.value = true;
+}
+
+function toggleDropdown() {
+  isDropdownOpen.value = !isDropdownOpen.value;
+  if (isDropdownOpen.value && props.searchable && searchInputRef.value) {
+    searchInputRef.value.focus();
+  }
+}
+
+function handleCardClick() {
+  if (!isDropdownOpen.value) {
+    isDropdownOpen.value = true;
+  }
+  if (props.searchable && searchInputRef.value) {
+    searchInputRef.value.focus();
+  }
+}
+
+function onSearchInput() {
+  if (!isDropdownOpen.value) {
+    isDropdownOpen.value = true;
+  }
+}
+
 function handleClickOutside(event: MouseEvent) {
   if (
     dropdownRef.value &&
@@ -70,6 +130,7 @@ function handleClickOutside(event: MouseEvent) {
     !arrowRef.value?.contains(event.target as Node)
   ) {
     isDropdownOpen.value = false;
+    searchQuery.value = '';
   }
 }
 
@@ -93,6 +154,7 @@ onBeforeUnmount(() => {
   padding: 12px 32px 12px 12px;
   position: relative;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .chips-container {
   display: flex;
@@ -102,6 +164,24 @@ onBeforeUnmount(() => {
   align-items: flex-start;
   max-height: 100%;
   overflow: hidden;
+  cursor: text;
+}
+
+.search-input-inline {
+  flex: 1;
+  min-width: 80px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 10px;
+  font-family: Montserrat, sans-serif;
+  color: rgba(120, 151, 166, 1);
+  padding: 0 4px;
+  height: 13px;
+}
+
+.search-input-inline::placeholder {
+  color: rgba(120, 151, 166, 0.6);
 }
 .chip {
   display: flex;
@@ -160,13 +240,39 @@ onBeforeUnmount(() => {
   z-index: 10;
   margin-top: 4px;
   padding: 8px;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
 }
+
 .dropdown-chips {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-height: 120px;
+  max-height: 280px;
   overflow-y: auto;
+  flex: 1;
+}
+.dropdown-chips::-webkit-scrollbar {
+  width: 6px;
+}
+.dropdown-chips::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.dropdown-chips::-webkit-scrollbar-thumb {
+  background: #C0DFEF;
+  border-radius: 3px;
+}
+.dropdown-chips::-webkit-scrollbar-thumb:hover {
+  background: #7897A6;
+}
+.no-results {
+  padding: 12px;
+  text-align: center;
+  color: rgba(120, 151, 166, 0.6);
+  font-size: 12px;
+  font-family: Montserrat, sans-serif;
 }
 .dropdown-chip {
   display: flex;
