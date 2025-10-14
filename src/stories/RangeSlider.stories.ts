@@ -303,7 +303,7 @@ export const WithCutoffsDiscreteDates: Story = {
       return { values, selected, cutoffs, fmt };
     },
     template: `
-      <div>
+      <div style="width: 500px;">
         <RangeSlider 
           v-model="selected" 
           :values="values" 
