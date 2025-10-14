@@ -38,6 +38,10 @@ const meta: Meta<typeof RangeSlider> = {
       control: { type: 'boolean' },
       description: 'Отключить слайдер',
     },
+    cutoffs: {
+      control: { type: 'object' },
+      description: 'Массив значений отсечек для отображения на слайдере',
+    },
   },
 };
 
@@ -215,6 +219,100 @@ export const DiscreteRangeDates: Story = {
       <div>
         <RangeSlider v-model="selected" :values="values" :range="true" :label-formatter="fmt" />
         <p style="margin-top: 16px; font-size: 14px;">Диапазон: {{ fmt(selected[0]) }} — {{ fmt(selected[1]) }}</p>
+      </div>
+    `,
+  }),
+};
+
+// New: With cutoffs in continuous mode
+export const WithCutoffsContinuous: Story = {
+  render: (args: any) => ({
+    components: { RangeSlider },
+    setup() {
+      const value = ref(args.modelValue);
+      const cutoffs = [-50, 0, 50];
+      return { args, value, cutoffs };
+    },
+    template: `
+      <div>
+        <RangeSlider
+          v-model="value"
+          :min="args.min"
+          :max="args.max"
+          :min-label="args.minLabel"
+          :max-label="args.maxLabel"
+          :step="args.step"
+          :cutoffs="cutoffs"
+        />
+        <p style="margin-top: 16px; font-size: 14px;">Текущее значение: {{ value }}</p>
+        <p style="margin-top: 8px; font-size: 12px; color: #ed6e1c;">Отсечки: -50, 0, 50</p>
+      </div>
+    `,
+  }),
+  args: {
+    modelValue: 0,
+    min: -100,
+    max: 100,
+    minLabel: '-100%',
+    maxLabel: '100%',
+    step: 1,
+  },
+};
+
+// New: With cutoffs in discrete range mode
+export const WithCutoffsDiscreteRange: Story = {
+  render: () => ({
+    components: { RangeSlider },
+    setup() {
+      const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const selected = ref<[number, number]>([20, 80]);
+      const cutoffs = [25, 50, 75];
+      return { values, selected, cutoffs };
+    },
+    template: `
+      <div>
+        <RangeSlider 
+          v-model="selected" 
+          :values="values" 
+          :range="true" 
+          :cutoffs="cutoffs"
+        />
+        <p style="margin-top: 16px; font-size: 14px;">Диапазон: {{ selected[0] }} — {{ selected[1] }}</p>
+        <p style="margin-top: 8px; font-size: 12px; color: #ed6e1c;">Отсечки на значениях: 25, 50, 75 (только 50 будет отображаться, т.к. есть в values)</p>
+      </div>
+    `,
+  }),
+};
+
+// New: With cutoffs in discrete range mode (dates)
+export const WithCutoffsDiscreteDates: Story = {
+  render: () => ({
+    components: { RangeSlider },
+    setup() {
+      const values = [
+        new Date('2024-01-01'),
+        new Date('2024-02-01'),
+        new Date('2024-03-01'),
+        new Date('2024-04-01'),
+        new Date('2024-05-01'),
+        new Date('2024-06-01'),
+      ];
+      const selected = ref<[Date, Date]>([values[1], values[4]]);
+      const cutoffs = [new Date('2024-03-01'), new Date('2024-05-01')];
+      const fmt = (d: Date) => d.toLocaleDateString();
+      return { values, selected, cutoffs, fmt };
+    },
+    template: `
+      <div>
+        <RangeSlider 
+          v-model="selected" 
+          :values="values" 
+          :range="true" 
+          :label-formatter="fmt"
+          :cutoffs="cutoffs"
+        />
+        <p style="margin-top: 16px; font-size: 14px;">Диапазон: {{ fmt(selected[0]) }} — {{ fmt(selected[1]) }}</p>
+        <p style="margin-top: 8px; font-size: 12px; color: #ed6e1c;">Отсечки: март и май 2024</p>
       </div>
     `,
   }),

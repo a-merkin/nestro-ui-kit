@@ -10,6 +10,15 @@
     <!-- Трек с ползунками -->
     <div class="range-slider__track-container" ref="trackContainer" @mousedown="onTrackMouseDown">
       <div class="range-slider__track" />
+      
+      <!-- Отсечки -->
+      <div
+        v-for="(cutoffPx, idx) in cutoffPositions"
+        :key="`cutoff-${idx}`"
+        class="range-slider__cutoff"
+        :style="{ left: cutoffPx + 'px' }"
+      />
+      
       <div
         v-if="isRangeMode"
         class="range-slider__range"
@@ -80,6 +89,8 @@ interface Props {
   disabled?: boolean;
   // Optional formatter for labels when using values
   labelFormatter?: (v: MaybeDate) => string;
+  // Cutoffs/markers to display on the slider track
+  cutoffs?: number[] | MaybeDate[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -321,6 +332,43 @@ const rightEdgeLabel = computed(() => {
   if (isRangeMode.value && props.values?.length) return valueToLabel(props.values[props.values.length - 1]);
   return props.maxLabel;
 });
+
+// Cutoffs
+const cutoffPositions = computed(() => {
+  const positions = new Set<number>();
+  
+  // Всегда добавляем отсечки в начале и конце
+  positions.add(0);
+  positions.add(trackWidth.value);
+  
+  if (props.cutoffs && props.cutoffs.length) {
+    if (isRangeMode.value && props.values?.length) {
+      // Discrete mode: find index in values array
+      props.cutoffs.forEach(cutoff => {
+        const target = cutoff instanceof Date ? cutoff.getTime() : Number(cutoff);
+        for (let i = 0; i < props.values!.length; i++) {
+          const val = props.values![i];
+          const valNum = val instanceof Date ? val.getTime() : Number(val);
+          if (valNum === target) {
+            positions.add(indexToPx(i));
+            break;
+          }
+        }
+      });
+    } else {
+      // Continuous mode: convert value to pixel position
+      (props.cutoffs as number[]).forEach(cutoff => {
+        const range = props.max - props.min;
+        const valueOffset = cutoff - props.min;
+        const percentage = range === 0 ? 0 : valueOffset / range;
+        const pos = percentage * trackWidth.value;
+        positions.add(Math.max(0, Math.min(trackWidth.value, pos)));
+      });
+    }
+  }
+  
+  return Array.from(positions).sort((a, b) => a - b);
+});
 </script>
 
 <style scoped lang="scss">
@@ -388,6 +436,17 @@ const rightEdgeLabel = computed(() => {
   transform: translateY(-50%);
 }
 
+.range-slider__cutoff {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 17px;
+  background-color: var(--color-blue-30, #cfd7db);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
 .range-slider__thumb {
   position: absolute;
   top: 50%;
@@ -409,32 +468,6 @@ const rightEdgeLabel = computed(() => {
 .range-slider__thumb--single {
   background-color: var(--color-orange, #ed6e1c);
   border-color: var(--color-orange, #ed6e1c);
-}
-
-// Адаптивные стили для мобильных устройств
-@media (max-width: 480px) {
-  .range-slider {
-    min-width: 240px;
-  }
-  
-  .range-slider__label {
-    font-size: 11px;
-  }
-  
-  .range-slider__track-container {
-    margin: 0 4px;
-  }
-}
-
-// Адаптивные стили для очень маленьких экранов
-@media (max-width: 320px) {
-  .range-slider {
-    min-width: 200px;
-  }
-  
-  .range-slider__label {
-    font-size: 10px;
-  }
 }
 
 .range-slider--disabled {
