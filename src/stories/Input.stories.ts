@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Input from '../components/Input/Input.vue';
+import Icon from '../components/Icon/Icon.vue';
 
 const meta = {
   title: 'UI/Input',
@@ -78,4 +79,89 @@ export const Required: Story = {
     placeholder: 'Обязательное поле',
     required: true,
   },
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    modelValue: '',
+    placeholder: 'Поиск...',
+  },
+  render: (args) => ({
+    components: { Input, Icon },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Input v-bind="args">
+        <template #iconLeft>
+          <Icon name="magnifier" />
+        </template>
+      </Input>
+    `,
+  }),
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    modelValue: '',
+    placeholder: 'Настройки...',
+  },
+  render: (args) => ({
+    components: { Input, Icon },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Input v-bind="args">
+        <template #iconRight>
+          <Icon name="settings" />
+        </template>
+      </Input>
+    `,
+  }),
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    modelValue: '',
+    placeholder: 'Поиск настроек...',
+  },
+  render: (args) => ({
+    components: { Input, Icon },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Input v-bind="args">
+        <template #iconLeft>
+          <Icon name="magnifier" />
+        </template>
+        <template #iconRight>
+          <Icon name="settings" />
+        </template>
+      </Input>
+    `,
+  }),
+};
+
+export const WithIconsAndError: Story = {
+  args: {
+    modelValue: 'Неверный запрос',
+    placeholder: 'Поиск...',
+    error: true,
+    errorMessage: 'Не удалось найти результаты',
+  },
+  render: (args) => ({
+    components: { Input, Icon },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Input v-bind="args">
+        <template #iconLeft>
+          <Icon name="magnifier" />
+        </template>
+      </Input>
+    `,
+  }),
 };

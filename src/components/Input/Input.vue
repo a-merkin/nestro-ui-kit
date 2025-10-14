@@ -1,24 +1,33 @@
 <!-- Input.vue -->
 <template>
   <div class="input-wrapper">
-    <input
-      :type="type"
-      :value="modelValue"
-      @input="handleInput"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :name="name"
-      :required="required"
-      :class="inputClasses"
-    />
+    <div class="input-container">
+      <div v-if="$slots.iconLeft" class="input-icon input-icon--left">
+        <slot name="iconLeft"></slot>
+      </div>
+      <input
+        :type="type"
+        :value="modelValue"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :name="name"
+        :required="required"
+        :class="inputClasses"
+        :style="inputStyles"
+      />
+      <div v-if="$slots.iconRight" class="input-icon input-icon--right">
+        <slot name="iconRight"></slot>
+      </div>
+    </div>
     <span v-if="error && errorMessage" class="error-message">{{ errorMessage }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 
 interface Props {
   modelValue: string;
@@ -42,6 +51,8 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
+const slots = useSlots();
+
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   emit('update:modelValue', target.value);
@@ -64,6 +75,15 @@ const inputClasses = computed(() => ({
   'input--error': error,
   'input--disabled': disabled,
 }));
+
+const inputStyles = computed(() => {
+  const paddingLeft = slots.iconLeft ? '44px' : '16px';
+  const paddingRight = slots.iconRight ? '44px' : '16px';
+  return {
+    paddingLeft,
+    paddingRight,
+  };
+});
 </script>
 
 <style scoped>
@@ -73,10 +93,16 @@ const inputClasses = computed(() => ({
   flex-direction: column;
 }
 
-.input {
-  width: 100%;
+.input-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   min-width: 230px;
   max-width: 500px;
+}
+
+.input {
+  width: 100%;
   height: 40px;
   padding: 0 16px;
   border-radius: 60px;
@@ -91,6 +117,30 @@ const inputClasses = computed(() => ({
   color: rgba(120, 151, 166, 0.6);
 }
 
+.input-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 20px;
+  pointer-events: none;
+  color: var(--color-text-primary);
+  z-index: 2;
+}
+
+.input-icon--left {
+  left: 12px;
+}
+
+.input-icon--right {
+  right: 12px;
+}
+
+.input-icon :deep(svg) {
+  width: 20px;
+  height: 20px;
+}
 
 .input--error {
   border-color: var(--color-stroke-error, #ED6E1C);

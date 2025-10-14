@@ -31,13 +31,6 @@ const meta = {
       description: 'Включить поиск среди опций',
     },
   },
-  parameters: {
-    docs: {
-      description: {
-        component: 'Мультиселект - Позволяет выбирать несколько элементов из списка.',
-      },
-    },
-  },
 } satisfies Meta<typeof MultiSelect>;
 
 export default meta;
