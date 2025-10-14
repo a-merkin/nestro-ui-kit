@@ -32,6 +32,12 @@ export default defineConfig({
       output: {
         globals: {
           vue: 'Vue'
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'nestro-ui-kit.css';
+          }
+          return assetInfo.name || 'assets/[name].[ext]';
         }
       }
     }
