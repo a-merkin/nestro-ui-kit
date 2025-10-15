@@ -14,9 +14,17 @@ const meta = {
       control: 'boolean',
       description: 'Отключен ли переключатель',
     },
+    labelBefore: {
+      control: 'text',
+      description: 'Текст метки до переключателя',
+    },
+    labelAfter: {
+      control: 'text',
+      description: 'Текст метки после переключателя',
+    },
     default: {
       control: 'text',
-      description: 'Текст метки переключателя',
+      description: 'Текст метки переключателя (устаревший слот, используйте labelAfter)',
     },
   },
 } satisfies Meta<typeof Switch>;
@@ -27,14 +35,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     modelValue: false,
-    default: 'Переключатель',
+    labelAfter: 'Переключатель',
   },
 };
 
 export const Checked: Story = {
   args: {
     modelValue: true,
-    default: 'Включенный переключатель',
+    labelAfter: 'Включенный переключатель',
   },
 };
 
@@ -42,7 +50,7 @@ export const Disabled: Story = {
   args: {
     modelValue: false,
     disabled: true,
-    default: 'Отключенный переключатель',
+    labelAfter: 'Отключенный переключатель',
   },
 };
 
@@ -50,12 +58,36 @@ export const DisabledChecked: Story = {
   args: {
     modelValue: true,
     disabled: true,
-    default: 'Отключенный включенный переключатель',
+    labelBefore: 'Выкл',
+    labelAfter: 'Вкл',
   },
 };
 
 export const WithoutLabel: Story = {
   args: {
     modelValue: false,
+  },
+};
+
+export const WithTwoLabels: Story = {
+  args: {
+    modelValue: false,
+    labelBefore: 'Выкл',
+    labelAfter: 'Вкл',
+  },
+};
+
+export const WithTwoLabelsChecked: Story = {
+  args: {
+    modelValue: true,
+    labelBefore: 'Выкл',
+    labelAfter: 'Вкл',
+  },
+};
+
+export const OnlyLabelBefore: Story = {
+  args: {
+    modelValue: false,
+    labelBefore: 'Переключатель слева',
   },
 };

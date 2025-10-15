@@ -8,11 +8,16 @@
       :disabled="disabled"
       class="switch__input"
     />
+    <span v-if="$slots.labelBefore || labelBefore" class="switch__label switch__label--before">
+      <slot name="labelBefore">{{ labelBefore }}</slot>
+    </span>
     <span class="switch__track">
       <span class="switch__thumb"></span>
     </span>
-    <span v-if="$slots.default" class="switch__label">
-      <slot />
+    <span v-if="$slots.labelAfter || labelAfter || $slots.default" class="switch__label switch__label--after">
+      <slot name="labelAfter">
+        <slot>{{ labelAfter }}</slot>
+      </slot>
     </span>
   </label>
 </template>
@@ -21,10 +26,14 @@
 interface Props {
   modelValue: boolean;
   disabled?: boolean;
+  labelBefore?: string;
+  labelAfter?: string;
 }
 
-const { modelValue, disabled } = withDefaults(defineProps<Props>(), {
+const { modelValue, disabled, labelBefore, labelAfter } = withDefaults(defineProps<Props>(), {
   disabled: false,
+  labelBefore: '',
+  labelAfter: '',
 });
 
 const emit = defineEmits<{

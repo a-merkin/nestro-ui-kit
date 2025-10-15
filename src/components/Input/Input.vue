@@ -98,7 +98,6 @@ const inputStyles = computed(() => {
   display: inline-flex;
   align-items: center;
   min-width: 230px;
-  max-width: 500px;
 }
 
 .input {
