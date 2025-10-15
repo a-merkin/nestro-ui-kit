@@ -377,7 +377,8 @@ const cutoffPositions = computed(() => {
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  min-width: 280px; // Минимальная ширина для корректного отображения
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .range-slider__labels-row {
@@ -386,6 +387,7 @@ const cutoffPositions = computed(() => {
   align-items: center;
   width: 100%;
   margin-bottom: 4px;
+  box-sizing: border-box;
 }
 
 .range-slider__label {
@@ -399,21 +401,20 @@ const cutoffPositions = computed(() => {
   
   &--left { 
     text-align: left;
-    margin-right: 8px;
   }
   &--right { 
     text-align: right;
-    margin-left: 8px;
   }
 }
 
 .range-slider__track-container {
   position: relative;
-  width: 100%;
+  width: calc(100% - 16px);
   height: 16px;
   cursor: pointer;
   flex: 1;
   margin: 0 8px;
+  box-sizing: border-box;
 }
 
 .range-slider__track {
