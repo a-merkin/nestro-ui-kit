@@ -1,4 +1,3 @@
-<!-- Dropdown.vue -->
 <template>
   <div class="dropdown" :class="{ 'dropdown--open': isOpen }">
     <div
@@ -9,8 +8,8 @@
       <input
         v-if="searchable"
         ref="searchInputRef"
-        type="text"
         v-model="searchQuery"
+        type="text"
         :placeholder="selectedLabel"
         class="dropdown__search-field"
         :class="{ 'dropdown__search-field--placeholder': !hasSelectedValue && !searchQuery }"
@@ -25,19 +24,39 @@
       >
         {{ selectedLabel }}
       </span>
-      <svg
-        class="dropdown__arrow"
-        width="22"
-        height="22"
-        viewBox="0 0 22 22"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M17.8258 7.35254L11.0067 13.9998L4.18757 7.35254C4.06574 7.23352 3.90219 7.16689 3.73187 7.16689C3.56156 7.16689 3.398 7.23352 3.27617 7.35254C3.21718 7.41034 3.17031 7.47933 3.13832 7.55547C3.10632 7.63161 3.08984 7.71337 3.08984 7.79596C3.08984 7.87855 3.10632 7.9603 3.13832 8.03644C3.17031 8.11259 3.21718 8.18158 3.27617 8.23938L10.5305 15.3123C10.6579 15.4365 10.8288 15.506 11.0067 15.506C11.1846 15.506 11.3555 15.4365 11.4829 15.3123L18.7372 8.24074C18.7966 8.1829 18.8439 8.11374 18.8761 8.03734C18.9083 7.96095 18.925 7.87887 18.925 7.79596C18.925 7.71304 18.9083 7.63096 18.8761 7.55457C18.8439 7.47817 18.7966 7.40901 18.7372 7.35117C18.6154 7.23216 18.4518 7.16553 18.2815 7.16553C18.1112 7.16553 17.9477 7.23216 17.8258 7.35117V7.35254Z"
-          fill="#90A9B6"
-        />
-      </svg>
+      <div class="dropdown__actions">
+        <span v-if="clearable && hasSelectedValue" class="dropdown__clear" @click="handleClear">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13 13L1 1M13 1L1 13"
+              stroke="#90A9B6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <span>
+          <svg
+            class="dropdown__arrow"
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.8258 7.35254L11.0067 13.9998L4.18757 7.35254C4.06574 7.23352 3.90219 7.16689 3.73187 7.16689C3.56156 7.16689 3.398 7.23352 3.27617 7.35254C3.21718 7.41034 3.17031 7.47933 3.13832 7.55547C3.10632 7.63161 3.08984 7.71337 3.08984 7.79596C3.08984 7.87855 3.10632 7.9603 3.13832 8.03644C3.17031 8.11259 3.21718 8.18158 3.27617 8.23938L10.5305 15.3123C10.6579 15.4365 10.8288 15.506 11.0067 15.506C11.1846 15.506 11.3555 15.4365 11.4829 15.3123L18.7372 8.24074C18.7966 8.1829 18.8439 8.11374 18.8761 8.03734C18.9083 7.96095 18.925 7.87887 18.925 7.79596C18.925 7.71304 18.9083 7.63096 18.8761 7.55457C18.8439 7.47817 18.7966 7.40901 18.7372 7.35117C18.6154 7.23216 18.4518 7.16553 18.2815 7.16553C18.1112 7.16553 17.9477 7.23216 17.8258 7.35117V7.35254Z"
+              fill="#90A9B6"
+            />
+          </svg>
+        </span>
+      </div>
     </div>
     <div v-if="isOpen" class="dropdown__content">
       <ul class="dropdown__list">
@@ -67,11 +86,12 @@ interface Option {
 }
 
 interface Props {
-  modelValue?: string | number | null;
+  modelValue: string | number | null;
   options: Option[];
   placeholder?: string;
   disabled?: boolean;
   searchable?: boolean;
+  clearable?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,10 +100,11 @@ const props = withDefaults(defineProps<Props>(), {
   searchable: false,
 });
 
-const { options, modelValue, placeholder, disabled, searchable } = toRefs(props);
+const { options, modelValue, placeholder, disabled, searchable, clearable } = toRefs(props);
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void;
+  (e: 'update:modelValue', value: string | number | null): void;
+  (e: 'clear'): void;
 }>();
 
 const isOpen = ref(false);
@@ -138,6 +159,17 @@ const handleClickOutside = (event: MouseEvent) => {
   if (!target.closest('.dropdown')) {
     isOpen.value = false;
     searchQuery.value = '';
+  }
+};
+
+const handleClear = () => {
+  if (!disabled.value) {
+    emit('update:modelValue', null);
+    emit('clear');
+    searchQuery.value = '';
+    if (searchable.value && searchInputRef.value) {
+      searchInputRef.value.focus();
+    }
   }
 };
 
@@ -209,7 +241,6 @@ onUnmounted(() => {
 
 .dropdown__arrow {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 12px;
   color: #a2b1b8;
 }
 
@@ -316,14 +347,35 @@ onUnmounted(() => {
   color: rgba(120, 151, 166, 0.6);
 }
 
+.dropdown__actions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+}
+
 .dropdown__clear {
-  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  transition: opacity 0.2s;
-  opacity: 0.7;
+  color: #90a9b6;
+  border-radius: 50%;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .dropdown__clear:hover {
+  transform: scale(1.1);
+}
+
+.dropdown__clear:active {
+  transform: scale(0.95);
+}
+
+.dropdown__clear:hover::before {
   opacity: 1;
 }
 </style>

@@ -74,10 +74,20 @@ export const Searchable: Story = {
 
 export const Disabled: Story = {
   args: {
-    modelValue: 2,
+    modelValue: null,
     options: defaultOptions,
     disabled: true,
     placeholder: 'Дропдаун неактивен',
+  },
+  render: renderTemplate,
+};
+
+export const Clearable: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    clearable: true,
+    placeholder: 'Выберите значение',
   },
   render: renderTemplate,
 };
