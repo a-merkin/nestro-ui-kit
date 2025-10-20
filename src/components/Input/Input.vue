@@ -35,7 +35,7 @@ interface Props {
   disabled?: boolean;
   error?: boolean;
   errorMessage?: string;
-  type?: 'text' | 'password' | 'email' | 'number';
+  type?: 'text' | 'password' | 'email' | 'number' | 'date';
   name?: string;
   required?: boolean;
 }
@@ -157,5 +157,39 @@ const inputStyles = computed(() => {
   border-color: rgba(225, 225, 225, 0.51);
   color: var(--color-text-disabled, #E1E1E1);
   cursor: not-allowed;
+}
+
+/* Стили для input type="date" */
+.input[type="date"] {
+  cursor: pointer;
+}
+
+.input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.5);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+.input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.input[type="date"]::-webkit-datetime-edit-text {
+  padding: 0 2px;
+}
+
+.input[type="date"]::-webkit-datetime-edit-month-field,
+.input[type="date"]::-webkit-datetime-edit-day-field,
+.input[type="date"]::-webkit-datetime-edit-year-field {
+  padding: 0 2px;
 }
 </style> 

@@ -17,7 +17,7 @@ const meta = {
     },
     type: {
       control: 'select',
-      options: ['text', 'password', 'email', 'number'],
+      options: ['text', 'password', 'email', 'number', 'date'],
       description: 'Тип поля ввода',
     },
     disabled: {
@@ -164,4 +164,12 @@ export const WithIconsAndError: Story = {
       </Input>
     `,
   }),
+};
+
+export const DateInput: Story = {
+  args: {
+    modelValue: '',
+    type: 'date',
+    placeholder: 'Выберите дату',
+  },
 };
