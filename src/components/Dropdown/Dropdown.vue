@@ -36,12 +36,12 @@
       <ul class="dropdown__list">
         <li
           v-for="option in filteredOptions"
-          :key="option.value"
+          :key="getOptionValue(option)"
           class="dropdown__item"
           :class="getItemClasses(option)"
           @click="selectOption(option)"
         >
-          {{ option.label }}
+          {{ getOptionLabel(option) }}
         </li>
         <li v-if="filteredOptions.length === 0" class="dropdown__item dropdown__item--no-results">
           Ничего не найдено
@@ -56,18 +56,15 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import CloseIcon from './CloseIcon.vue';
 import ArrowIcon from './ArrowIcon.vue';
 
-interface Option {
-  value: string | number;
-  label: string;
-}
-
 interface Props {
   modelValue: string | number | null;
-  options: Option[];
+  options: any[];
   placeholder?: string;
   disabled?: boolean;
   searchable?: boolean;
   clearable?: boolean;
+  valueKey?: string;
+  labelKey?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -75,6 +72,8 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   searchable: false,
   clearable: false,
+  valueKey: 'value',
+  labelKey: 'label',
 });
 
 const emit = defineEmits<{
@@ -103,12 +102,12 @@ const selectedClasses = computed(() => ({
 }));
 
 const hasSelectedValue = computed(() => {
-  return props.options.some((option) => option.value === props.modelValue);
+  return props.options.some((option) => getOptionValue(option) === props.modelValue);
 });
 
 const selectedLabel = computed(() => {
-  const selected = props.options.find((option) => option.value === props.modelValue);
-  return selected ? selected.label : props.placeholder;
+  const selected = props.options.find((option) => getOptionValue(option) === props.modelValue);
+  return selected ? getOptionLabel(selected) : props.placeholder;
 });
 
 const filteredOptions = computed(() => {
@@ -117,11 +116,19 @@ const filteredOptions = computed(() => {
   }
 
   const query = searchQuery.value.toLowerCase();
-  return props.options.filter((option) => option.label.toLowerCase().includes(query));
+  return props.options.filter((option) => getOptionLabel(option).toLowerCase().includes(query));
 });
 
-const getItemClasses = (option: Option) => ({
-  'dropdown__item--selected': props.modelValue === option.value,
+const getOptionValue = (option: any): string | number => {
+  return option[props.valueKey];
+};
+
+const getOptionLabel = (option: any): string => {
+  return option[props.labelKey];
+};
+
+const getItemClasses = (option: any) => ({
+  'dropdown__item--selected': props.modelValue === getOptionValue(option),
 });
 
 const openDropdown = () => {
@@ -144,8 +151,8 @@ const onSearchInput = () => {
   }
 };
 
-const selectOption = (option: Option) => {
-  emit('update:modelValue', option.value);
+const selectOption = (option: any) => {
+  emit('update:modelValue', getOptionValue(option));
   isOpen.value = false;
   searchQuery.value = '';
 };

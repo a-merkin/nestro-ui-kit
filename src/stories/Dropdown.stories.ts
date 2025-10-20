@@ -12,6 +12,8 @@ const meta = {
     placeholder: { control: 'text', description: 'Текст подсказки' },
     disabled: { control: 'boolean', description: 'Отключен ли дропдаун' },
     searchable: { control: 'boolean', description: 'Включить поиск в основном поле ввода' },
+    valueKey: { control: 'text', description: 'Ключ для значения опции' },
+    labelKey: { control: 'text', description: 'Ключ для отображаемого текста опции' },
   },
 } satisfies Meta<typeof Dropdown>;
 
@@ -22,6 +24,13 @@ const defaultOptions = [
   { value: '1', label: 'Опция 1' },
   { value: '2', label: 'Опция 2' },
   { value: '3', label: 'Опция 3' },
+];
+
+const customKeyOptions = [
+  { id: 'user_1', name: 'Иван Иванов', email: 'ivan@example.com' },
+  { id: 'user_2', name: 'Петр Петров', email: 'petr@example.com' },
+  { id: 'user_3', name: 'Мария Сидорова', email: 'maria@example.com' },
+  { id: 'user_4', name: 'Анна Козлова', email: 'anna@example.com' },
 ];
 
 const renderTemplate = (args: any) => ({
@@ -88,6 +97,19 @@ export const Clearable: Story = {
     options: defaultOptions,
     clearable: true,
     placeholder: 'Выберите значение',
+  },
+  render: renderTemplate,
+};
+
+export const CustomValueLabelKeys: Story = {
+  name: 'С кастомными ключами',
+  args: {
+    modelValue: null,
+    options: customKeyOptions,
+    valueKey: 'id',
+    labelKey: 'name',
+    placeholder: 'Выберите пользователя',
+    clearable: true,
   },
   render: renderTemplate,
 };
