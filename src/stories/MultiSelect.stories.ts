@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import MultiSelect from '../components/MultiSelect.vue';
 
 const options = [
-  { id: 1, name: 'Дебит нефти' },
-  { id: 2, name: 'Дебит газа' },
-  { id: 3, name: 'Дебит воды' },
-  { id: 4, name: 'Давление' },
-  { id: 5, name: 'Температура' },
-  { id: 6, name: 'Объем' },
-  { id: 7, name: 'Скорость' },
-  { id: 8, name: 'Вязкость' },
-  { id: 9, name: 'Плотность' },
+  { value: 1, label: 'Дебит нефти' },
+  { value: 2, label: 'Дебит газа' },
+  { value: 3, label: 'Дебит воды' },
+  { value: 4, label: 'Давление' },
+  { value: 5, label: 'Температура' },
+  { value: 6, label: 'Объем' },
+  { value: 7, label: 'Скорость' },
+  { value: 8, label: 'Вязкость' },
+  { value: 9, label: 'Плотность' },
 ];
 
 const meta = {
@@ -72,17 +72,17 @@ export const SearchWithManyOptions: Story = {
   args: {
     options: [
       ...options,
-      { id: 10, name: 'Концентрация' },
-      { id: 11, name: 'Проводимость' },
-      { id: 12, name: 'Сопротивление' },
-      { id: 13, name: 'Мощность' },
-      { id: 14, name: 'Энергия' },
-      { id: 15, name: 'Частота' },
-      { id: 16, name: 'Ускорение' },
-      { id: 17, name: 'Сила' },
-      { id: 18, name: 'Момент' },
-      { id: 19, name: 'Работа' },
-      { id: 20, name: 'Теплоемкость' },
+      { value: 10, label: 'Концентрация' },
+      { value: 11, label: 'Проводимость' },
+      { value: 12, label: 'Сопротивление' },
+      { value: 13, label: 'Мощность' },
+      { value: 14, label: 'Энергия' },
+      { value: 15, label: 'Частота' },
+      { value: 16, label: 'Ускорение' },
+      { value: 17, label: 'Сила' },
+      { value: 18, label: 'Момент' },
+      { value: 19, label: 'Работа' },
+      { value: 20, label: 'Теплоемкость' },
     ],
     modelValue: [1, 5, 10, 15],
     searchable: true,

@@ -1,10 +1,10 @@
 <template>
   <div class="figma-card" @click="handleCardClick">
     <div class="chips-container" ref="chipsRef">
-      <template v-for="item in selectedItems" :key="item.id">
+      <template v-for="item in selectedItems" :key="item.value">
         <div class="chip">
-          <span class="chip-close" @click.stop="removeSelected(item.id)">×</span>
-          <span class="chip-text">{{ item.name }}</span>
+          <span class="chip-close" @click.stop="removeSelected(item.value)">×</span>
+          <span class="chip-text">{{ item.label }}</span>
         </div>
       </template>
       <input
@@ -31,9 +31,9 @@
     </div>
     <div v-if="isDropdownOpen" class="dropdown-list" ref="dropdownRef">
       <div class="dropdown-chips">
-        <label v-for="item in filteredOptions" :key="item.id" class="dropdown-chip">
-          <input type="checkbox" :checked="modelValue.includes(item.id)" @change="toggleSelect(item.id)" />
-          <span>{{ item.name }}</span>
+        <label v-for="item in filteredOptions" :key="item.value" class="dropdown-chip">
+          <input type="checkbox" :checked="modelValue.includes(item.value)" @change="toggleSelect(item.value)" />
+          <span>{{ item.label }}</span>
         </label>
         <div v-if="filteredOptions.length === 0" class="no-results">
           Ничего не найдено
@@ -47,8 +47,8 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 interface OptionItem {
-  id: string | number;
-  name: string;
+  value: string | number;
+  label: string;
 }
 
 interface Props {
@@ -71,7 +71,7 @@ const isDropdownOpen = ref(false);
 const searchQuery = ref('');
 
 const selectedItems = computed(() =>
-  props.options.filter(item => props.modelValue.includes(item.id))
+  props.options.filter(item => props.modelValue.includes(item.value))
 );
 
 const filteredOptions = computed(() => {
@@ -80,19 +80,19 @@ const filteredOptions = computed(() => {
   }
   const query = searchQuery.value.toLowerCase();
   return props.options.filter(item => 
-    item.name.toLowerCase().includes(query)
+    item.label.toLowerCase().includes(query)
   );
 });
 
-function toggleSelect(id: string | number) {
-  const newValue = props.modelValue.includes(id)
-    ? props.modelValue.filter(val => val !== id)
-    : [...props.modelValue, id];
+function toggleSelect(value: string | number) {
+  const newValue = props.modelValue.includes(value)
+    ? props.modelValue.filter(val => val !== value)
+    : [...props.modelValue, value];
   emit('update:modelValue', newValue);
 }
 
-function removeSelected(id: string | number) {
-  const newValue = props.modelValue.filter(val => val !== id);
+function removeSelected(value: string | number) {
+  const newValue = props.modelValue.filter(val => val !== value);
   emit('update:modelValue', newValue);
 }
 
