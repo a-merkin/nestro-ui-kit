@@ -34,7 +34,7 @@ interface Props {
   title: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const isOpen = ref(true);
 
