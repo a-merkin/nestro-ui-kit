@@ -186,6 +186,7 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   max-width: 320px;
+  box-sizing: border-box;
 
   &__trigger {
     display: flex;
@@ -203,6 +204,7 @@ onUnmounted(() => {
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(31, 41, 55, 0.06);
+    box-sizing: border-box;
 
     &--disabled {
       background: #f3f4f6;
