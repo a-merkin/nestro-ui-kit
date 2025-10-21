@@ -10,7 +10,6 @@
         class="dropdown__search"
         :class="searchFieldClasses"
         :disabled="disabled"
-        @focus="openDropdown"
         @input="onSearchInput"
       />
       <span v-else class="dropdown__selected" :class="selectedClasses">
@@ -131,15 +130,10 @@ const getItemClasses = (option: any) => ({
   'dropdown__item--selected': props.modelValue === getOptionValue(option),
 });
 
-const openDropdown = () => {
-  if (!props.disabled) {
-    isOpen.value = true;
-  }
-};
-
 const handleTriggerClick = () => {
   if (props.searchable && searchInputRef.value) {
     searchInputRef.value.focus();
+    isOpen.value = !isOpen.value;
   } else if (!props.disabled) {
     isOpen.value = !isOpen.value;
   }
