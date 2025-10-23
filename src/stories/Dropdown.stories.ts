@@ -124,3 +124,14 @@ export const Loading: Story = {
   },
   render: renderTemplate,
 };
+
+export const WithLabel: Story = {
+  name: 'With Label',
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    placeholder: 'Выберите значение',
+    label: 'Выбор опции',
+  },
+  render: renderTemplate,
+};

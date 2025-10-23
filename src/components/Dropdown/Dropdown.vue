@@ -1,5 +1,6 @@
 <template>
   <div class="dropdown" :class="dropdownClasses">
+    <label v-if="label" class="dropdown__label text-h2">{{ label }}</label>
     <div class="dropdown__trigger" :class="triggerClasses" @click="handleTriggerClick">
       <input
         v-if="searchable"
@@ -67,6 +68,7 @@ interface Props {
   valueKey?: string;
   labelKey?: string;
   loading?: boolean;
+  label?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -94,7 +96,7 @@ const dropdownClasses = computed(() => ({
 }));
 
 const triggerClasses = computed(() => ({
-  'dropdown__trigger--disabled': isDisabled,
+  'dropdown__trigger--disabled': isDisabled.value,
 }));
 
 const searchFieldClasses = computed(() => ({
@@ -202,6 +204,20 @@ onUnmounted(() => {
   width: 100%;
   max-width: 320px;
   box-sizing: border-box;
+
+  &__label {
+    display: block;
+    max-width: 100%;
+    color: var(--color-text-tertiary, #464e56);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.219;
+    margin-bottom: 8px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &__trigger {
     display: flex;
