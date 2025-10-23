@@ -77,6 +77,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number | null): void;
+  (e: 'change', value: string | number | null): void;
   (e: 'clear'): void;
 }>();
 
@@ -146,7 +147,9 @@ const onSearchInput = () => {
 };
 
 const selectOption = (option: any) => {
-  emit('update:modelValue', getOptionValue(option));
+  const value = getOptionValue(option);
+  emit('update:modelValue', value);
+  emit('change', value);
   isOpen.value = false;
   searchQuery.value = '';
 };
@@ -154,6 +157,7 @@ const selectOption = (option: any) => {
 const handleClear = () => {
   if (!props.disabled) {
     emit('update:modelValue', null);
+    emit('change', null);
     emit('clear');
     searchQuery.value = '';
 
