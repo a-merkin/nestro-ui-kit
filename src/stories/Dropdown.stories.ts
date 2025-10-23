@@ -113,3 +113,14 @@ export const CustomValueLabelKeys: Story = {
   },
   render: renderTemplate,
 };
+
+export const Loading: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    placeholder: 'Загрузка...',
+    loading: true,
+    disabled: true,
+  },
+  render: renderTemplate,
+};

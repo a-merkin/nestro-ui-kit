@@ -9,7 +9,7 @@
         :placeholder="selectedLabel"
         class="dropdown__search"
         :class="searchFieldClasses"
-        :disabled="disabled"
+        :disabled="isDisabled"
         @input="onSearchInput"
       />
       <span v-else class="dropdown__selected" :class="selectedClasses">
@@ -26,7 +26,8 @@
           <CloseIcon />
         </button>
         <span class="dropdown__arrow">
-          <ArrowIcon />
+          <ArrowIcon v-if="!props.loading" />
+          <LoadingIcon v-else />
         </span>
       </div>
     </div>
@@ -54,6 +55,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import CloseIcon from './CloseIcon.vue';
 import ArrowIcon from './ArrowIcon.vue';
+import LoadingIcon from './LoadingIcon.vue';
 
 interface Props {
   modelValue: string | number | null;
@@ -64,6 +66,7 @@ interface Props {
   clearable?: boolean;
   valueKey?: string;
   labelKey?: string;
+  loading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -73,6 +76,7 @@ const props = withDefaults(defineProps<Props>(), {
   clearable: false,
   valueKey: 'value',
   labelKey: 'label',
+  loading: false,
 });
 
 const emit = defineEmits<{
@@ -90,7 +94,7 @@ const dropdownClasses = computed(() => ({
 }));
 
 const triggerClasses = computed(() => ({
-  'dropdown__trigger--disabled': props.disabled,
+  'dropdown__trigger--disabled': isDisabled,
 }));
 
 const searchFieldClasses = computed(() => ({
@@ -105,7 +109,10 @@ const hasSelectedValue = computed(() => {
   return props.options.some((option) => getOptionValue(option) === props.modelValue);
 });
 
+const isDisabled = computed(() => props.disabled || props.loading);
+
 const selectedLabel = computed(() => {
+  if (props.loading) return 'Загрузка...';
   const selected = props.options.find((option) => getOptionValue(option) === props.modelValue);
   return selected ? getOptionLabel(selected) : props.placeholder;
 });
@@ -132,12 +139,16 @@ const getItemClasses = (option: any) => ({
 });
 
 const handleTriggerClick = () => {
+  if (isDisabled.value) {
+    return;
+  }
+
   if (props.searchable && searchInputRef.value) {
     searchInputRef.value.focus();
     isOpen.value = !isOpen.value;
-  } else if (!props.disabled) {
-    isOpen.value = !isOpen.value;
+    return;
   }
+  isOpen.value = !isOpen.value;
 };
 
 const onSearchInput = () => {
@@ -155,7 +166,7 @@ const selectOption = (option: any) => {
 };
 
 const handleClear = () => {
-  if (!props.disabled) {
+  if (!isDisabled.value) {
     emit('update:modelValue', null);
     emit('change', null);
     emit('clear');
@@ -392,6 +403,10 @@ onUnmounted(() => {
       }
     }
   }
+
+  &__loader {
+    animation: spin 1s linear infinite;
+  }
 }
 
 @keyframes dropdown-fade-in {
@@ -402,6 +417,15 @@ onUnmounted(() => {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>
