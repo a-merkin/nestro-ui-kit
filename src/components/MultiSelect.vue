@@ -261,14 +261,6 @@ onBeforeUnmount(() => {
     }
   }
 
-  &__arrow-icon {
-    transition: transform 0.2s;
-
-    &--rotated {
-      transform: rotate(180deg);
-    }
-  }
-
   &__dropdown {
     position: absolute;
     top: calc(100% + 8px);
