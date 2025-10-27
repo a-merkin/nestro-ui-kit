@@ -31,8 +31,8 @@
     </div>
     <div v-if="isDropdownOpen" class="dropdown-list" ref="dropdownRef">
       <div class="dropdown-chips">
-        <label v-for="item in filteredOptions" :key="item.value" class="dropdown-chip">
-          <input type="checkbox" :checked="modelValue.includes(item.value)" @change="toggleSelect(item.value)" />
+        <label v-for="item in filteredOptions" :key="item.value" class="dropdown-chip" @click.stop>
+          <input type="checkbox" :checked="localSelectedValues.includes(item.value)" @change="toggleSelect(item.value)" />
           <span>{{ item.label }}</span>
         </label>
         <div v-if="filteredOptions.length === 0" class="no-results">
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 
 interface OptionItem {
   value: string | number;
@@ -70,9 +70,17 @@ const searchInputRef = ref<HTMLInputElement | null>(null);
 const isDropdownOpen = ref(false);
 const searchQuery = ref('');
 
-const selectedItems = computed(() =>
-  props.options.filter(item => props.modelValue.includes(item.value))
-);
+// Локальное состояние для отслеживания выбранных значений
+const localSelectedValues = ref<Array<string | number>>([]);
+
+// Синхронизация локального состояния с пропсами
+watch(() => props.modelValue, (newValue) => {
+  localSelectedValues.value = [...newValue];
+}, { immediate: true });
+
+const selectedItems = computed(() => {
+  return props.options.filter(item => localSelectedValues.value.includes(item.value));
+});
 
 const filteredOptions = computed(() => {
   if (!props.searchable || !searchQuery.value.trim()) {
@@ -85,14 +93,17 @@ const filteredOptions = computed(() => {
 });
 
 function toggleSelect(value: string | number) {
-  const newValue = props.modelValue.includes(value)
-    ? props.modelValue.filter(val => val !== value)
-    : [...props.modelValue, value];
+  const newValue = localSelectedValues.value.includes(value)
+    ? localSelectedValues.value.filter(val => val !== value)
+    : [...localSelectedValues.value, value];
+    
+  localSelectedValues.value = newValue;
   emit('update:modelValue', newValue);
 }
 
 function removeSelected(value: string | number) {
-  const newValue = props.modelValue.filter(val => val !== value);
+  const newValue = localSelectedValues.value.filter(val => val !== value);
+  localSelectedValues.value = newValue;
   emit('update:modelValue', newValue);
 }
 
@@ -123,12 +134,8 @@ function onSearchInput() {
 }
 
 function handleClickOutside(event: MouseEvent) {
-  if (
-    dropdownRef.value &&
-    !dropdownRef.value.contains(event.target as Node) &&
-    !chipsRef.value?.contains(event.target as Node) &&
-    !arrowRef.value?.contains(event.target as Node)
-  ) {
+  const target = event.target as HTMLElement;
+  if (!target.closest('.figma-card')) {
     isDropdownOpen.value = false;
     searchQuery.value = '';
   }
