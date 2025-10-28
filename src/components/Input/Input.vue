@@ -9,6 +9,7 @@
         :type="type"
         :value="modelValue"
         @input="handleInput"
+        @change="handleChange"
         @focus="handleFocus"
         @blur="handleBlur"
         :placeholder="placeholder"
@@ -49,6 +50,7 @@ const { type, disabled, error, required } = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
+  (e: 'change', value: string): void;
 }>();
 
 const slots = useSlots();
@@ -56,6 +58,11 @@ const slots = useSlots();
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   emit('update:modelValue', target.value);
+};
+
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  emit('change', target.value);
 };
 
 const handleFocus = () => {
