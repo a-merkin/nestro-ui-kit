@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 import SegmentedControl from './components/SegmentedControl/SegmentedControl.vue';
+import RadioGroup from './components/RadioGroup/RadioGroup.vue';
 import type { SegmentedControlOption } from './components/SegmentedControl/SegmentedControl.vue';
+import type { RadioGroupOption } from './components/RadioGroup/RadioGroup.vue';
 
 const periodOptions: SegmentedControlOption[] = [
   { label: 'День', value: 'day' },
@@ -18,6 +20,14 @@ const viewOptions: SegmentedControlOption[] = [
 ];
 
 const selectedView = ref('list');
+
+const radioOptions: RadioGroupOption[] = [
+  { label: 'Вариант 1', value: 'option1' },
+  { label: 'Вариант 2', value: 'option2' },
+  { label: 'Вариант 3', value: 'option3' },
+];
+
+const selectedRadio = ref('option1');
 </script>
 
 <template>
@@ -31,10 +41,11 @@ const selectedView = ref('list');
   </div>
   <HelloWorld msg="Vite + Vue" />
   
-  <div class="segmented-demo">
-    <h3>Демонстрация SegmentedControl</h3>
+  <div class="components-demo">
+    <h3>Демонстрация компонентов</h3>
     
     <div class="demo-section">
+      <h4>SegmentedControl</h4>
       <label>Выберите период:</label>
       <SegmentedControl 
         v-model="selectedPeriod" 
@@ -53,12 +64,14 @@ const selectedView = ref('list');
     </div>
     
     <div class="demo-section">
-      <label>Отключенный контрол:</label>
-      <SegmentedControl 
-        v-model="selectedPeriod" 
-        :options="periodOptions" 
-        :disabled="true"
+      <h4>RadioGroup</h4>
+      <RadioGroup
+        v-model="selectedRadio"
+        :options="radioOptions"
+        label="Выберите вариант"
+        direction="vertical"
       />
+      <p>Выбрано: <strong>{{ selectedRadio }}</strong></p>
     </div>
   </div>
 </template>
@@ -77,7 +90,7 @@ const selectedView = ref('list');
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 
-.segmented-demo {
+.components-demo {
   margin-top: 40px;
   padding: 20px;
   max-width: 600px;
@@ -85,9 +98,16 @@ const selectedView = ref('list');
   margin-right: auto;
 }
 
-.segmented-demo h3 {
+.components-demo h3 {
   margin-bottom: 24px;
   color: #000;
+}
+
+.components-demo h4 {
+  margin-bottom: 16px;
+  margin-top: 24px;
+  color: #0F9D3B;
+  font-size: 18px;
 }
 
 .demo-section {
