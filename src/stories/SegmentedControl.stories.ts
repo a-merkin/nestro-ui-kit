@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import SegmentedControl from '../components/SegmentedControl/SegmentedControl.vue';
 import type { SegmentedControlOption } from '../components/SegmentedControl/SegmentedControl.vue';
 
@@ -20,12 +20,6 @@ const meta = {
       control: 'boolean',
       description: 'Отключить компонент',
     },
-    'update:modelValue': {
-      action: 'update:modelValue',
-    },
-    change: {
-      action: 'change',
-    },
   },
 } satisfies Meta<typeof SegmentedControl>;
 
@@ -44,36 +38,23 @@ export const Default: Story = {
     modelValue: 'month',
     disabled: false,
   },
-  render: (args) => ({
+  render: (args: any) => ({
     components: { SegmentedControl },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
 
       const handleChange = (val: string | number) => {
         console.log('Выбрано:', val);
       };
 
-      // Исключаем modelValue из args для избежания конфликта с v-model
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value, handleChange };
+      return { args, value, handleChange };
     },
     template: `
       <div>
         <SegmentedControl 
           v-model="value"
-          v-bind="restArgs"
+          :options="args.options"
+          :disabled="args.disabled"
           @change="handleChange"
         />
         <p style="margin-top: 16px;">Выбранное значение: <strong>{{ value }}</strong></p>
@@ -91,30 +72,17 @@ export const TwoOptions: Story = {
     modelValue: 'list',
     disabled: false,
   },
-  render: (args) => ({
+  render: (args: any) => ({
     components: { SegmentedControl },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
-
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value };
+      return { args, value };
     },
     template: `
       <SegmentedControl 
         v-model="value"
-        v-bind="restArgs"
+        :options="args.options"
+        :disabled="args.disabled"
       />
     `,
   }),
@@ -131,30 +99,17 @@ export const FourOptions: Story = {
     modelValue: 'all',
     disabled: false,
   },
-  render: (args) => ({
+  render: (args: any) => ({
     components: { SegmentedControl },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
-
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value };
+      return { args, value };
     },
     template: `
       <SegmentedControl 
         v-model="value"
-        v-bind="restArgs"
+        :options="args.options"
+        :disabled="args.disabled"
       />
     `,
   }),
@@ -170,31 +125,18 @@ export const WithNumbers: Story = {
     modelValue: 1,
     disabled: false,
   },
-  render: (args) => ({
+  render: (args: any) => ({
     components: { SegmentedControl },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
-
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value };
+      return { args, value };
     },
     template: `
       <div>
         <SegmentedControl 
           v-model="value"
-          v-bind="restArgs"
+          :options="args.options"
+          :disabled="args.disabled"
         />
         <p style="margin-top: 16px;">Выбрано: <strong>{{ value }} {{ value === 1 ? 'год' : value < 5 ? 'года' : 'лет' }}</strong></p>
       </div>
@@ -220,30 +162,17 @@ export const LongLabels: Story = {
     modelValue: 'option1',
     disabled: false,
   },
-  render: (args) => ({
+  render: (args: any) => ({
     components: { SegmentedControl },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
-
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value };
+      return { args, value };
     },
     template: `
       <SegmentedControl 
         v-model="value"
-        v-bind="restArgs"
+        :options="args.options"
+        :disabled="args.disabled"
       />
     `,
   }),

@@ -78,6 +78,9 @@ export const WithoutLabel: Story = {
 };
 
 export const Group: Story = {
+  args: {
+    value: 'option1',
+  },
   render: () => ({
     components: { RadioButton },
     setup() {

@@ -1,20 +1,20 @@
 <!-- RadioGroup.vue -->
 <template>
-  <div class="radio-group" :class="{ 'radio-group--horizontal': direction === 'horizontal' }">
-    <label v-if="label" class="radio-group__title">{{ label }}</label>
+  <div class="radio-group" :class="{ 'radio-group--horizontal': props.direction === 'horizontal' }">
+    <label v-if="props.label" class="radio-group__title">{{ props.label }}</label>
     <div class="radio-group__items">
       <label
-        v-for="option in options"
+        v-for="option in props.options"
         :key="option.value"
         class="radio-group__item"
-        :class="{ 'radio-group__item--disabled': disabled }"
+        :class="{ 'radio-group__item--disabled': props.disabled }"
       >
         <input
           type="radio"
           :value="option.value"
-          :checked="option.value === modelValue"
-          :disabled="disabled"
-          :name="name"
+          :checked="option.value === props.modelValue"
+          :disabled="props.disabled"
+          :name="groupName"
           class="radio-group__input"
           @change="handleChange(option.value)"
         />
@@ -26,6 +26,9 @@
 </template>
 
 <script setup lang="ts">
+let uniqueId = 0;
+const generateId = () => `radio-group-${++uniqueId}-${Date.now()}`;
+
 export interface RadioGroupOption {
   label: string;
   value: string | number;
@@ -40,12 +43,15 @@ interface Props {
   direction?: 'vertical' | 'horizontal';
 }
 
-const { modelValue, options, name, label, disabled, direction } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   name: '',
   label: '',
   disabled: false,
   direction: 'vertical',
 });
+
+// Генерируем уникальное имя для группы, если не задано
+const groupName = props.name || generateId();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void;
@@ -53,7 +59,7 @@ const emit = defineEmits<{
 }>();
 
 const handleChange = (value: string | number) => {
-  if (!disabled) {
+  if (!props.disabled) {
     emit('update:modelValue', value);
     emit('change', value);
   }

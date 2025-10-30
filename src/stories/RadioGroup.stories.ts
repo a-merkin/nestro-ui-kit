@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import RadioGroup from '../components/RadioGroup/RadioGroup.vue';
 import type { RadioGroupOption } from '../components/RadioGroup/RadioGroup.vue';
 
@@ -50,25 +50,18 @@ export const Default: Story = {
     components: { RadioGroup },
     setup() {
       const value = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (newVal) => {
-          value.value = newVal;
-        }
-      );
-
-      watch(value, (newVal) => {
-        args.modelValue = newVal;
-      });
-
-      const { modelValue, ...restArgs } = args;
-
-      return { restArgs, value };
+      return { args, value };
     },
     template: `
       <div>
-        <RadioGroup v-model="value" v-bind="restArgs" />
+        <RadioGroup 
+          v-model="value"
+          :options="args.options"
+          :label="args.label"
+          :disabled="args.disabled"
+          :direction="args.direction"
+          :name="args.name"
+        />
         <p style="margin-top: 16px;">Выбрано: <strong>{{ value }}</strong></p>
       </div>
     `,
@@ -86,12 +79,18 @@ export const WithoutLabel: Story = {
     components: { RadioGroup },
     setup() {
       const value = ref(args.modelValue);
-      watch(() => args.modelValue, (newVal) => (value.value = newVal));
-      watch(value, (newVal) => (args.modelValue = newVal));
-      const { modelValue, ...restArgs } = args;
-      return { restArgs, value };
+      return { args, value };
     },
-    template: `<RadioGroup v-model="value" v-bind="restArgs" />`,
+    template: `
+      <RadioGroup 
+        v-model="value"
+        :options="args.options"
+        :label="args.label"
+        :disabled="args.disabled"
+        :direction="args.direction"
+        :name="args.name"
+      />
+    `,
   }),
 };
 
@@ -107,12 +106,18 @@ export const Horizontal: Story = {
     components: { RadioGroup },
     setup() {
       const value = ref(args.modelValue);
-      watch(() => args.modelValue, (newVal) => (value.value = newVal));
-      watch(value, (newVal) => (args.modelValue = newVal));
-      const { modelValue, ...restArgs } = args;
-      return { restArgs, value };
+      return { args, value };
     },
-    template: `<RadioGroup v-model="value" v-bind="restArgs" />`,
+    template: `
+      <RadioGroup 
+        v-model="value"
+        :options="args.options"
+        :label="args.label"
+        :disabled="args.disabled"
+        :direction="args.direction"
+        :name="args.name"
+      />
+    `,
   }),
 };
 
@@ -128,12 +133,18 @@ export const Discretization: Story = {
     components: { RadioGroup },
     setup() {
       const value = ref(args.modelValue);
-      watch(() => args.modelValue, (newVal) => (value.value = newVal));
-      watch(value, (newVal) => (args.modelValue = newVal));
-      const { modelValue, ...restArgs } = args;
-      return { restArgs, value };
+      return { args, value };
     },
-    template: `<RadioGroup v-model="value" v-bind="restArgs" />`,
+    template: `
+      <RadioGroup 
+        v-model="value"
+        :options="args.options"
+        :label="args.label"
+        :disabled="args.disabled"
+        :direction="args.direction"
+        :name="args.name"
+      />
+    `,
   }),
 };
 
@@ -149,11 +160,17 @@ export const Disabled: Story = {
     components: { RadioGroup },
     setup() {
       const value = ref(args.modelValue);
-      watch(() => args.modelValue, (newVal) => (value.value = newVal));
-      watch(value, (newVal) => (args.modelValue = newVal));
-      const { modelValue, ...restArgs } = args;
-      return { restArgs, value };
+      return { args, value };
     },
-    template: `<RadioGroup v-model="value" v-bind="restArgs" />`,
+    template: `
+      <RadioGroup 
+        v-model="value"
+        :options="args.options"
+        :label="args.label"
+        :disabled="args.disabled"
+        :direction="args.direction"
+        :name="args.name"
+      />
+    `,
   }),
 };
