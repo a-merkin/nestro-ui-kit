@@ -15,3 +15,7 @@ export { default as Workplace } from './components/Workplace.vue';
 export { default as ColorPalette } from './components/ColorPalette.vue';
 export { default as MultiSelect } from './components/MultiSelect.vue';
 export { default as CurrentScenario } from './components/CurrentScenario.vue';
+export { default as SegmentedControl } from './components/SegmentedControl/SegmentedControl.vue';
+
+// Types
+export type { SegmentedControlOption } from './components/SegmentedControl/SegmentedControl.vue';
