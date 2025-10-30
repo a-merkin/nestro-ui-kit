@@ -106,6 +106,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void;
   (e: 'update:modelValue', value: MaybeDate[]): void;
+  (e: 'change', value: number | MaybeDate[]): void;
 }>();
 
 const trackContainer = ref<HTMLElement>();
@@ -228,6 +229,7 @@ const startDragSingle = (event: MouseEvent) => {
   draggingThumb.value = 'right'; // reuse
   document.addEventListener('mousemove', onMouseMoveSingle);
   document.addEventListener('mouseup', stopDragSingle);
+  emit('change', singleValue.value);
   onMouseMoveSingle(event);
 };
 
@@ -261,6 +263,12 @@ const stopDrag = () => {
   draggingThumb.value = null;
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', stopDrag);
+
+  if (isRangeMode.value && props.values) {
+    const from = props.values[leftIndex.value];
+    const to = props.values[rightIndex.value];
+    emit('change', [from, to]);
+  }
 };
 
 const stopDragSingle = () => {
@@ -285,6 +293,7 @@ const onTrackMouseDown = (event: MouseEvent) => {
       rightIndex.value = Math.max(clickIndex, leftIndex.value);
     }
     emitRange();
+    emit('change', [props.values![leftIndex.value], props.values![rightIndex.value]]);
   } else {
     startDragSingle(event);
   }
