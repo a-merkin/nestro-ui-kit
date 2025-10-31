@@ -229,7 +229,6 @@ const startDragSingle = (event: MouseEvent) => {
   draggingThumb.value = 'right'; // reuse
   document.addEventListener('mousemove', onMouseMoveSingle);
   document.addEventListener('mouseup', stopDragSingle);
-  emit('change', singleValue.value);
   onMouseMoveSingle(event);
 };
 
@@ -276,6 +275,7 @@ const stopDragSingle = () => {
   draggingThumb.value = null;
   document.removeEventListener('mousemove', onMouseMoveSingle);
   document.removeEventListener('mouseup', stopDragSingle);
+  emit('change', singleValue.value);
 };
 
 // Click on track – jump nearest thumb
