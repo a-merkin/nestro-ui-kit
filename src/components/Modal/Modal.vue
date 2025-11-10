@@ -1,5 +1,5 @@
 <template>
-  <component :is="teleport ? 'teleport' : 'div'" :to="teleport ? 'body' : undefined">
+  <Teleport v-if="teleport" to="body">
     <Transition name="modal-zoom">
       <div v-if="modelValue" class="modal" tabindex="0" @click.self="close" @keydown.esc="close">
         <div class="modal__dialog" role="dialog" aria-modal="true">
@@ -25,7 +25,7 @@
         </div>
       </div>
     </Transition>
-  </component>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
