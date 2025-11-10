@@ -3,13 +3,13 @@
   <label class="checkbox">
     <input
       type="checkbox"
-      :checked="modelValue"
+      :checked="isChecked"
       @change="handleChange"
-      :disabled="disabled"
+      :disabled="props.disabled"
       class="checkbox__input"
     />
     <span class="checkbox__box">
-      <svg v-if="modelValue" class="checkbox__icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg v-if="isChecked" class="checkbox__icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.6667 3.5L5.25 9.91667L2.33333 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </span>
@@ -20,22 +20,57 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface Props {
-  modelValue: boolean;
+  modelValue: boolean | any[];
+  value?: any;
   disabled?: boolean;
 }
 
-const { modelValue, disabled } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   disabled: false,
+  value: undefined,
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
+  (e: 'update:modelValue', value: boolean | any[]): void;
 }>();
+
+// Определяем, работаем ли мы с массивом
+const isArray = computed(() => Array.isArray(props.modelValue));
+
+// Вычисляем состояние чекбокса
+const isChecked = computed(() => {
+  if (isArray.value && props.value !== undefined) {
+    return (props.modelValue as any[]).includes(props.value);
+  }
+  return props.modelValue as boolean;
+});
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.checked);
+  
+  if (isArray.value && props.value !== undefined) {
+    // Режим массива
+    const newValue = [...(props.modelValue as any[])];
+    if (target.checked) {
+      // Добавляем значение, если его еще нет
+      if (!newValue.includes(props.value)) {
+        newValue.push(props.value);
+      }
+    } else {
+      // Удаляем значение
+      const index = newValue.indexOf(props.value);
+      if (index > -1) {
+        newValue.splice(index, 1);
+      }
+    }
+    emit('update:modelValue', newValue);
+  } else {
+    // Режим boolean
+    emit('update:modelValue', target.checked);
+  }
 };
 </script>
 

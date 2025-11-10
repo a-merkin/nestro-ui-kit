@@ -64,6 +64,109 @@ const handleClick = () => {
 </script>
 ```
 
+## 💡 Примеры использования компонентов
+
+### Checkbox
+
+Компонент Checkbox поддерживает два режима работы: **boolean** (одиночный чекбокс) и **array** (группа чекбоксов с массивом значений).
+
+#### Boolean режим
+
+Для простых случаев "да/нет":
+
+```vue
+<template>
+  <Checkbox v-model="agreed">
+    Я согласен с условиями использования
+  </Checkbox>
+  <p>Значение: {{ agreed }}</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Checkbox } from 'nestro-ui-kit'
+
+const agreed = ref(false)
+</script>
+```
+
+#### Array режим
+
+Для выбора нескольких элементов из списка. Чекбокс автоматически определяет режим работы по типу `v-model`:
+
+```vue
+<template>
+  <div>
+    <h3>Выберите фрукты:</h3>
+    <Checkbox v-model="selectedFruits" value="apple">Яблоко</Checkbox>
+    <Checkbox v-model="selectedFruits" value="banana">Банан</Checkbox>
+    <Checkbox v-model="selectedFruits" value="orange">Апельсин</Checkbox>
+    <Checkbox v-model="selectedFruits" value="grape">Виноград</Checkbox>
+    
+    <p>Выбрано: {{ selectedFruits }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Checkbox } from 'nestro-ui-kit'
+
+const selectedFruits = ref<string[]>(['apple']) // Начальное значение
+</script>
+```
+
+#### Array режим с объектами
+
+Можно использовать любые значения (строки, числа, объекты):
+
+```vue
+<template>
+  <div>
+    <h3>Выберите пользователей:</h3>
+    <Checkbox 
+      v-for="user in users" 
+      :key="user.id"
+      v-model="selectedUserIds" 
+      :value="user.id"
+    >
+      {{ user.name }}
+    </Checkbox>
+    
+    <p>Выбраны ID: {{ selectedUserIds }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Checkbox } from 'nestro-ui-kit'
+
+const selectedUserIds = ref<number[]>([1, 3])
+
+const users = [
+  { id: 1, name: 'Иван Иванов' },
+  { id: 2, name: 'Петр Петров' },
+  { id: 3, name: 'Мария Сидорова' },
+  { id: 4, name: 'Анна Кузнецова' },
+]
+</script>
+```
+
+#### Props
+
+| Prop | Тип | По умолчанию | Описание |
+|------|-----|--------------|----------|
+| `modelValue` | `boolean \| any[]` | - | Значение чекбокса (обязательный) |
+| `value` | `any` | `undefined` | Значение для режима массива (опционально) |
+| `disabled` | `boolean` | `false` | Отключить чекбокс |
+
+#### Как это работает
+
+- Если `modelValue` — **boolean**, чекбокс работает в обычном режиме (включен/выключен)
+- Если `modelValue` — **массив** и указан проп `value`, чекбокс работает в режиме массива:
+  - При включении: `value` добавляется в массив
+  - При выключении: `value` удаляется из массива
+  - Чекбокс отмечен, если `value` присутствует в массиве
+
 ## 📚 Компоненты
 
 Библиотека включает следующие компоненты:
@@ -72,7 +175,7 @@ const handleClick = () => {
 
 - **Button** - Кнопка с различными вариантами стилей
 - **Input** - Поле ввода с поддержкой иконок
-- **Checkbox** - Чекбокс с кастомным дизайном
+- **Checkbox** - Чекбокс с кастомным дизайном (поддержка boolean и массивов)
 - **Switch** - Переключатель
 - **RadioButton** - Радио-кнопка
 - **RadioGroup** - Группа радио-кнопок
