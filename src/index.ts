@@ -18,6 +18,8 @@ export { default as CurrentScenario } from './components/CurrentScenario.vue';
 export { default as SegmentedControl } from './components/SegmentedControl/SegmentedControl.vue';
 export { default as RadioButton } from './components/RadioButton/RadioButton.vue';
 export { default as RadioGroup } from './components/RadioGroup/RadioGroup.vue';
+export { default as SectionWrapper } from './components/SectionWrapper/SectionWrapper.vue';
+export { default as Modal } from './components/Modal/Modal.vue';
 
 // Types
 export type { SegmentedControlOption } from './components/SegmentedControl/SegmentedControl.vue';
