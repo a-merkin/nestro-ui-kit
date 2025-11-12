@@ -26,8 +26,7 @@
 </template>
 
 <script setup lang="ts">
-let uniqueId = 0;
-const generateId = () => `radio-group-${++uniqueId}-${Date.now()}`;
+import { computed, getCurrentInstance } from 'vue';
 
 export interface RadioGroupOption {
   label: string;
@@ -50,8 +49,9 @@ const props = withDefaults(defineProps<Props>(), {
   direction: 'vertical',
 });
 
-// Генерируем уникальное имя для группы, если не задано
-const groupName = props.name || generateId();
+const instance = getCurrentInstance();
+const defaultGroupName = `radio-group-${instance?.uid ?? Math.random().toString(36).slice(2)}`;
+const groupName = computed(() => props.name || defaultGroupName);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void;
@@ -153,7 +153,6 @@ const handleChange = (value: string | number) => {
 
 .radio-group__label {
   color: #000000;
-  font-size: 14px;
   line-height: 1.4;
 }
 

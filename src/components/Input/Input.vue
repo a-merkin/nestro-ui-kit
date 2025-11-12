@@ -115,6 +115,9 @@ const inputStyles = computed(() => {
   border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
   background: rgba(182, 199, 207, 0.15);
   color: var(--color-text-primary);
+  font-family: var(--font-family-base, 'Montserrat', sans-serif);
+  font-size: 16px;
+  font-weight: 400;
   transition: all 0.3s ease;
   outline: none;
 }
@@ -198,5 +201,8 @@ const inputStyles = computed(() => {
 .input[type="date"]::-webkit-datetime-edit-day-field,
 .input[type="date"]::-webkit-datetime-edit-year-field {
   padding: 0 2px;
+  font-family: var(--font-family-base, 'Montserrat', sans-serif);
+  font-size: 16px;
+  font-weight: 400;
 }
 </style> 

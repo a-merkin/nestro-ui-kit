@@ -126,7 +126,6 @@ const handleChange = (event: Event) => {
 
 .checkbox__label {
   color: #000000;
-  @apply .typography-label;
 }
 
 .checkbox__input:disabled ~ .checkbox__label {

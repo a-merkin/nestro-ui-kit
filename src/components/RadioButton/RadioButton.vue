@@ -97,8 +97,6 @@ const handleChange = () => {
 
 .radio__label {
   color: #000000;
-  font-size: 14px;
-  line-height: 1.4;
 }
 
 .radio__input:disabled ~ .radio__label {
