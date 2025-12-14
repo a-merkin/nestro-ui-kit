@@ -42,7 +42,18 @@
           :class="getItemClasses(option)"
           @click="selectOption(option)"
         >
-          {{ getOptionLabel(option) }}
+          <Tooltip
+            v-if="showOptionTooltip"
+            :text="getOptionLabel(option)"
+            placement="right"
+            :only-if-truncated="true"
+          >
+            {{ getOptionLabel(option) }}
+          </Tooltip>
+
+          <template v-else>
+            {{ getOptionLabel(option) }}
+          </template>
         </li>
         <li v-if="filteredOptions.length === 0" class="dropdown__item dropdown__item--no-results">
           Ничего не найдено
@@ -57,6 +68,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import CloseIcon from './CloseIcon.vue';
 import ArrowIcon from './ArrowIcon.vue';
 import LoadingIcon from './LoadingIcon.vue';
+import Tooltip from '../Tooltip/Tooltip.vue';
 
 interface Props {
   modelValue: string | number | null;
@@ -69,6 +81,7 @@ interface Props {
   labelKey?: string;
   loading?: boolean;
   label?: string;
+  showOptionTooltip?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,6 +92,7 @@ const props = withDefaults(defineProps<Props>(), {
   valueKey: 'value',
   labelKey: 'label',
   loading: false,
+  showOptionTooltip: true,
 });
 
 const emit = defineEmits<{
@@ -204,6 +218,12 @@ onUnmounted(() => {
   width: 100%;
   max-width: 320px;
   box-sizing: border-box;
+
+  &__item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &__label {
     display: block;

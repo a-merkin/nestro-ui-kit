@@ -135,3 +135,29 @@ export const WithLabel: Story = {
   },
   render: renderTemplate,
 };
+
+export const WithOptionTooltip: Story = {
+  name: 'With option tooltip',
+  args: {
+    modelValue: null,
+    options: [
+      { value: '1', label: 'Очень длинное название опции номер один' },
+      { value: '2', label: 'Коротко' },
+      { value: '3', label: 'Еще одна супер длинная опция с текстом' },
+    ],
+    placeholder: 'Выберите опцию',
+    showOptionTooltip: true,
+  },
+  render: (args) => ({
+    components: { Dropdown },
+    setup() {
+      const value = ref(args.modelValue);
+      return { args, value };
+    },
+    template: `
+      <div style="width: 220px">
+        <Dropdown v-model="value" v-bind="args" />
+      </div>
+    `,
+  }),
+};
