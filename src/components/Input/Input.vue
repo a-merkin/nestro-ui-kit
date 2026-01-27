@@ -6,6 +6,7 @@
         <slot name="iconLeft"></slot>
       </div>
       <input
+        v-bind="$attrs"
         :type="type"
         :value="modelValue"
         @input="handleInput"
@@ -30,6 +31,10 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 interface Props {
   modelValue: string;
   placeholder?: string;
@@ -51,6 +56,8 @@ const { type, disabled, error, required } = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
   (e: 'change', value: string): void;
+  (e: 'focus', event: FocusEvent): void;
+  (e: 'blur', event: FocusEvent): void;
 }>();
 
 const slots = useSlots();
@@ -65,16 +72,12 @@ const handleChange = (event: Event) => {
   emit('change', target.value);
 };
 
-const handleFocus = () => {
-  if (!disabled) {
-    // Можно добавить дополнительную логику при фокусе
-  }
+const handleFocus = (event: FocusEvent) => {
+  emit('focus', event);
 };
 
-const handleBlur = () => {
-  if (!disabled) {
-    // Можно добавить дополнительную логику при потере фокуса
-  }
+const handleBlur = (event: FocusEvent) => {
+  emit('blur', event);
 };
 
 const inputClasses = computed(() => ({

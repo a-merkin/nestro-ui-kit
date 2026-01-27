@@ -2,6 +2,7 @@
 <template>
   <label class="switch">
     <input
+      v-bind="$attrs"
       type="checkbox"
       :checked="modelValue"
       @change="handleChange"
@@ -23,6 +24,10 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+});
+
 interface Props {
   modelValue: boolean;
   disabled?: boolean;

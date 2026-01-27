@@ -2,6 +2,7 @@
 <template>
   <label class="checkbox">
     <input
+      v-bind="$attrs"
       type="checkbox"
       :checked="isChecked"
       @change="handleChange"
@@ -21,6 +22,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 interface Props {
   modelValue: boolean | any[];

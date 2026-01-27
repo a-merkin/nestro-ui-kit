@@ -2,6 +2,7 @@
 <template>
   <label class="radio">
     <input
+      v-bind="$attrs"
       type="radio"
       :checked="checked"
       :disabled="disabled"
@@ -18,6 +19,10 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+});
+
 interface Props {
   value: string | number;
   checked?: boolean;
