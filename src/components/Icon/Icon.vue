@@ -38,7 +38,7 @@ const iconComponent = computed(() => {
 });
 
 const iconClasses = computed(() => ({
-  'icon': true,
+  icon: true,
   [`icon--${size}`]: true,
   'icon--custom-color': !!color,
 }));
@@ -75,4 +75,4 @@ const iconClasses = computed(() => ({
   height: 100%;
   padding: 0;
 }
-</style> 
+</style>

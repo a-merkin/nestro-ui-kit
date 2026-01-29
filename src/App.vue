@@ -40,29 +40,27 @@ const selectedRadio = ref('option1');
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
-  
+
   <div class="components-demo">
     <h3>Демонстрация компонентов</h3>
-    
+
     <div class="demo-section">
       <h4>SegmentedControl</h4>
       <label>Выберите период:</label>
-      <SegmentedControl 
-        v-model="selectedPeriod" 
-        :options="periodOptions" 
-      />
-      <p>Выбрано: <strong>{{ selectedPeriod }}</strong></p>
+      <SegmentedControl v-model="selectedPeriod" :options="periodOptions" />
+      <p>
+        Выбрано: <strong>{{ selectedPeriod }}</strong>
+      </p>
     </div>
-    
+
     <div class="demo-section">
       <label>Выберите вид:</label>
-      <SegmentedControl 
-        v-model="selectedView" 
-        :options="viewOptions" 
-      />
-      <p>Выбрано: <strong>{{ selectedView }}</strong></p>
+      <SegmentedControl v-model="selectedView" :options="viewOptions" />
+      <p>
+        Выбрано: <strong>{{ selectedView }}</strong>
+      </p>
     </div>
-    
+
     <div class="demo-section">
       <h4>RadioGroup</h4>
       <RadioGroup
@@ -71,7 +69,9 @@ const selectedRadio = ref('option1');
         label="Выберите вариант"
         direction="vertical"
       />
-      <p>Выбрано: <strong>{{ selectedRadio }}</strong></p>
+      <p>
+        Выбрано: <strong>{{ selectedRadio }}</strong>
+      </p>
     </div>
   </div>
 </template>
@@ -106,7 +106,7 @@ const selectedRadio = ref('option1');
 .components-demo h4 {
   margin-bottom: 16px;
   margin-top: 24px;
-  color: #0F9D3B;
+  color: #0f9d3b;
   font-size: 18px;
 }
 
@@ -119,12 +119,12 @@ const selectedRadio = ref('option1');
   margin-bottom: 12px;
   font-size: 14px;
   font-weight: 500;
-  color: #464E56;
+  color: #464e56;
 }
 
 .demo-section p {
   margin-top: 12px;
   font-size: 14px;
-  color: #464E56;
+  color: #464e56;
 }
 </style>

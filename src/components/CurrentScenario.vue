@@ -1,9 +1,9 @@
 <template>
   <div class="current-scenario">
     <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3 20L9 11L3 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5"/>
-<path d="M13 20L18 11L13 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5"/>
-</svg>
+      <path d="M3 20L9 11L3 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5" />
+      <path d="M13 20L18 11L13 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5" />
+    </svg>
 
     <template v-for="(part, idx) in scenarioParts" :key="idx">
       <span class="current-scenario__text">{{ part }}</span>
@@ -31,7 +31,7 @@ defineProps<{ scenarioParts: string[] }>();
   font-weight: 400;
   font-size: 14px;
   line-height: 1.22;
-  color: #3B697E;
+  color: #3b697e;
   display: flex;
   align-items: center;
 }
@@ -40,7 +40,7 @@ defineProps<{ scenarioParts: string[] }>();
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #D9D9D9;
+  background: #d9d9d9;
   margin: 0 8px;
 }
-</style> 
+</style>

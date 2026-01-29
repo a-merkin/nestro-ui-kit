@@ -1,6 +1,6 @@
 <template>
   <div class="multiselect" :class="multiselectClasses" @click="handleCardClick">
-    <div class="multiselect__chips" ref="chipsRef">
+    <div ref="chipsRef" class="multiselect__chips">
       <template v-for="item in selectedItems" :key="item.value">
         <div class="multiselect__chip">
           <span class="multiselect__chip-close" @click.stop="removeSelected(item.value)">×</span>
@@ -10,15 +10,15 @@
       <input
         v-if="searchable"
         ref="searchInputRef"
-        type="text"
         v-model="searchQuery"
+        type="text"
         class="multiselect__search"
         @focus="openDropdown"
         @input="onSearchInput"
         @click.stop
       />
     </div>
-    <div class="multiselect__arrow" ref="arrowRef" @click.stop="toggleDropdown">
+    <div ref="arrowRef" class="multiselect__arrow" @click.stop="toggleDropdown">
       <svg
         :class="{ 'multiselect__arrow-icon--rotated': isDropdownOpen }"
         width="32"
@@ -26,13 +26,28 @@
         viewBox="0 0 32 32"
         fill="none"
       >
-        <path d="M10 13L16 19L22 13" stroke="#90A9B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path
+          d="M10 13L16 19L22 13"
+          stroke="#90A9B6"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </div>
-    <div v-if="isDropdownOpen" class="multiselect__dropdown" ref="dropdownRef">
+    <div v-if="isDropdownOpen" ref="dropdownRef" class="multiselect__dropdown">
       <div class="multiselect__options">
-        <label v-for="item in filteredOptions" :key="item.value" class="multiselect__option" @click.stop>
-          <input type="checkbox" :checked="localSelectedValues.includes(item.value)" @change="toggleSelect(item.value)" />
+        <label
+          v-for="item in filteredOptions"
+          :key="item.value"
+          class="multiselect__option"
+          @click.stop
+        >
+          <input
+            type="checkbox"
+            :checked="localSelectedValues.includes(item.value)"
+            @change="toggleSelect(item.value)"
+          />
           <span>{{ item.label }}</span>
         </label>
         <div v-if="filteredOptions.length === 0" class="multiselect__no-results">
@@ -78,12 +93,16 @@ const multiselectClasses = computed(() => ({
 const localSelectedValues = ref<Array<string | number>>([]);
 
 // Синхронизация локального состояния с пропсами
-watch(() => props.modelValue, (newValue) => {
-  localSelectedValues.value = [...newValue];
-}, { immediate: true });
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    localSelectedValues.value = [...newValue];
+  },
+  { immediate: true }
+);
 
 const selectedItems = computed(() => {
-  return props.options.filter(item => localSelectedValues.value.includes(item.value));
+  return props.options.filter((item) => localSelectedValues.value.includes(item.value));
 });
 
 const filteredOptions = computed(() => {
@@ -91,22 +110,20 @@ const filteredOptions = computed(() => {
     return props.options;
   }
   const query = searchQuery.value.toLowerCase();
-  return props.options.filter(item => 
-    item.label.toLowerCase().includes(query)
-  );
+  return props.options.filter((item) => item.label.toLowerCase().includes(query));
 });
 
 function toggleSelect(value: string | number) {
   const newValue = localSelectedValues.value.includes(value)
-    ? localSelectedValues.value.filter(val => val !== value)
+    ? localSelectedValues.value.filter((val) => val !== value)
     : [...localSelectedValues.value, value];
-    
+
   localSelectedValues.value = newValue;
   emit('update:modelValue', newValue);
 }
 
 function removeSelected(value: string | number) {
-  const newValue = localSelectedValues.value.filter(val => val !== value);
+  const newValue = localSelectedValues.value.filter((val) => val !== value);
   localSelectedValues.value = newValue;
   emit('update:modelValue', newValue);
 }
@@ -310,7 +327,7 @@ onBeforeUnmount(() => {
     gap: 6px;
     font-size: 12px;
     font-family: Montserrat, sans-serif;
-    color: #7897A6;
+    color: #7897a6;
     padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
@@ -321,7 +338,7 @@ onBeforeUnmount(() => {
       color: #0f9d3b;
     }
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       margin: 0;
       cursor: pointer;
     }
@@ -352,4 +369,4 @@ onBeforeUnmount(() => {
     transform: translateY(0);
   }
 }
-</style> 
+</style>

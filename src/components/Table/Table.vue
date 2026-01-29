@@ -7,10 +7,7 @@
           <th
             v-for="column in columns"
             :key="column.key"
-            :class="[
-              'table__header',
-              { 'table__header--sortable': column.sortable }
-            ]"
+            :class="['table__header', { 'table__header--sortable': column.sortable }]"
             @click="handleSort(column)"
           >
             {{ column.title }}
@@ -19,7 +16,7 @@
               class="table__sort-icon"
               :class="{
                 'table__sort-icon--active': sortKey === column.key,
-                'table__sort-icon--desc': sortOrder === 'desc'
+                'table__sort-icon--desc': sortOrder === 'desc',
               }"
               width="12"
               height="12"
@@ -27,30 +24,15 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M6 2L10 7H2L6 2Z"
-                fill="currentColor"
-              />
+              <path d="M6 2L10 7H2L6 2Z" fill="currentColor" />
             </svg>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(row, index) in sortedData"
-          :key="index"
-          class="table__row"
-        >
-          <td
-            v-for="column in columns"
-            :key="column.key"
-            class="table__cell"
-          >
-            <slot
-              :name="column.key"
-              :row="row"
-              :value="row[column.key]"
-            >
+        <tr v-for="(row, index) in sortedData" :key="index" class="table__row">
+          <td v-for="column in columns" :key="column.key" class="table__cell">
+            <slot :name="column.key" :row="row" :value="row[column.key]">
               {{ row[column.key] }}
             </slot>
           </td>
@@ -115,11 +97,11 @@ const sortedData = computed(() => {
   width: 100%;
   border-collapse: collapse;
   font-family: 'Montserrat', sans-serif;
-  background: #FFFFFF;
+  background: var(--color-background-primary);
 }
 
 .table__header {
-  padding: 12px 16px;
+  padding: var(--padding-sm) var(--padding-md);
   text-align: left;
   font-weight: 600;
   font-size: 14px;
@@ -134,7 +116,7 @@ const sortedData = computed(() => {
   user-select: none;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .table__header--sortable:hover {
@@ -163,9 +145,9 @@ const sortedData = computed(() => {
 }
 
 .table__cell {
-  padding: 12px 16px;
+  padding: var(--padding-sm) var(--padding-md);
   font-size: 14px;
   color: var(--color-text-primary);
   border-bottom: 1px solid var(--color-stroke-primary);
 }
-</style> 
+</style>

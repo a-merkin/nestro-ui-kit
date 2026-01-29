@@ -1,20 +1,15 @@
 <!-- Button.vue -->
 <template>
-  <button
-    :type="type"
-    :class="buttonClasses"
-    :disabled="disabled || loading"
-    @click="handleClick"
-  >
+  <button :type="type" :class="buttonClasses" :disabled="disabled || loading" @click="handleClick">
     <template v-if="loading">
       <span class="button__spinner" />
     </template>
     <template v-else>
-      <slot name="icon-left" v-if="$slots['icon-left']" />
-      <span class="button__text" v-if="$slots.default">
+      <slot v-if="$slots['icon-left']" name="icon-left" />
+      <span v-if="$slots.default" class="button__text">
         <slot />
       </span>
-      <slot name="icon-right" v-if="$slots['icon-right']" />
+      <slot v-if="$slots['icon-right']" name="icon-right" />
     </template>
   </button>
 </template>
@@ -49,7 +44,7 @@ const handleClick = (event: MouseEvent) => {
 };
 
 const buttonClasses = computed(() => ({
-  'button': true,
+  button: true,
   [`button--${variant}`]: true,
   'button--disabled': disabled,
 }));
@@ -60,8 +55,8 @@ const buttonClasses = computed(() => ({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 22px;
+  gap: var(--gap-xs);
+  padding: var(--padding-md) 22px;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -70,48 +65,48 @@ const buttonClasses = computed(() => ({
 }
 
 .button--primary {
-  background: #0F9D3B;
-  color: #FFFFFF;
+  background: var(--color-button-primary);
+  color: var(--color-white);
 
   &:hover {
-    background: #72CA94;
+    background: var(--color-button-primary-hover);
   }
 
   &:active {
-    background: #097F2D;
+    background: var(--color-button-primary-pressed);
   }
 
   &.button--disabled {
-    background: #D9D9D9;
+    background: var(--color-button-primary-disabled);
     cursor: not-allowed;
     border: none;
   }
 }
 
 .button--secondary {
-  background: #fff;
-  border: 1px solid #CFD7DB;
-  color: #000000;
+  background: var(--color-button-secondary);
+  border: 1px solid var(--color-stroke-primary);
+  color: var(--color-black);
 
   &:hover {
-    border-color: #000;
-    color: #000;
+    border-color: var(--color-black);
+    color: var(--color-black);
   }
 
   &.button--disabled {
-    color: #D9D9D9;
+    color: var(--color-stroke-disabled);
     cursor: not-allowed;
-    border: 1px solid #D9D9D9;
+    border: 1px solid var(--color-stroke-disabled);
   }
 }
 
 .button--text {
   background: transparent;
-  padding: 8px;
-  color: #000000;
+  padding: var(--padding-xs);
+  color: var(--color-black);
 
   &:hover {
-    color: #0F9D3B;
+    color: var(--color-button-primary);
   }
 }
 
@@ -129,16 +124,16 @@ const buttonClasses = computed(() => ({
   justify-content: center;
 
   &:hover {
-    background: #009639;
-    color: #FFFFFF;
+    background: var(--color-button-primary);
+    color: var(--color-white);
   }
 }
 
 .button__spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid #fff;
-  border-top: 3px solid #0F9D3B;
+  width: var(--space-6);
+  height: var(--space-6);
+  border: 3px solid var(--color-white);
+  border-top: 3px solid var(--color-button-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   box-sizing: border-box;
@@ -146,7 +141,11 @@ const buttonClasses = computed(() => ({
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-</style> 
+</style>

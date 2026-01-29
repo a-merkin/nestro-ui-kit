@@ -77,7 +77,7 @@ const handleChange = () => {
   justify-content: center;
   width: 16px;
   height: 16px;
-  border: 2px solid #AABDC7;
+  border: 2px solid #aabdc7;
   border-radius: 50%;
   background: transparent;
   transition: all 0.3s ease;
@@ -85,19 +85,19 @@ const handleChange = () => {
 }
 
 .radio__input:checked + .radio__circle {
-  border-color: #0F9D3B;
-  background: #0F9D3B;
+  border-color: #0f9d3b;
+  background: #0f9d3b;
 }
 
 .radio__input:disabled + .radio__circle {
-  border-color: #D9D9D9;
-  background: #F9F9F9;
+  border-color: #d9d9d9;
+  background: #f9f9f9;
   cursor: not-allowed;
 }
 
 .radio__input:disabled:checked + .radio__circle {
-  border-color: #D9D9D9;
-  background: #D9D9D9;
+  border-color: #d9d9d9;
+  background: #d9d9d9;
 }
 
 .radio__label {
@@ -105,11 +105,11 @@ const handleChange = () => {
 }
 
 .radio__input:disabled ~ .radio__label {
-  color: #D9D9D9;
+  color: #d9d9d9;
   cursor: not-allowed;
 }
 
 .radio:hover:not(:has(.radio__input:disabled)) .radio__circle {
-  border-color: #0F9D3B;
+  border-color: #0f9d3b;
 }
 </style>

@@ -1,22 +1,19 @@
 <!-- SegmentedControl.vue -->
 <template>
-  <div 
-    ref="containerRef" 
-    class="segmented-control" 
+  <div
+    ref="containerRef"
+    class="segmented-control"
     :class="{ 'segmented-control--disabled': props.disabled }"
   >
-    <div 
-      class="segmented-control__indicator"
-      :style="indicatorStyle"
-    ></div>
+    <div class="segmented-control__indicator" :style="indicatorStyle"></div>
     <button
       v-for="(option, index) in props.options"
       :key="option.value"
-      :ref="el => setButtonRef(el, index)"
+      :ref="(el) => setButtonRef(el, index)"
       type="button"
       :class="[
         'segmented-control__segment',
-        { 'segmented-control__segment--active': isActive(option.value) }
+        { 'segmented-control__segment--active': isActive(option.value) },
       ]"
       :disabled="props.disabled"
       @click="handleSelect(option.value)"
@@ -71,21 +68,21 @@ const isActive = (value: string | number): boolean => {
 
 const updateIndicatorPosition = () => {
   nextTick(() => {
-    const activeIndex = props.options.findIndex(option => option.value === props.modelValue);
+    const activeIndex = props.options.findIndex((option) => option.value === props.modelValue);
     if (activeIndex !== -1 && buttonRefs.value[activeIndex]) {
       const activeButton = buttonRefs.value[activeIndex];
       const container = containerRef.value;
-      
+
       if (activeButton && container) {
         const buttonRect = activeButton.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        
+
         indicatorStyle.value = {
           width: `${buttonRect.width}px`,
           transform: `translateX(${buttonRect.left - containerRect.left}px)`,
           transition: isInitialized.value ? 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
         };
-        
+
         // Включаем анимацию после первой установки позиции
         if (!isInitialized.value) {
           setTimeout(() => {
@@ -116,12 +113,12 @@ onMounted(() => {
 .segmented-control {
   position: relative;
   display: inline-flex;
-  background: #FFFFFF;
-  border: 1px solid var(--color-stroke-primary, #CFD7DB);
+  background: #ffffff;
+  border: 1px solid var(--color-stroke-primary, #cfd7db);
   border-radius: 30px;
   padding: 4px;
   gap: 4px;
-  
+
   &--disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -133,7 +130,7 @@ onMounted(() => {
   top: 4px;
   left: 4px;
   height: calc(100% - 8px);
-  background: #0F9D3B;
+  background: #0f9d3b;
   border-radius: 26px;
   pointer-events: none;
   z-index: 0;
@@ -154,26 +151,26 @@ onMounted(() => {
   transition: color 0.3s ease;
   white-space: nowrap;
   min-width: fit-content;
-  
+
   &:hover:not(:disabled):not(.segmented-control__segment--active) {
     background: rgba(244, 247, 248, 0.5);
   }
-  
+
   &--active {
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: default;
-    
+
     &:hover {
       background: transparent;
     }
   }
-  
+
   &:disabled {
     cursor: not-allowed;
   }
-  
+
   &:focus-visible {
-    outline: 2px solid #0F9D3B;
+    outline: 2px solid #0f9d3b;
     outline-offset: 2px;
   }
 }
@@ -182,4 +179,3 @@ onMounted(() => {
   cursor: not-allowed;
 }
 </style>
-

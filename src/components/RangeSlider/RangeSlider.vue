@@ -8,9 +8,9 @@
     </div>
 
     <!-- Трек с ползунками -->
-    <div class="range-slider__track-container" ref="trackContainer" @mousedown="onTrackMouseDown">
+    <div ref="trackContainer" class="range-slider__track-container" @mousedown="onTrackMouseDown">
       <div class="range-slider__track" />
-      
+
       <!-- Отсечки -->
       <div
         v-for="(cutoffPx, idx) in cutoffPositions"
@@ -18,7 +18,7 @@
         class="range-slider__cutoff"
         :style="{ left: cutoffPx + 'px' }"
       />
-      
+
       <div
         v-if="isRangeMode"
         class="range-slider__range"
@@ -177,12 +177,16 @@ const stepToPx = (step: number) => {
 const indexToPx = (index: number) => stepToPx(index);
 
 const pxToIndex = (px: number) => {
-  const raw = Math.round(((px / trackWidth.value) * (stepsCount.value || 1)));
+  const raw = Math.round((px / trackWidth.value) * (stepsCount.value || 1));
   return Math.max(0, Math.min(stepsCount.value, raw));
 };
 
-const leftThumbPx = computed(() => Math.max(0, Math.min(trackWidth.value, indexToPx(leftIndex.value))));
-const rightThumbPx = computed(() => Math.max(0, Math.min(trackWidth.value, indexToPx(rightIndex.value))));
+const leftThumbPx = computed(() =>
+  Math.max(0, Math.min(trackWidth.value, indexToPx(leftIndex.value)))
+);
+const rightThumbPx = computed(() =>
+  Math.max(0, Math.min(trackWidth.value, indexToPx(rightIndex.value)))
+);
 const rangeLeft = computed(() => leftThumbPx.value);
 const rangeWidth = computed(() => Math.max(0, rightThumbPx.value - leftThumbPx.value));
 
@@ -321,14 +325,17 @@ const moveIndex = (target: 'left' | 'right', delta: number) => {
 const onThumbKeydown = (target: 'left' | 'right', e: KeyboardEvent) => {
   if (e.key === 'ArrowLeft') moveIndex(target, -1);
   else if (e.key === 'ArrowRight') moveIndex(target, 1);
-  else if (e.key === 'Home') moveIndex(target, target === 'left' ? -maxStep.value : leftIndex.value - rightIndex.value);
-  else if (e.key === 'End') moveIndex(target, target === 'right' ? maxStep.value : rightIndex.value - leftIndex.value);
+  else if (e.key === 'Home')
+    moveIndex(target, target === 'left' ? -maxStep.value : leftIndex.value - rightIndex.value);
+  else if (e.key === 'End')
+    moveIndex(target, target === 'right' ? maxStep.value : rightIndex.value - leftIndex.value);
 };
 
 const onThumbKeydownSingle = (e: KeyboardEvent) => {
   const step = props.step || 1;
   if (e.key === 'ArrowLeft') singleValue.value = Math.max(props.min, singleValue.value - step);
-  else if (e.key === 'ArrowRight') singleValue.value = Math.min(props.max, singleValue.value + step);
+  else if (e.key === 'ArrowRight')
+    singleValue.value = Math.min(props.max, singleValue.value + step);
 };
 
 // Labels
@@ -338,22 +345,23 @@ const leftEdgeLabel = computed(() => {
 });
 
 const rightEdgeLabel = computed(() => {
-  if (isRangeMode.value && props.values?.length) return valueToLabel(props.values[props.values.length - 1]);
+  if (isRangeMode.value && props.values?.length)
+    return valueToLabel(props.values[props.values.length - 1]);
   return props.maxLabel;
 });
 
 // Cutoffs
 const cutoffPositions = computed(() => {
   const positions = new Set<number>();
-  
+
   // Всегда добавляем отсечки в начале и конце
   positions.add(0);
   positions.add(trackWidth.value);
-  
+
   if (props.cutoffs && props.cutoffs.length) {
     if (isRangeMode.value && props.values?.length) {
       // Discrete mode: find index in values array
-      props.cutoffs.forEach(cutoff => {
+      props.cutoffs.forEach((cutoff) => {
         const target = cutoff instanceof Date ? cutoff.getTime() : Number(cutoff);
         for (let i = 0; i < props.values!.length; i++) {
           const val = props.values![i];
@@ -366,7 +374,7 @@ const cutoffPositions = computed(() => {
       });
     } else {
       // Continuous mode: convert value to pixel position
-      (props.cutoffs as number[]).forEach(cutoff => {
+      (props.cutoffs as number[]).forEach((cutoff) => {
         const range = props.max - props.min;
         const valueOffset = cutoff - props.min;
         const percentage = range === 0 ? 0 : valueOffset / range;
@@ -375,7 +383,7 @@ const cutoffPositions = computed(() => {
       });
     }
   }
-  
+
   return Array.from(positions).sort((a, b) => a - b);
 });
 </script>
@@ -407,11 +415,11 @@ const cutoffPositions = computed(() => {
   color: var(--color-black);
   white-space: nowrap;
   flex-shrink: 0;
-  
-  &--left { 
+
+  &--left {
     text-align: left;
   }
-  &--right { 
+  &--right {
     text-align: right;
   }
 }
@@ -467,12 +475,22 @@ const cutoffPositions = computed(() => {
   border-radius: 50%;
   cursor: grab;
   transform: translate(-50%, -50%);
-  transition: box-shadow 0.1s ease, transform 0.1s ease;
+  transition:
+    box-shadow 0.1s ease,
+    transform 0.1s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 
-  &:hover { transform: translate(-50%, -50%) scale(1.05); }
-  &:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.02); }
-  &:focus { outline: none; box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.2); }
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  &:active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.2);
+  }
 }
 
 .range-slider__thumb--single {
@@ -481,9 +499,18 @@ const cutoffPositions = computed(() => {
 }
 
 .range-slider--disabled {
-  .range-slider__track { background-color: var(--color-grey-40, #cdcdcd); }
-  .range-slider__range { background-color: var(--color-grey-40, #cdcdcd); }
-  .range-slider__thumb { border-color: var(--color-grey-40, #cdcdcd); cursor: not-allowed; }
-  .range-slider__label { color: var(--color-grey-40, #cdcdcd); }
+  .range-slider__track {
+    background-color: var(--color-grey-40, #cdcdcd);
+  }
+  .range-slider__range {
+    background-color: var(--color-grey-40, #cdcdcd);
+  }
+  .range-slider__thumb {
+    border-color: var(--color-grey-40, #cdcdcd);
+    cursor: not-allowed;
+  }
+  .range-slider__label {
+    color: var(--color-grey-40, #cdcdcd);
+  }
 }
 </style>

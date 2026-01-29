@@ -5,13 +5,25 @@
       v-bind="$attrs"
       type="checkbox"
       :checked="isChecked"
-      @change="handleChange"
       :disabled="props.disabled"
       class="checkbox__input"
+      @change="handleChange"
     />
     <span class="checkbox__box">
-      <svg v-if="isChecked" class="checkbox__icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.6667 3.5L5.25 9.91667L2.33333 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg
+        v-if="isChecked"
+        class="checkbox__icon"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </span>
     <span v-if="$slots.default" class="checkbox__label">
@@ -55,7 +67,7 @@ const isChecked = computed(() => {
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  
+
   if (isArray.value && props.value !== undefined) {
     // Режим массива
     const newValue = [...(props.modelValue as any[])];
@@ -83,7 +95,7 @@ const handleChange = (event: Event) => {
 .checkbox {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--gap-xs);
   cursor: pointer;
   user-select: none;
 }
@@ -104,37 +116,37 @@ const handleChange = (event: Event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #6F6F6F;
+  width: var(--space-5);
+  height: var(--space-5);
+  border: 1px solid var(--color-icon-stroke-secondary);
   border-radius: 2px;
   background: transparent;
   transition: all 0.3s ease;
 }
 
 .checkbox__input:checked + .checkbox__box {
-  background: #4CAF50;
-  border-color: #4CAF50;
+  background: var(--color-button-primary);
+  border-color: var(--color-button-primary);
 }
 
 .checkbox__input:disabled + .checkbox__box {
-  background: #E1E1E1;
-  border-color: #E1E1E1;
+  background: var(--color-stroke-disabled);
+  border-color: var(--color-stroke-disabled);
   cursor: not-allowed;
 }
 
 .checkbox__icon {
   width: 14px;
   height: 14px;
-  color: #FFFFFF;
+  color: var(--color-white);
 }
 
 .checkbox__label {
-  color: #000000;
+  color: var(--color-text-primary);
 }
 
 .checkbox__input:disabled ~ .checkbox__label {
-  color: #E1E1E1;
+  color: var(--color-stroke-disabled);
   cursor: not-allowed;
 }
-</style> 
+</style>

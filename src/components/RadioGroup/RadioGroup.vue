@@ -71,13 +71,13 @@ const handleChange = (value: string | number) => {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  
+
   &--horizontal {
     flex-direction: row;
     align-items: center;
     gap: 16px;
   }
-  
+
   &--horizontal &__items {
     flex-direction: row;
     gap: 24px;
@@ -85,7 +85,7 @@ const handleChange = (value: string | number) => {
 }
 
 .radio-group__title {
-  color: var(--color-text-tertiary, #464E56);
+  color: var(--color-text-tertiary, #464e56);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.219;
@@ -104,7 +104,7 @@ const handleChange = (value: string | number) => {
   gap: 8px;
   cursor: pointer;
   user-select: none;
-  
+
   &--disabled {
     cursor: not-allowed;
   }
@@ -129,7 +129,7 @@ const handleChange = (value: string | number) => {
   justify-content: center;
   width: 16px;
   height: 16px;
-  border: 2px solid #AABDC7;
+  border: 2px solid #aabdc7;
   border-radius: 50%;
   background: transparent;
   transition: all 0.3s ease;
@@ -137,18 +137,18 @@ const handleChange = (value: string | number) => {
 }
 
 .radio-group__input:checked + .radio-group__circle {
-  border-color: #0F9D3B;
-  background: #0F9D3B;
+  border-color: #0f9d3b;
+  background: #0f9d3b;
 }
 
 .radio-group__input:disabled + .radio-group__circle {
-  border-color: #D9D9D9;
-  background: #F9F9F9;
+  border-color: #d9d9d9;
+  background: #f9f9f9;
 }
 
 .radio-group__input:disabled:checked + .radio-group__circle {
-  border-color: #D9D9D9;
-  background: #D9D9D9;
+  border-color: #d9d9d9;
+  background: #d9d9d9;
 }
 
 .radio-group__label {
@@ -157,11 +157,10 @@ const handleChange = (value: string | number) => {
 }
 
 .radio-group__input:disabled ~ .radio-group__label {
-  color: #D9D9D9;
+  color: #d9d9d9;
 }
 
 .radio-group__item:hover:not(.radio-group__item--disabled) .radio-group__circle {
-  border-color: #0F9D3B;
+  border-color: #0f9d3b;
 }
 </style>
-

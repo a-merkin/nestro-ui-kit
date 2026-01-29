@@ -8,7 +8,11 @@
           <div class="color-preview" :style="{ backgroundColor: `var(${String(name)})` }"></div>
           <div class="color-info">
             <div class="color-name">{{ formatColorName(String(name)) }}</div>
-            <div class="color-value" @click="copyToClipboard(name)" :class="{ 'copied': copiedValue === name }">
+            <div
+              class="color-value"
+              :class="{ copied: copiedValue === name }"
+              @click="copyToClipboard(name)"
+            >
               {{ String(name) }}
               <span v-if="copiedValue === name" class="copy-indicator">Скопировано!</span>
             </div>
@@ -20,31 +24,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import '../styles/colors.css'
+import { defineComponent, ref } from 'vue';
+import '../styles/colors.css';
 
 interface ColorGroups {
   [key: string]: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }
 
 export default defineComponent({
   name: 'ColorPalette',
   setup() {
-    const copiedValue = ref<string>('')
+    const copiedValue = ref<string>('');
 
     const copyToClipboard = async (value: string) => {
       try {
-        await navigator.clipboard.writeText(value)
-        copiedValue.value = value
+        await navigator.clipboard.writeText(value);
+        copiedValue.value = value;
         setTimeout(() => {
-          copiedValue.value = ''
-        }, 2000)
+          copiedValue.value = '';
+        }, 2000);
       } catch (err) {
-        console.error('Failed to copy text: ', err)
+        console.error('Failed to copy text: ', err);
       }
-    }
+    };
 
     const colorGroups: ColorGroups = {
       base: {
@@ -111,7 +115,7 @@ export default defineComponent({
         '--color-button-tertiary': '--color-button-tertiary',
         '--color-button-light': '--color-button-light',
       },
-    }
+    };
 
     const formatGroupName = (name: string): string => {
       const groupNames: { [key: string]: string } = {
@@ -125,17 +129,17 @@ export default defineComponent({
         icon: 'Цвета иконок',
         stroke: 'Цвета обводки',
         button: 'Цвета кнопок',
-      }
-      return groupNames[name]
-    }
+      };
+      return groupNames[name];
+    };
 
     const formatColorName = (name: string): string => {
       return name
         .replace('--color-', '')
         .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
-    }
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    };
 
     return {
       colorGroups,
@@ -143,9 +147,9 @@ export default defineComponent({
       formatColorName,
       copyToClipboard,
       copiedValue,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped>
@@ -241,4 +245,4 @@ export default defineComponent({
     transform: translate(-50%, 0);
   }
 }
-</style> 
+</style>

@@ -23,13 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
   modelValue: string;
   tabs: { label: string; value: string }[];
 }>();
-const emit = defineEmits(['update:modelValue']);
+defineEmits(['update:modelValue']);
 
 const isFirstTabActive = computed(() => {
   return props.tabs.length > 0 && props.modelValue === props.tabs[0].value;

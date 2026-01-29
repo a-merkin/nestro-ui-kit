@@ -9,16 +9,16 @@
         v-bind="$attrs"
         :type="type"
         :value="modelValue"
-        @input="handleInput"
-        @change="handleChange"
-        @focus="handleFocus"
-        @blur="handleBlur"
         :placeholder="placeholder"
         :disabled="disabled"
         :name="name"
         :required="required"
         :class="inputClasses"
         :style="inputStyles"
+        @input="handleInput"
+        @change="handleChange"
+        @focus="handleFocus"
+        @blur="handleBlur"
       />
       <div v-if="$slots.iconRight" class="input-icon input-icon--right">
         <slot name="iconRight"></slot>
@@ -81,14 +81,14 @@ const handleBlur = (event: FocusEvent) => {
 };
 
 const inputClasses = computed(() => ({
-  'input': true,
+  input: true,
   'input--error': error,
   'input--disabled': disabled,
 }));
 
 const inputStyles = computed(() => {
-  const paddingLeft = slots.iconLeft ? '44px' : '16px';
-  const paddingRight = slots.iconRight ? '44px' : '16px';
+  const paddingLeft = slots.iconLeft ? 'var(--space-11)' : 'var(--padding-md)';
+  const paddingRight = slots.iconRight ? 'var(--space-11)' : 'var(--padding-md)';
   return {
     paddingLeft,
     paddingRight,
@@ -112,8 +112,8 @@ const inputStyles = computed(() => {
 
 .input {
   width: 100%;
-  height: 40px;
-  padding: 0 16px;
+  height: var(--space-10);
+  padding: 0 var(--padding-md);
   border-radius: 60px;
   border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
   background: rgba(182, 199, 207, 0.15);
@@ -134,78 +134,78 @@ const inputStyles = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  width: 20px;
+  height: var(--space-10);
+  width: var(--space-5);
   pointer-events: none;
   color: var(--color-text-primary);
   z-index: 2;
 }
 
 .input-icon--left {
-  left: 12px;
+  left: var(--space-3);
 }
 
 .input-icon--right {
-  right: 12px;
+  right: var(--space-3);
 }
 
 .input-icon :deep(svg) {
-  width: 20px;
-  height: 20px;
+  width: var(--space-5);
+  height: var(--space-5);
 }
 
 .input--error {
-  border-color: var(--color-stroke-error, #ED6E1C);
+  border-color: var(--color-stroke-error, #ed6e1c);
 }
 
 .error-message {
-  color: var(--color-text-error, #ED6E1C);
+  color: var(--color-text-error, #ed6e1c);
   font-size: 12px;
-  margin-top: 4px;
-  padding-left: 16px;
+  margin-top: var(--space-1);
+  padding-left: var(--padding-md);
 }
 
 .input--disabled {
   background: rgba(218, 218, 218, 0.15);
   border-color: rgba(225, 225, 225, 0.51);
-  color: var(--color-text-disabled, #E1E1E1);
+  color: var(--color-text-disabled, #e1e1e1);
   cursor: not-allowed;
 }
 
 /* Стили для input type="date" */
-.input[type="date"] {
+.input[type='date'] {
   cursor: pointer;
 }
 
-.input[type="date"]::-webkit-calendar-picker-indicator {
+.input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0.5);
   opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
-.input[type="date"]::-webkit-calendar-picker-indicator:hover {
+.input[type='date']::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
 }
 
-.input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+.input[type='date']::-webkit-datetime-edit-fields-wrapper {
   padding: 0;
 }
 
-.input[type="date"]::-webkit-datetime-edit {
+.input[type='date']::-webkit-datetime-edit {
   padding: 0;
 }
 
-.input[type="date"]::-webkit-datetime-edit-text {
+.input[type='date']::-webkit-datetime-edit-text {
   padding: 0 2px;
 }
 
-.input[type="date"]::-webkit-datetime-edit-month-field,
-.input[type="date"]::-webkit-datetime-edit-day-field,
-.input[type="date"]::-webkit-datetime-edit-year-field {
+.input[type='date']::-webkit-datetime-edit-month-field,
+.input[type='date']::-webkit-datetime-edit-day-field,
+.input[type='date']::-webkit-datetime-edit-year-field {
   padding: 0 2px;
   font-family: var(--font-family-base, 'Montserrat', sans-serif);
   font-size: 16px;
   font-weight: 400;
 }
-</style> 
+</style>

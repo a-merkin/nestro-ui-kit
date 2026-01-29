@@ -5,7 +5,7 @@
       <div class="progress-bar__track-bg" />
       <div class="progress-bar__track-fill" :style="{ width: `${clampedValue}%` }" />
     </div>
-    <div v-if="showLabel" class="progress-bar__label">{{ Math.round(clampedValue) }}%</div>
+    <div v-if="props.showLabel" class="progress-bar__label">{{ Math.round(clampedValue) }}%</div>
   </div>
 </template>
 
@@ -18,14 +18,14 @@ interface Props {
   width?: number;
 }
 
-const { value, showLabel, width } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   value: 0,
   showLabel: true,
   width: 200,
 });
 
 const clampedValue = computed(() => {
-  return Math.max(0, Math.min(100, value));
+  return Math.max(0, Math.min(100, props.value));
 });
 </script>
 
@@ -33,13 +33,13 @@ const clampedValue = computed(() => {
 .progress-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--gap-xs);
 }
 
 .progress-bar__track {
   position: relative;
   height: 5px;
-  width: v-bind('width + "px"');
+  width: v-bind('props.width + "px"');
 }
 
 .progress-bar__track-bg {
@@ -48,7 +48,7 @@ const clampedValue = computed(() => {
   left: 0;
   width: 100%;
   height: 5px;
-  background-color: #cfd7db;
+  background-color: var(--color-stroke-primary);
   border-radius: 2.5px;
 }
 
@@ -57,7 +57,7 @@ const clampedValue = computed(() => {
   top: -0.5px;
   left: 0;
   height: 6px;
-  background-color: #009639;
+  background-color: var(--color-button-primary);
   border-radius: 3px;
   transition: width 0.3s ease;
   z-index: 1;
@@ -68,8 +68,8 @@ const clampedValue = computed(() => {
   font-weight: 400;
   font-size: 12px;
   line-height: 1.25em;
-  color: #000000;
+  color: var(--color-text-primary);
   text-align: center;
-  min-width: 40px;
+  min-width: var(--space-10);
 }
 </style>
