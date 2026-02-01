@@ -1,5 +1,6 @@
-import './styles/typography.css';
-import './styles/colors.css';
+// import './styles/typography.css';
+// import './styles/colors.css';
+import './styles/index.css';
 
 export { default as Button } from './components/Button/Button.vue';
 export { default as Icon } from './components/Icon/Icon.vue';
