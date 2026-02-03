@@ -1,13 +1,11 @@
-<!-- Checkbox.vue -->
 <template>
   <label class="checkbox">
     <input
-      v-bind="$attrs"
       type="checkbox"
       :checked="isChecked"
+      @change="handleChange"
       :disabled="props.disabled"
       class="checkbox__input"
-      @change="handleChange"
     />
     <span class="checkbox__box">
       <svg
@@ -34,10 +32,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-
-defineOptions({
-  inheritAttrs: false,
-});
 
 interface Props {
   modelValue: boolean | any[];
@@ -95,7 +89,7 @@ const handleChange = (event: Event) => {
 .checkbox {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-xs);
+  gap: 8px;
   cursor: pointer;
   user-select: none;
 }
@@ -116,37 +110,37 @@ const handleChange = (event: Event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-5);
-  height: var(--space-5);
-  border: 1px solid var(--color-icon-stroke-secondary);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #6f6f6f;
   border-radius: 2px;
   background: transparent;
   transition: all 0.3s ease;
 }
 
 .checkbox__input:checked + .checkbox__box {
-  background: var(--color-button-primary);
-  border-color: var(--color-button-primary);
+  background: #4caf50;
+  border-color: #4caf50;
 }
 
 .checkbox__input:disabled + .checkbox__box {
-  background: var(--color-stroke-disabled);
-  border-color: var(--color-stroke-disabled);
+  background: #e1e1e1;
+  border-color: #e1e1e1;
   cursor: not-allowed;
 }
 
 .checkbox__icon {
   width: 14px;
   height: 14px;
-  color: var(--color-white);
+  color: #ffffff;
 }
 
 .checkbox__label {
-  color: var(--color-text-primary);
+  color: #000000;
 }
 
 .checkbox__input:disabled ~ .checkbox__label {
-  color: var(--color-stroke-disabled);
+  color: #e1e1e1;
   cursor: not-allowed;
 }
 </style>

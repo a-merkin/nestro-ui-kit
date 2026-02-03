@@ -55,8 +55,8 @@ const buttonClasses = computed(() => ({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-xs);
-  padding: var(--padding-md) 22px;
+  gap: 8px;
+  padding: 16px 22px;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -65,48 +65,48 @@ const buttonClasses = computed(() => ({
 }
 
 .button--primary {
-  background: var(--color-button-primary);
-  color: var(--color-white);
+  background: #0f9d3b;
+  color: #ffffff;
 
   &:hover {
-    background: var(--color-button-primary-hover);
+    background: #72ca94;
   }
 
   &:active {
-    background: var(--color-button-primary-pressed);
+    background: #097f2d;
   }
 
   &.button--disabled {
-    background: var(--color-button-primary-disabled);
+    background: #d9d9d9;
     cursor: not-allowed;
     border: none;
   }
 }
 
 .button--secondary {
-  background: var(--color-button-secondary);
-  border: 1px solid var(--color-stroke-primary);
-  color: var(--color-black);
+  background: #fff;
+  border: 1px solid #cfd7db;
+  color: #000000;
 
   &:hover {
-    border-color: var(--color-black);
-    color: var(--color-black);
+    border-color: #000;
+    color: #000;
   }
 
   &.button--disabled {
-    color: var(--color-stroke-disabled);
+    color: #d9d9d9;
     cursor: not-allowed;
-    border: 1px solid var(--color-stroke-disabled);
+    border: 1px solid #d9d9d9;
   }
 }
 
 .button--text {
   background: transparent;
-  padding: var(--padding-xs);
-  color: var(--color-black);
+  padding: 8px;
+  color: #000000;
 
   &:hover {
-    color: var(--color-button-primary);
+    color: #0f9d3b;
   }
 }
 
@@ -124,16 +124,16 @@ const buttonClasses = computed(() => ({
   justify-content: center;
 
   &:hover {
-    background: var(--color-button-primary);
-    color: var(--color-white);
+    background: #009639;
+    color: #ffffff;
   }
 }
 
 .button__spinner {
-  width: var(--space-6);
-  height: var(--space-6);
-  border: 3px solid var(--color-white);
-  border-top: 3px solid var(--color-button-primary);
+  width: 24px;
+  height: 24px;
+  border: 3px solid #fff;
+  border-top: 3px solid #0f9d3b;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   box-sizing: border-box;
