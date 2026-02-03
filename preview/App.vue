@@ -1,10 +1,7 @@
-<template>
-  <div class="playground">
-    <h1>Nestro UI Kit Playground</h1>
-    <OverviewPage />
-  </div>
-</template>
-
 <script setup lang="ts">
-import OverviewPage from './pages/Overview.vue';
+import Overview from './pages/Overview.vue';
 </script>
+
+<template>
+  <Overview />
+</template>

@@ -1,1 +1,12 @@
 @import '../assets/fonts/index.css';
+
+/* Tokens */
+@import './tokens/typography.tokens.css';
+/* @import './tokens/colors.tokens.css'; */
+
+/* Base */
+@import './base/reset.css';
+@import './base/typography.css';
+
+/* Utilities */
+@import './utilities/typography.utilities.css';

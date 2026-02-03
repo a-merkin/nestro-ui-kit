@@ -1,21 +1,24 @@
-<template>
-  <section class="stack">
-    overview
-    <!-- <h2>Buttons</h2>
-    <Button label="Primary" />
-    <Button variant="secondary" label="Secondary" />
-
-    <h2>Inputs</h2>
-    <Input placeholder="Type here..." />
-
-    <h2>Checkbox</h2>
-    <Checkbox v-model="checked" label="Accept terms" /> -->
-  </section>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Button, Input, Checkbox } from '@/index';
+import Workplace from '../../src/components/Workplace.vue';
 
-// const checked = ref(false);
+const activeTab = ref('main');
+
+const tabs = [
+  { label: 'Основное', value: 'main' },
+  { label: 'Цены', value: 'pricing' },
+  { label: 'Характеристики', value: 'specs' },
+];
 </script>
+
+<template>
+  <section>
+    <Workplace v-model="activeTab" :tabs="tabs">
+      <div v-if="activeTab === 'main'">Основной контент</div>
+
+      <div v-else-if="activeTab === 'pricing'">Информация о ценах</div>
+
+      <div v-else-if="activeTab === 'specs'">Технические характеристики</div>
+    </Workplace>
+  </section>
+</template>
