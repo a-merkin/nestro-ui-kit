@@ -1,4 +1,5 @@
 // export { default as Button } from './components/Button/Button.vue';
+import './styles/index.css';
 export * from './components/Button';
 // export { default as Icon } from './components/Icon/Icon.vue';
 // export { default as Dropdown } from './components/Dropdown/Dropdown.vue';
