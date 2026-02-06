@@ -1,9 +1,15 @@
-<!-- Button.vue -->
 <template>
-  <button :type="type" :class="buttonClasses" :disabled="disabled || loading" @click="handleClick">
+  <button
+    :type="type"
+    :class="buttonClasses"
+    :disabled="disabled || loading"
+    :aria-busy="loading || undefined"
+    @click="handleClick"
+  >
     <template v-if="loading">
       <span class="button__spinner" />
     </template>
+
     <template v-else>
       <slot v-if="$slots['icon-left']" name="icon-left" />
       <span v-if="$slots.default" class="button__text">
@@ -16,37 +22,26 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { ButtonProps, ButtonEmits } from './Button.types';
 
-type ButtonVariant = 'primary' | 'secondary' | 'text' | 'circle';
-
-interface Props {
-  variant?: ButtonVariant;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  loading?: boolean;
-}
-
-const { variant, disabled, type, loading } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
   disabled: false,
   type: 'button',
   loading: false,
 });
 
-const emit = defineEmits<{
-  (e: 'click', event: MouseEvent): void;
-}>();
+const emit = defineEmits<ButtonEmits>();
 
 const handleClick = (event: MouseEvent) => {
-  if (!disabled) {
-    emit('click', event);
-  }
+  if (props.disabled || props.loading) return;
+  emit('click', event);
 };
 
 const buttonClasses = computed(() => ({
   button: true,
-  [`button--${variant}`]: true,
-  'button--disabled': disabled,
+  [`button--${props.variant}`]: true,
+  'button--disabled': props.disabled || props.loading,
 }));
 </script>
 

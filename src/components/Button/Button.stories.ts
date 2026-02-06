@@ -1,17 +1,16 @@
 import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Button from '../components/Button/Button.vue';
+import Button from './Button.vue';
+import type { ButtonVariant } from './Button.types';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
   title: 'UI/Button',
   component: Button,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'text', 'circle'],
+      options: ['primary', 'secondary', 'text', 'circle'] satisfies ButtonVariant[],
       description: 'Вариант кнопки',
     },
     disabled: {
@@ -36,18 +35,13 @@ const meta = {
     },
   },
   args: {
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     onClick: fn(),
   },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/api/csf
- * to learn how to use render functions.
- */
+
 export const Primary: Story = {
   args: {
     variant: 'primary',
@@ -77,18 +71,33 @@ export const Disabled: Story = {
 };
 
 export const WithIcons: Story = {
-  args: {
-    default: 'Кнопка',
-    'icon-left': '👈',
-    'icon-right': '👉',
-  },
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Button v-bind="args">
+        <template #icon-left>👈</template>
+        Кнопка
+        <template #icon-right>👉</template>
+      </Button>
+    `,
+  }),
 };
 
 export const Circle: Story = {
-  args: {
-    variant: 'circle',
-    'icon-left': '⭐',
-  },
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Button v-bind="args" variant="circle">
+        ⭐
+      </Button>
+    `,
+  }),
 };
 
 export const Loading: Story = {

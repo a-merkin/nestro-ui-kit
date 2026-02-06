@@ -1,4 +1,5 @@
-export { default as Button } from './components/Button/Button.vue';
+// export { default as Button } from './components/Button/Button.vue';
+export * from './components/Button';
 // export { default as Icon } from './components/Icon/Icon.vue';
 // export { default as Dropdown } from './components/Dropdown/Dropdown.vue';
 // export { default as Checkbox } from './components/Checkbox/Checkbox.vue';
@@ -19,5 +20,5 @@ export { default as Button } from './components/Button/Button.vue';
 // export { default as Tooltip } from './components/Tooltip/Tooltip.vue';
 
 // Types
-export type { SegmentedControlOption } from './components/SegmentedControl/SegmentedControl.vue';
-export type { RadioGroupOption } from './components/RadioGroup/RadioGroup.vue';
+// export type { SegmentedControlOption } from './components/SegmentedControl/SegmentedControl.vue';
+// export type { RadioGroupOption } from './components/RadioGroup/RadioGroup.vue';
