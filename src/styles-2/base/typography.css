@@ -1,7 +1,0 @@
-html, body {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
-}
