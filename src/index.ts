@@ -1,6 +1,25 @@
-// export { default as Button } from './components/Button/Button.vue';
+import type { App } from 'vue';
 import './styles/index.css';
-export * from './components/Button';
+
+import Button from './components/Button/Button.vue';
+
+export { Button };
+
+const components = [Button];
+
+export const NestroUI = {
+  install(app: App) {
+    components.forEach((c) => {
+      app.component(c.name!, c);
+    });
+  },
+};
+
+export default NestroUI;
+
+// export { default as Button } from './components/Button/Button.vue';
+// import './styles/index.css';
+// export * from './components/Button';
 // export { default as Icon } from './components/Icon/Icon.vue';
 // export { default as Dropdown } from './components/Dropdown/Dropdown.vue';
 // export { default as Checkbox } from './components/Checkbox/Checkbox.vue';

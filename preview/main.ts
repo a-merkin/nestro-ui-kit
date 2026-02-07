@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
-import '../src/styles/index.css';
+import 'nestro-ui-kit/nestro-ui-kit.css';
+import UIkit from 'nestro-ui-kit';
 import App from './App.vue';
 
-createApp(App).mount('#app');
+createApp(App).use(UIkit).mount('#app');

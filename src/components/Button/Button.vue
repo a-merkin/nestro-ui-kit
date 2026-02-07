@@ -24,6 +24,10 @@
 import { computed } from 'vue';
 import type { ButtonProps, ButtonEmits } from './Button.types';
 
+defineOptions({
+  name: 'NButton',
+});
+
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
   disabled: false,
