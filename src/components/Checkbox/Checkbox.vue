@@ -2,14 +2,14 @@
   <label class="checkbox">
     <input
       type="checkbox"
-      :checked="isChecked"
-      @change="handleChange"
+      :checked="checked"
       :disabled="props.disabled"
       class="checkbox__input"
+      @change="handleChange"
     />
     <span class="checkbox__box">
       <svg
-        v-if="isChecked"
+        v-if="checked"
         class="checkbox__icon"
         viewBox="0 0 14 14"
         fill="none"
@@ -32,55 +32,42 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { CheckboxProps, CheckboxEmits } from './Checkbox.types';
 
-interface Props {
-  modelValue: boolean | any[];
-  value?: any;
-  disabled?: boolean;
-}
+defineOptions({ name: 'NCheckbox' });
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<CheckboxProps>(), {
   disabled: false,
   value: undefined,
 });
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean | any[]): void;
-}>();
+const emit = defineEmits<CheckboxEmits>();
 
-// Определяем, работаем ли мы с массивом
 const isArray = computed(() => Array.isArray(props.modelValue));
 
-// Вычисляем состояние чекбокса
-const isChecked = computed(() => {
+// вычисляем, отмечен ли чекбокс
+const checked = computed(() => {
   if (isArray.value && props.value !== undefined) {
-    return (props.modelValue as any[]).includes(props.value);
+    return (props.modelValue as any[])?.includes(props.value);
   }
-  return props.modelValue as boolean;
+  // Если modelValue не передан, галочка по умолчанию
+  return props.modelValue !== false;
 });
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
+  const value = target.checked;
+
+  if (props.modelValue === undefined) return;
 
   if (isArray.value && props.value !== undefined) {
-    // Режим массива
     const newValue = [...(props.modelValue as any[])];
-    if (target.checked) {
-      // Добавляем значение, если его еще нет
-      if (!newValue.includes(props.value)) {
-        newValue.push(props.value);
-      }
-    } else {
-      // Удаляем значение
-      const index = newValue.indexOf(props.value);
-      if (index > -1) {
-        newValue.splice(index, 1);
-      }
-    }
+    value
+      ? !newValue.includes(props.value) && newValue.push(props.value)
+      : newValue.includes(props.value) && newValue.splice(newValue.indexOf(props.value), 1);
     emit('update:modelValue', newValue);
   } else {
-    // Режим boolean
-    emit('update:modelValue', target.checked);
+    emit('update:modelValue', value);
   }
 };
 </script>
