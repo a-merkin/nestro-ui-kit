@@ -10,7 +10,8 @@ export type IconName =
   | 'download'
   | 'magnifier'
   | 'setting'
-  | 'unite';
+  | 'unite'
+  | 'loading';
 
 export interface IconProps {
   name: IconName;

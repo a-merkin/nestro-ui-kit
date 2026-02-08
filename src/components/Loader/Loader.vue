@@ -1,4 +1,3 @@
-<!-- Loader.vue -->
 <template>
   <div :class="loaderClasses" :style="loaderStyle">
     <div class="loader__spinner"></div>

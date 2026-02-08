@@ -1,4 +1,3 @@
-<!-- Input.vue -->
 <template>
   <div class="input-wrapper">
     <div class="input-container">

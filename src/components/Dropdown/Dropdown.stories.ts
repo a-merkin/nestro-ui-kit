@@ -1,21 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref, watch } from 'vue';
-import Dropdown from '../components/Dropdown/Dropdown.vue';
+import NDropdown from './Dropdown.vue';
 
 const meta = {
-  title: 'UI/Dropdown',
-  component: Dropdown,
+  title: 'Components/Dropdown',
+  component: NDropdown,
   tags: ['autodocs'],
   argTypes: {
     modelValue: { control: 'text', description: 'Выбранное значение' },
-    options: { control: 'object', description: 'Массив опций для выбора' },
-    placeholder: { control: 'text', description: 'Текст подсказки' },
-    disabled: { control: 'boolean', description: 'Отключен ли дропдаун' },
-    searchable: { control: 'boolean', description: 'Включить поиск в основном поле ввода' },
-    valueKey: { control: 'text', description: 'Ключ для значения опции' },
-    labelKey: { control: 'text', description: 'Ключ для отображаемого текста опции' },
+    options: { control: 'object', description: 'Массив опций' },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+    searchable: { control: 'boolean' },
+    clearable: { control: 'boolean' },
+    valueKey: { control: 'text' },
+    labelKey: { control: 'text' },
+    loading: { control: 'boolean' },
+    label: { control: 'text' },
   },
-} satisfies Meta<typeof Dropdown>;
+} satisfies Meta<typeof NDropdown>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -34,39 +37,26 @@ const customKeyOptions = [
 ];
 
 const renderTemplate = (args: any) => ({
-  components: { Dropdown },
+  components: { NDropdown },
   setup() {
     const value = ref(args.modelValue);
 
     watch(
       () => args.modelValue,
-      (newVal) => (value.value = newVal)
+      (v) => (value.value = v)
     );
-    watch(value, (newVal) => (args.modelValue = newVal));
+    watch(value, (v) => (args.modelValue = v));
 
     return { args, value };
   },
-  template: `
-    <div>
-      <Dropdown v-model="value" v-bind="args" />
-    </div>
-  `,
+  template: `<NDropdown v-model="value" v-bind="args" />`,
 });
 
 export const Default: Story = {
   args: {
-    modelValue: '',
-    options: defaultOptions,
-    placeholder: 'Выберите опцию',
-  },
-  render: renderTemplate,
-};
-
-export const WithPlaceholder: Story = {
-  args: {
     modelValue: null,
     options: defaultOptions,
-    placeholder: 'Например: Выбери пункт',
+    placeholder: 'Выберите опцию',
   },
   render: renderTemplate,
 };
@@ -81,21 +71,42 @@ export const Searchable: Story = {
   render: renderTemplate,
 };
 
-export const Disabled: Story = {
-  args: {
-    modelValue: null,
-    options: defaultOptions,
-    disabled: true,
-    placeholder: 'Дропдаун неактивен',
-  },
-  render: renderTemplate,
-};
-
 export const Clearable: Story = {
   args: {
     modelValue: null,
     options: defaultOptions,
     clearable: true,
+    placeholder: 'Выберите значение',
+  },
+  render: renderTemplate,
+};
+
+export const Disabled: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    disabled: true,
+    placeholder: 'Недоступно',
+  },
+  render: renderTemplate,
+};
+
+export const Loading: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    loading: true,
+    disabled: true,
+    placeholder: 'Загрузка...',
+  },
+  render: renderTemplate,
+};
+
+export const WithLabel: Story = {
+  args: {
+    modelValue: null,
+    options: defaultOptions,
+    label: 'Выбор опции',
     placeholder: 'Выберите значение',
   },
   render: renderTemplate,
@@ -114,28 +125,6 @@ export const CustomValueLabelKeys: Story = {
   render: renderTemplate,
 };
 
-export const Loading: Story = {
-  args: {
-    modelValue: null,
-    options: defaultOptions,
-    placeholder: 'Загрузка...',
-    loading: true,
-    disabled: true,
-  },
-  render: renderTemplate,
-};
-
-export const WithLabel: Story = {
-  name: 'With Label',
-  args: {
-    modelValue: null,
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    label: 'Выбор опции',
-  },
-  render: renderTemplate,
-};
-
 export const WithOptionTooltip: Story = {
   name: 'With option tooltip',
   args: {
@@ -149,14 +138,14 @@ export const WithOptionTooltip: Story = {
     showOptionTooltip: true,
   },
   render: (args) => ({
-    components: { Dropdown },
+    components: { NDropdown },
     setup() {
       const value = ref(args.modelValue);
       return { args, value };
     },
     template: `
       <div style="width: 220px">
-        <Dropdown v-model="value" v-bind="args" />
+        <NDropdown v-model="value" v-bind="args" />
       </div>
     `,
   }),
