@@ -1,50 +1,29 @@
 <template>
-  <div :class="loaderClasses" :style="loaderStyle">
-    <div class="loader__spinner"></div>
+  <div :class="classes" role="status" aria-live="polite">
+    <div class="loader__spinner" />
     <span v-if="text" class="loader__text">{{ text }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { LoaderProps } from './Loader.types';
 
-type LoaderSize = 'small' | 'medium' | 'large';
-type LoaderVariant = 'primary' | 'secondary' | 'white';
+defineOptions({ name: 'NLoader' });
 
-interface Props {
-  size?: LoaderSize;
-  variant?: LoaderVariant;
-  text?: string;
-  overlay?: boolean;
-}
-
-const { size, variant, text, overlay } = withDefaults(defineProps<Props>(), {
-  size: 'medium',
+const props = withDefaults(defineProps<LoaderProps>(), {
+  size: 'md',
   variant: 'primary',
   text: '',
   overlay: false,
 });
 
-const loaderClasses = computed(() => ({
-  loader: true,
-  [`loader--${size}`]: true,
-  [`loader--${variant}`]: true,
-  'loader--overlay': overlay,
-}));
-
-const loaderStyle = computed(() => {
-  if (!overlay) return {};
-
-  return {
-    position: 'fixed' as const,
-    top: '0',
-    left: '0',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 9999,
-  };
-});
+const classes = computed(() => [
+  'loader',
+  `loader--${props.size}`,
+  `loader--${props.variant}`,
+  { 'loader--overlay': props.overlay },
+]);
 </script>
 
 <style scoped lang="scss">
@@ -57,46 +36,40 @@ const loaderStyle = computed(() => {
 }
 
 .loader--overlay {
-  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .loader__spinner {
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.9s linear infinite;
   box-sizing: border-box;
 }
 
-/* Размеры */
-.loader--small {
-  .loader__spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-  }
+.loader--sm .loader__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
 }
 
-.loader--medium {
-  .loader__spinner {
-    width: 24px;
-    height: 24px;
-    border: 3px solid transparent;
-  }
+.loader--md .loader__spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid transparent;
 }
 
-.loader--large {
-  .loader__spinner {
-    width: 32px;
-    height: 32px;
-    border: 4px solid transparent;
-  }
+.loader--lg .loader__spinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid transparent;
 }
 
-/* Варианты цветов */
 .loader--primary {
   .loader__spinner {
     border-bottom-color: var(--color-green-100);
   }
-
   .loader__text {
     color: var(--color-grey-100);
   }
@@ -106,7 +79,6 @@ const loaderStyle = computed(() => {
   .loader__spinner {
     border-bottom-color: var(--color-grey-80);
   }
-
   .loader__text {
     color: var(--color-grey-80);
   }
@@ -116,7 +88,6 @@ const loaderStyle = computed(() => {
   .loader__spinner {
     border-bottom-color: var(--color-white);
   }
-
   .loader__text {
     color: var(--color-white);
   }
@@ -129,10 +100,7 @@ const loaderStyle = computed(() => {
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }

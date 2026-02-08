@@ -1,9 +1,11 @@
 <template>
   <section>
     <NButton>Primary</NButton>
-    <NCheckbox v-model="checkTest"></NCheckbox>
+    <NCheckbox v-model="checkTest" />
     <NDropdown v-model="value" :options="options" />
     <NInput v-model="inputValue" placeholder="Введите текст" />
+
+    <NLoader size="md" />
   </section>
 </template>
 
@@ -11,8 +13,8 @@
 import { ref } from 'vue';
 
 const checkTest = ref(false);
-
 const value = ref(null);
+const inputValue = ref('');
 
 const options = [
   { value: '1', label: 'Опция 1' },
