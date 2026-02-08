@@ -1,0 +1,13 @@
+:root {
+  --size-control-sm: 32px;
+  --size-control-md: 40px;
+  --size-control-lg: 48px;
+
+  --size-control-padding-sm: 0 12px;
+  --size-control-padding-md: 0 16px;
+  --size-control-padding-lg: 0 20px;
+
+  --size-icon-sm: 16px;
+  --size-icon-md: 20px;
+  --size-icon-lg: 24px;
+}

@@ -1,29 +1,19 @@
-/* ===================================================
-   TYPOGRAPHY TOKENS — NESTRO UI KIT
-   Все размеры кратны 4px для согласованной сетки
-   Базовый размер шрифта: 14px (0.875rem)
-=================================================== */
-
 :root {
-  /* --- Font family --- */
-  --font-family-base: 'Montserrat', sans-serif; /* основной шрифт проекта */
+  --font-family-base: 'Montserrat', sans-serif;
 
-  /* --- Font weights --- */
-  --font-weight-regular: 400; /* обычный текст */
-  --font-weight-medium: 500; /* для label, кнопок */
-  --font-weight-semibold: 600; /* для подзаголовков */
-  --font-weight-bold: 700; /* для заголовков и акцентов */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
-  /* --- Font sizes (px) кратные 4 --- */
-  --font-size-xs: 12px; /* подсказки, мелкий текст */
-  --font-size-sm: 14px; /* основной текст (body) */
-  --font-size-md: 18px; /* субзаголовки, карточки */
-  --font-size-lg: 22px; /* заголовки h3 */
-  --font-size-xl: 26px; /* заголовки h2 */
-  --font-size-xxl: 32px; /* крупные заголовки, hero */
-  --font-size-xxxl: 40px; /* супер крупные заголовки */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 18px;
+  --font-size-lg: 22px;
+  --font-size-xl: 26px;
+  --font-size-xxl: 32px;
+  --font-size-xxxl: 40px;
 
-  /* --- Line heights (px) кратные 4 --- */
   --line-height-xs: 16px; /* для 12px */
   --line-height-sm: 20px; /* для 14px */
   --line-height-base: 24px; /* для 18px */
