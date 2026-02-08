@@ -3,6 +3,7 @@
     <NButton>Primary</NButton>
     <NCheckbox v-model="checkTest"></NCheckbox>
     <NDropdown v-model="value" :options="options" />
+    <NInput v-model="inputValue" placeholder="Введите текст" />
   </section>
 </template>
 

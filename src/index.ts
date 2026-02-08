@@ -5,10 +5,11 @@ import Button from './components/Button/Button.vue';
 import Checkbox from './components/Checkbox/Checkbox.vue';
 import Icon from './components/Icon/Icon.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
+import Input from './components/Input/Input.vue';
 
-export { Button, Checkbox, Icon, Dropdown };
+export { Button, Checkbox, Icon, Dropdown, Input };
 
-const components = [Button, Checkbox, Icon, Dropdown];
+const components = [Button, Checkbox, Icon, Dropdown, Input];
 
 export const NestroUI = {
   install(app: App) {
