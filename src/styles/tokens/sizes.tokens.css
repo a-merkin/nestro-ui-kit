@@ -1,11 +1,15 @@
 :root {
-  --size-control-sm: 32px;
-  --size-control-md: 40px;
-  --size-control-lg: 48px;
+  --size-height-sm: 32px;
+  --size-height-md: 40px;
+  --size-height-lg: 48px;
 
-  --size-control-padding-sm: 0 12px;
-  --size-control-padding-md: 0 16px;
-  --size-control-padding-lg: 0 20px;
+  --size-padding-horizontal-sm: 12px;
+  --size-padding-horizontal-md: 16px;
+  --size-padding-horizontal-lg: 20px;
+
+  --size-min-width-sm: 80px;
+  --size-min-width-md: 96px;
+  --size-min-width-lg: 112px;
 
   --size-icon-sm: 16px;
   --size-icon-md: 20px;

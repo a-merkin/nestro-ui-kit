@@ -24,9 +24,7 @@
 import { computed } from 'vue';
 import type { ButtonProps, ButtonEmits } from './Button.types';
 
-defineOptions({
-  name: 'NButton',
-});
+defineOptions({ name: 'NButton' });
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
@@ -49,63 +47,93 @@ const buttonClasses = computed(() => ({
 }));
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 22px;
-  border-radius: 30px;
+  gap: var(--space-2);
+
+  height: var(--size-height-md);
+  padding: 0 var(--size-padding-horizontal-md);
+  min-width: var(--size-min-width-md);
+
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-sm);
+
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  height: 50px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .button--primary {
-  background: #0f9d3b;
-  color: #ffffff;
+  background-color: var(--color-green-90);
+  color: var(--color-white);
 
-  &:hover {
-    background: #72ca94;
+  &:hover:not(.button--disabled) {
+    background-color: var(--color-green-80);
   }
 
-  &:active {
-    background: #097f2d;
+  &:active:not(.button--disabled) {
+    background-color: var(--color-green-100);
   }
 
   &.button--disabled {
-    background: #d9d9d9;
+    background-color: var(--color-grey-20);
+    color: var(--color-grey-80);
     cursor: not-allowed;
-    border: none;
   }
 }
 
 .button--secondary {
-  background: #fff;
-  border: 1px solid #cfd7db;
-  color: #000000;
+  background-color: var(--color-white);
+  border-color: var(--color-blue-30);
+  color: var(--color-black);
 
-  &:hover {
-    border-color: #000;
-    color: #000;
+  &:hover:not(.button--disabled) {
+    border-color: var(--color-black);
   }
 
   &.button--disabled {
-    color: #d9d9d9;
+    border-color: var(--color-grey-20);
+    color: var(--color-grey-80);
     cursor: not-allowed;
-    border: 1px solid #d9d9d9;
   }
 }
 
 .button--text {
-  background: transparent;
-  padding: 8px;
-  color: #000000;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-black);
+  padding: var(--space-2);
 
-  &:hover {
-    color: #0f9d3b;
+  &:hover:not(.button--disabled) {
+    color: var(--color-green-90);
+  }
+
+  &.button--disabled {
+    color: var(--color-grey-80);
+    cursor: not-allowed;
+  }
+}
+
+.button--circle {
+  width: var(--size-height-md);
+  height: var(--size-height-md);
+  min-width: var(--size-height-md);
+  padding: 0;
+  border-radius: var(--radius-round);
+
+  &:hover:not(.button--disabled) {
+    background-color: var(--color-green-90);
+    color: var(--color-white);
   }
 }
 
@@ -113,37 +141,19 @@ const buttonClasses = computed(() => ({
   white-space: nowrap;
 }
 
-.button--circle {
-  border-radius: 50%;
-  padding: 0;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background: #009639;
-    color: #ffffff;
-  }
-}
-
 .button__spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid #fff;
-  border-top: 3px solid #0f9d3b;
-  border-radius: 50%;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  border: 3px solid var(--color-white);
+  border-top: 3px solid var(--color-green-90);
+  border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
   box-sizing: border-box;
   display: inline-block;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
