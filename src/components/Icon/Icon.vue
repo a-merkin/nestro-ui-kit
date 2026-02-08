@@ -1,78 +1,71 @@
-<!-- Icon.vue -->
 <template>
-  <div class="icon" :class="iconClasses">
-    <component :is="iconComponent" />
-  </div>
+  <component
+    :is="iconComponent"
+    v-if="iconComponent"
+    :class="['icon', customClass]"
+    :style="{
+      width: sizeVar,
+      height: sizeVar,
+      color: colorVar,
+    }"
+  />
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import CheckIcon from '@/assets/icons/check.svg';
-import PlusIcon from '@/assets/icons/plus.svg';
-import UniteIcon from '@/assets/icons/unite.svg';
-import DownloadIcon from '@/assets/icons/download.svg';
-import MagnifierIcon from '@/assets/icons/magnifier.svg';
-import SettingsIcon from '@/assets/icons/settings.svg';
+import type { IconProps } from './Icon.types';
 
-interface Props {
-  name: 'check' | 'plus' | 'unite' | 'download' | 'magnifier' | 'settings';
-  size?: 'small' | 'medium' | 'large';
-  color?: string;
-}
+defineOptions({ name: 'NIcon' });
 
-const { name, size, color } = withDefaults(defineProps<Props>(), {
-  size: 'medium',
-});
+const props = defineProps<IconProps>();
 
-const iconComponents = {
-  check: CheckIcon,
-  plus: PlusIcon,
-  unite: UniteIcon,
-  download: DownloadIcon,
-  magnifier: MagnifierIcon,
-  settings: SettingsIcon,
-};
+const icons = import.meta.glob('../../assets/icons/*.svg', { eager: true, import: 'default' });
 
 const iconComponent = computed(() => {
-  return iconComponents[name];
+  const mod = icons[`../../assets/icons/${props.name}.svg`] as any;
+  if (!mod) console.warn('Icon not found:', props.name);
+  return mod || null;
 });
 
-const iconClasses = computed(() => ({
-  icon: true,
-  [`icon--${size}`]: true,
-  'icon--custom-color': !!color,
-}));
+const sizeVar = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'var(--size-icon-sm)';
+    case 'md':
+      return 'var(--size-icon-md)';
+    case 'lg':
+      return 'var(--size-icon-lg)';
+    default:
+      return 'var(--size-icon-md)';
+  }
+});
+
+const colorVar = computed(() => {
+  if (!props.color) return 'currentColor';
+  switch (props.color) {
+    case 'white':
+      return 'var(--color-white)';
+    case 'black':
+      return 'var(--color-black)';
+    case 'green-100':
+      return 'var(--color-green-100)';
+    case 'green-90':
+      return 'var(--color-green-90)';
+    case 'green-80':
+      return 'var(--color-green-80)';
+    case 'green-50':
+      return 'var(--color-green-50)';
+    case 'orange':
+      return 'var(--color-orange)';
+    default:
+      return props.color;
+  }
+});
 </script>
 
 <style scoped>
 .icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon--small :deep(svg) {
-  width: 16px;
-  height: 16px;
-}
-
-.icon--medium :deep(svg) {
-  width: 24px;
-  height: 24px;
-}
-
-.icon--large :deep(svg) {
-  width: 32px;
-  height: 32px;
-}
-
-.icon--custom-color :deep(svg path) {
-  fill: v-bind(color);
-}
-
-:deep(svg) {
-  width: 100%;
-  height: 100%;
-  padding: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>

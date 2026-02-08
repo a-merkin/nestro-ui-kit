@@ -3,10 +3,11 @@ import './styles/index.css';
 
 import Button from './components/Button/Button.vue';
 import Checkbox from './components/Checkbox/Checkbox.vue';
+import Icon from './components/Icon/Icon.vue';
 
-export { Button, Checkbox };
+export { Button, Checkbox, Icon };
 
-const components = [Button, Checkbox];
+const components = [Button, Checkbox, Icon];
 
 export const NestroUI = {
   install(app: App) {
