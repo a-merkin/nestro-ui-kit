@@ -12,6 +12,7 @@ import WorkPlace from './components/WorkPlace/WorkPlace.vue';
 import RadioButton from './components/RadioButton/RadioButton.vue';
 import RadioGroup from './components/RadioGroup/RadioGroup.vue';
 import RangeSlider from './components/RangeSlider/RangeSlider.vue';
+import Tooltip from './components/Tooltip/Tooltip.vue';
 
 export {
   Button,
@@ -25,6 +26,7 @@ export {
   RadioButton,
   RadioGroup,
   RangeSlider,
+  Tooltip,
 };
 
 const components = [
@@ -39,6 +41,7 @@ const components = [
   RadioButton,
   RadioGroup,
   RangeSlider,
+  Tooltip,
 ];
 
 export const NestroUI = {

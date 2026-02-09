@@ -40,6 +40,37 @@
 
         <NProgressBar />
         <NLoader size="md" />
+
+        <!-- TOOLTIP SHOWCASE -->
+        <div
+          style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center"
+        >
+          <NTooltip text="Подсказка справа" placement="right">
+            <NButton size="sm" variant="secondary">Hover right</NButton>
+          </NTooltip>
+
+          <NTooltip text="Снизу" placement="bottom">
+            <NButton size="sm" variant="secondary">Bottom</NButton>
+          </NTooltip>
+
+          <NTooltip text="По клику" trigger="click">
+            <NButton size="sm" variant="secondary">Click me</NButton>
+          </NTooltip>
+
+          <NTooltip text="Только если обрезан" only-if-truncated>
+            <span style="max-width: 120px; display: inline-block">
+              Очень длинный текст который точно не помещается
+            </span>
+          </NTooltip>
+
+          <NTooltip placement="top">
+            <template #tooltip>
+              <strong>Кастомный слот</strong><br />
+              <small>Любой контент</small>
+            </template>
+            <NButton size="sm" variant="ghost">Slot tooltip</NButton>
+          </NTooltip>
+        </div>
       </template>
 
       <template v-else-if="activeTab === 'layout'">

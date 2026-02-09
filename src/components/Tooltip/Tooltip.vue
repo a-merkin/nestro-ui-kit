@@ -1,12 +1,19 @@
 <template>
-  <span class="tooltip-wrapper" @mouseenter="onMouseEnter" @mouseleave="visible = false">
-    <span ref="contentRef" class="tooltip-content">
+  <span class="n-tooltip" @mouseenter="onEnter" @mouseleave="onLeave" @click="onClick">
+    <span ref="triggerRef" class="n-tooltip__trigger">
       <slot />
     </span>
 
     <transition name="tooltip-fade">
       <teleport to="body">
-        <div v-if="visible" class="tooltip" :class="`tooltip--${placement}`" :style="tooltipStyle">
+        <div
+          v-if="visible"
+          ref="tooltipRef"
+          class="n-tooltip__content"
+          :class="`n-tooltip__content--${placement}`"
+          :style="style"
+          role="tooltip"
+        >
           <slot name="tooltip">
             {{ text }}
           </slot>
@@ -17,121 +24,103 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, computed, nextTick } from 'vue';
+import type { TooltipProps } from './Tooltip.types';
 
-interface Props {
-  text?: string;
-  placement?: 'top' | 'right' | 'bottom' | 'left';
-  onlyIfTruncated?: boolean;
-}
+defineOptions({ name: 'NTooltip' });
 
-const props = withDefaults(defineProps<Props>(), {
-  placement: 'right',
-  onlyIfTruncated: true,
+const props = withDefaults(defineProps<TooltipProps>(), {
+  placement: 'top',
+  offset: 8,
+  trigger: 'hover',
+  onlyIfTruncated: false,
 });
 
-const contentRef = ref<HTMLElement | null>(null);
 const visible = ref(false);
-const tooltipStyle = ref({ top: '0px', left: '0px' });
+const triggerRef = ref<HTMLElement | null>(null);
+const tooltipRef = ref<HTMLElement | null>(null);
 
-const onMouseEnter = async () => {
-  if (!contentRef.value) return;
+const isTruncated = () => {
+  const el = triggerRef.value;
+  return !!el && el.scrollWidth > el.clientWidth;
+};
 
-  if (props.onlyIfTruncated) {
-    const el = contentRef.value;
-    const isTruncated = el.scrollWidth > el.clientWidth;
-    if (!isTruncated) return;
-  }
+const show = async () => {
+  if (props.disabled) return;
+  if (props.onlyIfTruncated && !isTruncated()) return;
 
   visible.value = true;
   await nextTick();
+};
 
-  const rect = contentRef.value!.getBoundingClientRect();
-  const tooltipEl = document.querySelector('.tooltip') as HTMLElement;
-  if (!tooltipEl) return;
+const hide = () => {
+  if (props.trigger !== 'manual') visible.value = false;
+};
 
-  const scrollX = window.scrollX || window.pageXOffset;
-  const scrollY = window.scrollY || window.pageYOffset;
+const onEnter = () => props.trigger === 'hover' && show();
+const onLeave = () => props.trigger === 'hover' && hide();
+const onClick = () => props.trigger === 'click' && (visible.value ? hide() : show());
+
+const style = computed(() => {
+  const trigger = triggerRef.value;
+  const tooltip = tooltipRef.value;
+  if (!trigger || !tooltip) return {};
+
+  const t = trigger.getBoundingClientRect();
+  const tt = tooltip.getBoundingClientRect();
+  const offset = props.offset;
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
 
   switch (props.placement) {
     case 'right':
-      tooltipStyle.value = {
-        top: `${rect.top + scrollY + rect.height / 2 - tooltipEl.offsetHeight / 2}px`,
-        left: `${rect.right + scrollX + 8}px`,
+      return {
+        top: `${t.top + scrollY + t.height / 2 - tt.height / 2}px`,
+        left: `${t.right + scrollX + offset}px`,
       };
-      break;
     case 'left':
-      tooltipStyle.value = {
-        top: `${rect.top + scrollY + rect.height / 2 - tooltipEl.offsetHeight / 2}px`,
-        left: `${rect.left + scrollX - tooltipEl.offsetWidth - 8}px`,
+      return {
+        top: `${t.top + scrollY + t.height / 2 - tt.height / 2}px`,
+        left: `${t.left + scrollX - tt.width - offset}px`,
       };
-      break;
-    case 'top':
-      tooltipStyle.value = {
-        top: `${rect.top + scrollY - tooltipEl.offsetHeight - 8}px`,
-        left: `${rect.left + scrollX + rect.width / 2 - tooltipEl.offsetWidth / 2}px`,
-      };
-      break;
     case 'bottom':
-      tooltipStyle.value = {
-        top: `${rect.bottom + scrollY + 8}px`,
-        left: `${rect.left + scrollX + rect.width / 2 - tooltipEl.offsetWidth / 2}px`,
+      return {
+        top: `${t.bottom + scrollY + offset}px`,
+        left: `${t.left + scrollX + t.width / 2 - tt.width / 2}px`,
       };
-      break;
+    default:
+      return {
+        top: `${t.top + scrollY - tt.height - offset}px`,
+        left: `${t.left + scrollX + t.width / 2 - tt.width / 2}px`,
+      };
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
-.tooltip-wrapper {
-  position: relative;
-  display: inline-block;
+.n-tooltip {
+  display: inline-flex;
   max-width: 100%;
 }
 
-.tooltip-content {
-  display: inline-block;
+.n-tooltip__trigger {
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.tooltip {
+.n-tooltip__content {
   position: absolute;
   z-index: 3000;
   padding: 6px 10px;
   font-size: 13px;
-  color: #fff;
-  background: #222c37;
-  border-radius: 6px;
+  color: var(--color-text-invert, #fff);
+  background: var(--color-bg-tooltip, #222c37);
+  border-radius: var(--radius-sm, 6px);
   white-space: nowrap;
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-  &--right {
-    top: 50%;
-    left: 100%;
-    transform: translate(8px, -50%);
-  }
-
-  &--left {
-    top: 50%;
-    right: 100%;
-    transform: translate(-8px, -50%);
-  }
-
-  &--top {
-    bottom: 100%;
-    left: 50%;
-    transform: translate(-50%, -8px);
-  }
-
-  &--bottom {
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, 8px);
-  }
 }
 
 .tooltip-fade-enter-active,
