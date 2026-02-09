@@ -3,13 +3,10 @@ import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import dts from 'vite-plugin-dts';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    svgLoader({
-      defaultImport: 'component',
-    }),
+    svgLoader({ defaultImport: 'component' }),
     dts({
       rollupTypes: true,
       tsconfigPath: './tsconfig.app.json',
@@ -19,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src',
+      '@preview': '/preview',
     },
   },
   build: {
@@ -31,15 +29,11 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue'],
       output: {
-        globals: {
-          vue: 'Vue',
-        },
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-            return 'nestro-ui-kit.css';
-          }
-          return assetInfo.name || 'assets/[name].[ext]';
-        },
+        globals: { vue: 'Vue' },
+        assetFileNames: (assetInfo) =>
+          assetInfo.name?.endsWith('.css')
+            ? 'nestro-ui-kit.css'
+            : assetInfo.name || 'assets/[name].[ext]',
       },
     },
   },

@@ -1,10 +1,10 @@
-<!-- Input.vue -->
 <template>
-  <div class="input-wrapper">
-    <div class="input-container">
-      <div v-if="$slots.iconLeft" class="input-icon input-icon--left">
-        <slot name="iconLeft"></slot>
-      </div>
+  <div class="input">
+    <div class="input__field">
+      <span v-if="$slots.iconLeft" class="input__icon input__icon--left">
+        <slot name="iconLeft" />
+      </span>
+
       <input
         v-bind="$attrs"
         :type="type"
@@ -13,40 +13,36 @@
         :disabled="disabled"
         :name="name"
         :required="required"
+        class="input__control"
         :class="inputClasses"
         :style="inputStyles"
-        @input="handleInput"
-        @change="handleChange"
-        @focus="handleFocus"
-        @blur="handleBlur"
+        @input="onInput"
+        @change="onChange"
+        @focus="onFocus"
+        @blur="onBlur"
       />
-      <div v-if="$slots.iconRight" class="input-icon input-icon--right">
-        <slot name="iconRight"></slot>
-      </div>
+
+      <span v-if="$slots.iconRight" class="input__icon input__icon--right">
+        <slot name="iconRight" />
+      </span>
     </div>
-    <span v-if="error && errorMessage" class="error-message">{{ errorMessage }}</span>
+
+    <p v-if="error && errorMessage" class="input__error">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
+import type { InputProps } from './Input.types';
 
 defineOptions({
+  name: 'NInput',
   inheritAttrs: false,
 });
 
-interface Props {
-  modelValue: string;
-  placeholder?: string;
-  disabled?: boolean;
-  error?: boolean;
-  errorMessage?: string;
-  type?: 'text' | 'password' | 'email' | 'number' | 'date';
-  name?: string;
-  required?: boolean;
-}
-
-const { type, disabled, error, required } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
   disabled: false,
   error: false,
@@ -62,55 +58,42 @@ const emit = defineEmits<{
 
 const slots = useSlots();
 
-const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
+const onInput = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).value);
 };
 
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('change', target.value);
+const onChange = (e: Event) => {
+  emit('change', (e.target as HTMLInputElement).value);
 };
 
-const handleFocus = (event: FocusEvent) => {
-  emit('focus', event);
-};
-
-const handleBlur = (event: FocusEvent) => {
-  emit('blur', event);
-};
+const onFocus = (e: FocusEvent) => emit('focus', e);
+const onBlur = (e: FocusEvent) => emit('blur', e);
 
 const inputClasses = computed(() => ({
-  input: true,
-  'input--error': error,
-  'input--disabled': disabled,
+  'input__control--error': props.error,
+  'input__control--disabled': props.disabled,
 }));
 
-const inputStyles = computed(() => {
-  const paddingLeft = slots.iconLeft ? 'var(--space-11)' : 'var(--padding-md)';
-  const paddingRight = slots.iconRight ? 'var(--space-11)' : 'var(--padding-md)';
-  return {
-    paddingLeft,
-    paddingRight,
-  };
-});
+const inputStyles = computed(() => ({
+  paddingLeft: slots.iconLeft ? 'var(--space-11)' : 'var(--padding-md)',
+  paddingRight: slots.iconRight ? 'var(--space-11)' : 'var(--padding-md)',
+}));
 </script>
 
 <style scoped>
-.input-wrapper {
-  position: relative;
+.input {
   display: flex;
   flex-direction: column;
 }
 
-.input-container {
+.input__field {
   position: relative;
   display: inline-flex;
   align-items: center;
   min-width: 230px;
 }
 
-.input {
+.input__control {
   width: 100%;
   height: var(--space-10);
   padding: 0 var(--padding-md);
@@ -121,15 +104,26 @@ const inputStyles = computed(() => {
   font-family: var(--font-family-base, 'Montserrat', sans-serif);
   font-size: 16px;
   font-weight: 400;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   outline: none;
 }
 
-.input::placeholder {
+.input__control::placeholder {
   color: rgba(120, 151, 166, 0.6);
 }
 
-.input-icon {
+.input__control--error {
+  border-color: var(--color-stroke-error, #ed6e1c);
+}
+
+.input__control--disabled {
+  background: rgba(218, 218, 218, 0.15);
+  border-color: rgba(225, 225, 225, 0.51);
+  color: var(--color-text-disabled, #e1e1e1);
+  cursor: not-allowed;
+}
+
+.input__icon {
   position: absolute;
   display: flex;
   align-items: center;
@@ -141,71 +135,38 @@ const inputStyles = computed(() => {
   z-index: 2;
 }
 
-.input-icon--left {
+.input__icon--left {
   left: var(--space-3);
 }
 
-.input-icon--right {
+.input__icon--right {
   right: var(--space-3);
 }
 
-.input-icon :deep(svg) {
+.input__icon :deep(svg) {
   width: var(--space-5);
   height: var(--space-5);
 }
 
-.input--error {
-  border-color: var(--color-stroke-error, #ed6e1c);
-}
-
-.error-message {
-  color: var(--color-text-error, #ed6e1c);
-  font-size: 12px;
+.input__error {
   margin-top: var(--space-1);
   padding-left: var(--padding-md);
+  font-size: 12px;
+  color: var(--color-text-error, #ed6e1c);
 }
 
-.input--disabled {
-  background: rgba(218, 218, 218, 0.15);
-  border-color: rgba(225, 225, 225, 0.51);
-  color: var(--color-text-disabled, #e1e1e1);
-  cursor: not-allowed;
-}
-
-/* Стили для input type="date" */
-.input[type='date'] {
+.input__control[type='date'] {
   cursor: pointer;
 }
 
-.input[type='date']::-webkit-calendar-picker-indicator {
+.input__control[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0.5);
   opacity: 0.6;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
-.input[type='date']::-webkit-calendar-picker-indicator:hover {
+.input__control[type='date']::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
-}
-
-.input[type='date']::-webkit-datetime-edit-fields-wrapper {
-  padding: 0;
-}
-
-.input[type='date']::-webkit-datetime-edit {
-  padding: 0;
-}
-
-.input[type='date']::-webkit-datetime-edit-text {
-  padding: 0 2px;
-}
-
-.input[type='date']::-webkit-datetime-edit-month-field,
-.input[type='date']::-webkit-datetime-edit-day-field,
-.input[type='date']::-webkit-datetime-edit-year-field {
-  padding: 0 2px;
-  font-family: var(--font-family-base, 'Montserrat', sans-serif);
-  font-size: 16px;
-  font-weight: 400;
 }
 </style>

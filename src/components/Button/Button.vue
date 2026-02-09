@@ -1,9 +1,15 @@
-<!-- Button.vue -->
 <template>
-  <button :type="type" :class="buttonClasses" :disabled="disabled || loading" @click="handleClick">
+  <button
+    :type="type"
+    :class="buttonClasses"
+    :disabled="disabled || loading"
+    :aria-busy="loading || undefined"
+    @click="handleClick"
+  >
     <template v-if="loading">
       <span class="button__spinner" />
     </template>
+
     <template v-else>
       <slot v-if="$slots['icon-left']" name="icon-left" />
       <span v-if="$slots.default" class="button__text">
@@ -16,97 +22,118 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { ButtonProps, ButtonEmits } from './Button.types';
 
-type ButtonVariant = 'primary' | 'secondary' | 'text' | 'circle';
+defineOptions({ name: 'NButton' });
 
-interface Props {
-  variant?: ButtonVariant;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  loading?: boolean;
-}
-
-const { variant, disabled, type, loading } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
   disabled: false,
   type: 'button',
   loading: false,
 });
 
-const emit = defineEmits<{
-  (e: 'click', event: MouseEvent): void;
-}>();
+const emit = defineEmits<ButtonEmits>();
 
 const handleClick = (event: MouseEvent) => {
-  if (!disabled) {
-    emit('click', event);
-  }
+  if (props.disabled || props.loading) return;
+  emit('click', event);
 };
 
 const buttonClasses = computed(() => ({
   button: true,
-  [`button--${variant}`]: true,
-  'button--disabled': disabled,
+  [`button--${props.variant}`]: true,
+  'button--disabled': props.disabled || props.loading,
 }));
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-xs);
-  padding: var(--padding-md) 22px;
-  border-radius: 30px;
+  gap: var(--space-2);
+
+  height: var(--size-height-md);
+  padding: 0 var(--size-padding-horizontal-md);
+  min-width: var(--size-min-width-md);
+
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-sm);
+
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  height: 50px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .button--primary {
-  background: var(--color-button-primary);
+  background-color: var(--color-green-90);
   color: var(--color-white);
 
-  &:hover {
-    background: var(--color-button-primary-hover);
+  &:hover:not(.button--disabled) {
+    background-color: var(--color-green-80);
   }
 
-  &:active {
-    background: var(--color-button-primary-pressed);
+  &:active:not(.button--disabled) {
+    background-color: var(--color-green-100);
   }
 
   &.button--disabled {
-    background: var(--color-button-primary-disabled);
+    background-color: var(--color-grey-20);
+    color: var(--color-grey-80);
     cursor: not-allowed;
-    border: none;
   }
 }
 
 .button--secondary {
-  background: var(--color-button-secondary);
-  border: 1px solid var(--color-stroke-primary);
+  background-color: var(--color-white);
+  border-color: var(--color-blue-30);
   color: var(--color-black);
 
-  &:hover {
+  &:hover:not(.button--disabled) {
     border-color: var(--color-black);
-    color: var(--color-black);
   }
 
   &.button--disabled {
-    color: var(--color-stroke-disabled);
+    border-color: var(--color-grey-20);
+    color: var(--color-grey-80);
     cursor: not-allowed;
-    border: 1px solid var(--color-stroke-disabled);
   }
 }
 
 .button--text {
-  background: transparent;
-  padding: var(--padding-xs);
+  background-color: transparent;
+  border-color: transparent;
   color: var(--color-black);
+  padding: var(--space-2);
 
-  &:hover {
-    color: var(--color-button-primary);
+  &:hover:not(.button--disabled) {
+    color: var(--color-green-90);
+  }
+
+  &.button--disabled {
+    color: var(--color-grey-80);
+    cursor: not-allowed;
+  }
+}
+
+.button--circle {
+  width: var(--size-height-md);
+  height: var(--size-height-md);
+  min-width: var(--size-height-md);
+  padding: 0;
+  border-radius: var(--radius-round);
+
+  &:hover:not(.button--disabled) {
+    background-color: var(--color-green-90);
+    color: var(--color-white);
   }
 }
 
@@ -114,37 +141,19 @@ const buttonClasses = computed(() => ({
   white-space: nowrap;
 }
 
-.button--circle {
-  border-radius: 50%;
-  padding: 0;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background: var(--color-button-primary);
-    color: var(--color-white);
-  }
-}
-
 .button__spinner {
-  width: var(--space-6);
-  height: var(--space-6);
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
   border: 3px solid var(--color-white);
-  border-top: 3px solid var(--color-button-primary);
-  border-radius: 50%;
+  border-top: 3px solid var(--color-green-90);
+  border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
   box-sizing: border-box;
   display: inline-block;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }

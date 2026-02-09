@@ -1,7 +1,6 @@
 <template>
   <div class="dropdown" :class="dropdownClasses">
-    <label v-if="label" class="dropdown__label">{{ label }}</label>
-
+    <label v-if="label" class="dropdown__label text-h2">{{ label }}</label>
     <div class="dropdown__trigger" :class="triggerClasses" @click="handleTriggerClick">
       <input
         v-if="searchable"
@@ -25,12 +24,11 @@
           type="button"
           @click.stop="handleClear"
         >
-          <NIcon name="close" size="sm" />
+          <CloseIcon />
         </button>
-
         <span class="dropdown__arrow">
-          <NIcon v-if="!loading" name="arrow-down" size="md" />
-          <NIcon v-else name="loading" size="md" class="dropdown__loader" />
+          <ArrowIcon v-if="!props.loading" />
+          <LoadingIcon v-else />
         </span>
       </div>
     </div>
@@ -57,7 +55,6 @@
             {{ getOptionLabel(option) }}
           </template>
         </li>
-
         <li v-if="filteredOptions.length === 0" class="dropdown__item dropdown__item--no-results">
           Ничего не найдено
         </li>
@@ -68,13 +65,28 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import type { DropdownProps, DropdownEmits } from './Dropdown.types';
-import NIcon from '../Icon/Icon.vue';
+import CloseIcon from './CloseIcon.vue';
+import ArrowIcon from './ArrowIcon.vue';
+import LoadingIcon from './LoadingIcon.vue';
 import Tooltip from '../Tooltip/Tooltip.vue';
 
 defineOptions({ name: 'NDropdown' });
 
-const props = withDefaults(defineProps<DropdownProps>(), {
+interface Props {
+  modelValue: string | number | null;
+  options: any[];
+  placeholder?: string;
+  disabled?: boolean;
+  searchable?: boolean;
+  clearable?: boolean;
+  valueKey?: string;
+  labelKey?: string;
+  loading?: boolean;
+  label?: string;
+  showOptionTooltip?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Выберите значение',
   disabled: false,
   searchable: false,
@@ -85,7 +97,11 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   showOptionTooltip: true,
 });
 
-const emit = defineEmits<DropdownEmits>();
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string | number | null): void;
+  (e: 'change', value: string | number | null): void;
+  (e: 'clear'): void;
+}>();
 
 const isOpen = ref(false);
 const searchQuery = ref('');
@@ -115,37 +131,48 @@ const isDisabled = computed(() => props.disabled || props.loading);
 
 const selectedLabel = computed(() => {
   if (props.loading) return 'Загрузка...';
-  const selected = props.options.find((o) => getOptionValue(o) === props.modelValue);
+  const selected = props.options.find((option) => getOptionValue(option) === props.modelValue);
   return selected ? getOptionLabel(selected) : props.placeholder;
 });
 
 const filteredOptions = computed(() => {
-  if (!props.searchable || !searchQuery.value.trim()) return props.options;
+  if (!props.searchable || !searchQuery.value.trim()) {
+    return props.options;
+  }
+
   const query = searchQuery.value.toLowerCase();
-  return props.options.filter((o) => getOptionLabel(o).toLowerCase().includes(query));
+  return props.options.filter((option) => getOptionLabel(option).toLowerCase().includes(query));
 });
 
-const getOptionValue = (option: any): string | number => option[props.valueKey];
-const getOptionLabel = (option: any): string => option[props.labelKey];
+const getOptionValue = (option: any): string | number => {
+  return option[props.valueKey];
+};
+
+const getOptionLabel = (option: any): string => {
+  return option[props.labelKey];
+};
 
 const getItemClasses = (option: any) => ({
   'dropdown__item--selected': props.modelValue === getOptionValue(option),
 });
 
 const handleTriggerClick = () => {
-  if (isDisabled.value) return;
+  if (isDisabled.value) {
+    return;
+  }
 
   if (props.searchable && searchInputRef.value) {
     searchInputRef.value.focus();
     isOpen.value = !isOpen.value;
     return;
   }
-
   isOpen.value = !isOpen.value;
 };
 
 const onSearchInput = () => {
-  if (!isOpen.value) isOpen.value = true;
+  if (!isOpen.value) {
+    isOpen.value = true;
+  }
 };
 
 const selectOption = (option: any) => {
@@ -157,13 +184,15 @@ const selectOption = (option: any) => {
 };
 
 const handleClear = () => {
-  if (isDisabled.value) return;
-  emit('update:modelValue', null);
-  emit('change', null);
-  emit('clear');
-  searchQuery.value = '';
-  if (props.searchable && searchInputRef.value) {
-    searchInputRef.value.focus();
+  if (!isDisabled.value) {
+    emit('update:modelValue', null);
+    emit('change', null);
+    emit('clear');
+    searchQuery.value = '';
+
+    if (props.searchable && searchInputRef.value) {
+      searchInputRef.value.focus();
+    }
   }
 };
 
@@ -178,12 +207,13 @@ const handleClickOutside = (event: MouseEvent) => {
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
+
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .dropdown {
   $self: &;
   position: relative;
@@ -191,12 +221,21 @@ onUnmounted(() => {
   max-width: 320px;
   box-sizing: border-box;
 
+  &__item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &__label {
     display: block;
-    margin-bottom: var(--space-2);
-    color: var(--color-grey-70);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-sm);
+    max-width: 100%;
+    color: var(--color-text-tertiary, #464e56);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.219;
+    margin-bottom: 8px;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -207,20 +246,22 @@ onUnmounted(() => {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: var(--size-height-md);
-    padding: 0 var(--size-padding-horizontal-md);
-    background: var(--color-blue-60);
-    border-radius: var(--radius-xl);
-    color: var(--color-grey-100);
-    font-size: var(--font-size-sm);
+    height: 44px;
+    padding: 0 16px;
+    background: rgba(182, 199, 207, 0.15);
+    border: none;
+    border-radius: 60px;
+    color: var(--color-text-primary, #222c37);
+    font-size: 14px;
+    font-weight: 400;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(31, 41, 55, 0.06);
     box-sizing: border-box;
 
     &--disabled {
-      background: var(--color-grey-50);
-      color: var(--color-grey-40);
+      background: #f3f4f6;
+      color: #b0b7c3;
       cursor: not-allowed;
       opacity: 0.7;
     }
@@ -231,42 +272,46 @@ onUnmounted(() => {
     border: none;
     background: transparent;
     outline: none;
-    font-size: var(--font-size-sm);
-    font-family: var(--font-family-base);
-    color: var(--color-grey-100);
+    font-size: 14px;
+    font-family: Montserrat, sans-serif;
+    color: var(--color-text-primary, #222c37);
     padding: 0;
+    width: 100%;
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     &::placeholder {
-      color: var(--color-grey-100);
+      color: var(--color-text-primary, #222c37);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &--placeholder::placeholder {
-      color: var(--color-grey-80);
+      color: rgba(120, 151, 166, 0.6);
     }
   }
 
   &__selected {
     flex: 1;
-    color: var(--color-grey-100);
+    color: var(--color-text-primary, #222c37);
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     &--placeholder {
-      color: var(--color-grey-80);
+      color: rgba(120, 151, 166, 0.6);
     }
   }
 
   &__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    margin-left: var(--space-2);
+    gap: 8px;
+    margin-left: 8px;
     flex-shrink: 0;
   }
 
@@ -274,14 +319,14 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--size-icon-md);
-    height: var(--size-icon-md);
+    width: 20px;
+    height: 20px;
     border: none;
     background: none;
     cursor: pointer;
-    color: var(--color-grey-80);
-    border-radius: var(--radius-round);
-    transition: transform 0.15s ease;
+    color: #90a9b6;
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0;
     flex-shrink: 0;
 
@@ -296,7 +341,10 @@ onUnmounted(() => {
     #{$self}__trigger--disabled & {
       cursor: not-allowed;
       opacity: 0.5;
+
       &:hover {
+        color: #90a9b6;
+        background: transparent;
         transform: none;
       }
     }
@@ -306,8 +354,8 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-grey-80);
-    transition: transform 0.25s ease;
+    color: #a2b1b8;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
 
     #{$self}--open & {
@@ -317,61 +365,79 @@ onUnmounted(() => {
 
   &__content {
     position: absolute;
-    top: calc(100% + var(--space-2));
+    top: calc(100% + 8px);
     left: 0;
     width: 100%;
-    background: var(--color-white);
-    border: 1px solid var(--color-blue-40);
-    border-radius: var(--radius-lg);
+    background: #ffffff;
+    border: 1.5px solid var(--color-stroke-primary, #d3e0e6);
+    border-radius: 16px;
     box-shadow: 0 8px 32px rgba(31, 41, 55, 0.12);
-    z-index: var(--z-dropdown);
-    animation: dropdown-fade-in 0.15s ease;
+    z-index: 1000;
+    animation: dropdown-fade-in 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     max-height: 400px;
     overflow: hidden;
   }
 
   &__list {
     margin: 0;
-    padding: var(--space-2) 0;
+    padding: 8px 0;
     list-style: none;
     max-height: 320px;
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #d3e0e6;
+      border-radius: 4px;
+
+      &:hover {
+        background: #90a9b6;
+      }
+    }
   }
 
   &__item {
-    padding: var(--space-3) var(--space-4);
-    color: var(--color-grey-100);
+    padding: 12px 20px;
+    color: var(--color-text-primary, #222c37);
     cursor: pointer;
-    font-size: var(--font-size-sm);
-    transition:
-      background 0.15s ease,
-      color 0.15s ease;
-    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.18s ease;
+    border-radius: 8px;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     &:hover {
-      background: var(--color-green-50);
-      color: var(--color-green-100);
+      background: #f0f7f4;
+      color: #0f9d3b;
     }
 
     &--selected {
-      background: var(--color-green-80);
-      color: var(--color-green-100);
+      background: #e6f4ea;
+      color: #0f9d3b;
     }
 
     &--no-results {
-      padding: var(--space-4);
+      padding: 20px;
       text-align: center;
-      color: var(--color-grey-80);
-      font-size: var(--font-size-sm);
+      color: rgba(120, 151, 166, 0.6);
+      font-size: 14px;
       cursor: default;
       white-space: normal;
 
       &:hover {
         background: transparent;
-        color: var(--color-grey-80);
+        color: rgba(120, 151, 166, 0.6);
       }
     }
   }
@@ -384,7 +450,7 @@ onUnmounted(() => {
 @keyframes dropdown-fade-in {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;

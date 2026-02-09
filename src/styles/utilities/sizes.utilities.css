@@ -1,0 +1,42 @@
+.h-control-sm {
+  height: var(--size-height-sm);
+}
+.h-control-md {
+  height: var(--size-height-md);
+}
+.h-control-lg {
+  height: var(--size-height-lg);
+}
+
+.px-control-sm {
+  padding-inline: var(--size-padding-horizontal-sm);
+}
+.px-control-md {
+  padding-inline: var(--size-padding-horizontal-md);
+}
+.px-control-lg {
+  padding-inline: var(--size-padding-horizontal-lg);
+}
+
+.min-w-control-sm {
+  min-width: var(--size-min-width-sm);
+}
+.min-w-control-md {
+  min-width: var(--size-min-width-md);
+}
+.min-w-control-lg {
+  min-width: var(--size-min-width-lg);
+}
+
+.icon-sm {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+.icon-md {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+.icon-lg {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}
