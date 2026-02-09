@@ -16,6 +16,14 @@
           <NRadioButton v-model="radioValue" value="three" disabled label="Disabled" />
         </div>
 
+        <NRadioGroup v-model="radioGroupValue" label="Radio group" :options="radioGroupOptions" />
+
+        <NRadioGroup
+          v-model="radioGroupInlineValue"
+          direction="horizontal"
+          :options="radioGroupInlineOptions"
+        />
+
         <NProgressBar />
         <NLoader size="md" />
       </template>
@@ -47,6 +55,20 @@ const value = ref(null);
 const inputValue = ref('');
 
 const radioValue = ref<'one' | 'two' | 'three'>('one');
+
+const radioGroupValue = ref<'a' | 'b' | 'c'>('a');
+const radioGroupInlineValue = ref<'yes' | 'no'>('yes');
+
+const radioGroupOptions = [
+  { label: 'Option A', value: 'a' },
+  { label: 'Option B', value: 'b' },
+  { label: 'Option C', value: 'c', disabled: true },
+];
+
+const radioGroupInlineOptions = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+];
 
 const options = [
   { value: '1', label: 'Опция 1' },

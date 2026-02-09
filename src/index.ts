@@ -10,8 +10,20 @@ import Loader from './components/Loader/Loader.vue';
 import ProgressBar from './components/ProgressBar/ProgressBar.vue';
 import WorkPlace from './components/WorkPlace/WorkPlace.vue';
 import RadioButton from './components/RadioButton/RadioButton.vue';
+import RadioGroup from './components/RadioGroup/RadioGroup.vue';
 
-export { Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar, WorkPlace, RadioButton };
+export {
+  Button,
+  Checkbox,
+  Icon,
+  Dropdown,
+  Input,
+  Loader,
+  ProgressBar,
+  WorkPlace,
+  RadioButton,
+  RadioGroup,
+};
 
 const components = [
   Button,
@@ -23,6 +35,7 @@ const components = [
   ProgressBar,
   WorkPlace,
   RadioButton,
+  RadioGroup,
 ];
 
 export const NestroUI = {
