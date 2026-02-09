@@ -24,6 +24,20 @@
           :options="radioGroupInlineOptions"
         />
 
+        <div style="margin-top: 24px; max-width: 400px">
+          <NRangeSlider
+            v-model="rangeValue"
+            :values="rangeValues"
+            :cutoffs="[2, 4]"
+            min-label="Min"
+            max-label="Max"
+          />
+        </div>
+
+        <div style="margin-top: 16px; max-width: 400px">
+          <NRangeSlider v-model="singleValue" :values="rangeValues" />
+        </div>
+
         <NProgressBar />
         <NLoader size="md" />
       </template>
@@ -75,4 +89,8 @@ const options = [
   { value: '2', label: 'Опция 2' },
   { value: '3', label: 'Опция 3' },
 ];
+
+const rangeValues = [10, 20, 30, 40, 50, 60];
+const rangeValue = ref<[number, number]>([20, 50]);
+const singleValue = ref<number>(30);
 </script>

@@ -11,6 +11,7 @@ import ProgressBar from './components/ProgressBar/ProgressBar.vue';
 import WorkPlace from './components/WorkPlace/WorkPlace.vue';
 import RadioButton from './components/RadioButton/RadioButton.vue';
 import RadioGroup from './components/RadioGroup/RadioGroup.vue';
+import RangeSlider from './components/RangeSlider/RangeSlider.vue';
 
 export {
   Button,
@@ -23,6 +24,7 @@ export {
   WorkPlace,
   RadioButton,
   RadioGroup,
+  RangeSlider,
 };
 
 const components = [
@@ -36,6 +38,7 @@ const components = [
   WorkPlace,
   RadioButton,
   RadioGroup,
+  RangeSlider,
 ];
 
 export const NestroUI = {
