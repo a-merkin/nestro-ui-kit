@@ -1,9 +1,10 @@
 <template>
   <section>
-    <NButton>Primary</NButton>
+    <NButton>Кнопка</NButton>
     <NCheckbox v-model="checkTest" />
     <NDropdown v-model="value" :options="options" />
     <NInput v-model="inputValue" placeholder="Введите текст" />
+    <NProgressBar></NProgressBar>
 
     <NLoader size="md" />
   </section>

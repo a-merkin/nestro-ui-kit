@@ -7,10 +7,11 @@ import Icon from './components/Icon/Icon.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import Input from './components/Input/Input.vue';
 import Loader from './components/Loader/Loader.vue';
+import ProgressBar from './components/ProgressBar/ProgressBar.vue';
 
-export { Button, Checkbox, Icon, Dropdown, Input, Loader };
+export { Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar };
 
-const components = [Button, Checkbox, Icon, Dropdown, Input, Loader];
+const components = [Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar];
 
 export const NestroUI = {
   install(app: App) {
