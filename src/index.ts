@@ -8,10 +8,11 @@ import Dropdown from './components/Dropdown/Dropdown.vue';
 import Input from './components/Input/Input.vue';
 import Loader from './components/Loader/Loader.vue';
 import ProgressBar from './components/ProgressBar/ProgressBar.vue';
+import WorkPlace from './components/WorkPlace/WorkPlace.vue';
 
-export { Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar };
+export { Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar, WorkPlace };
 
-const components = [Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar];
+const components = [Button, Checkbox, Icon, Dropdown, Input, Loader, ProgressBar, WorkPlace];
 
 export const NestroUI = {
   install(app: App) {
