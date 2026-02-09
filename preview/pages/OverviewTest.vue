@@ -3,9 +3,19 @@
     <NWorkplace v-model="activeTab" :tabs="tabs">
       <template v-if="activeTab === 'ui'">
         <NButton>Кнопка</NButton>
+
         <NCheckbox v-model="checkTest" />
+
         <NDropdown v-model="value" :options="options" />
+
         <NInput v-model="inputValue" placeholder="Введите текст" />
+
+        <div style="display: flex; gap: 16px; align-items: center">
+          <NRadioButton v-model="radioValue" value="one" label="Option 1" />
+          <NRadioButton v-model="radioValue" value="two" label="Option 2" />
+          <NRadioButton v-model="radioValue" value="three" disabled label="Disabled" />
+        </div>
+
         <NProgressBar />
         <NLoader size="md" />
       </template>
@@ -35,6 +45,8 @@ const tabs = [
 const checkTest = ref(false);
 const value = ref(null);
 const inputValue = ref('');
+
+const radioValue = ref<'one' | 'two' | 'three'>('one');
 
 const options = [
   { value: '1', label: 'Опция 1' },
