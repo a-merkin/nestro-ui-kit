@@ -1,181 +1,163 @@
-<!-- SegmentedControl.vue -->
 <template>
   <div
     ref="containerRef"
     class="segmented-control"
-    :class="{ 'segmented-control--disabled': props.disabled }"
+    :class="{
+      'segmented-control--disabled': disabled,
+    }"
+    role="radiogroup"
   >
-    <div class="segmented-control__indicator" :style="indicatorStyle"></div>
+    <div class="segmented-control__indicator" :style="indicatorStyle" />
+
     <button
-      v-for="(option, index) in props.options"
+      v-for="(option, index) in options"
       :key="option.value"
       :ref="(el) => setButtonRef(el, index)"
       type="button"
+      role="radio"
+      :aria-checked="isActive(option.value)"
+      :disabled="disabled || option.disabled"
       :class="[
         'segmented-control__segment',
         { 'segmented-control__segment--active': isActive(option.value) },
       ]"
-      :disabled="props.disabled"
-      @click="handleSelect(option.value)"
+      @click="select(option.value)"
     >
-      {{ option.label }}
+      <slot name="segment" :option="option" :active="isActive(option.value)">
+        {{ option.label }}
+      </slot>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted } from 'vue';
+import type { SegmentedControlProps, SegmentedControlValue } from './SegmentedControl.types';
 
-export interface SegmentedControlOption {
-  label: string;
-  value: string | number;
-}
-
-interface Props {
-  options: SegmentedControlOption[];
-  modelValue: string | number;
-  disabled?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SegmentedControlProps>(), {
   disabled: false,
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void;
-  (e: 'change', value: string | number): void;
+  (e: 'update:modelValue', value: SegmentedControlValue): void;
+  (e: 'change', value: SegmentedControlValue): void;
 }>();
 
 const containerRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<(HTMLElement | null)[]>([]);
-const isInitialized = ref(false);
+const isReady = ref(false);
 
-const setButtonRef = (el: any, index: number) => {
-  if (el) {
-    buttonRefs.value[index] = el as HTMLElement;
-  }
+const setButtonRef = (el: HTMLElement | null, index: number) => {
+  buttonRefs.value[index] = el;
 };
 
-const indicatorStyle = ref({
+const indicatorStyle = ref<Record<string, string>>({
   width: '0px',
   transform: 'translateX(0px)',
   transition: 'none',
 });
 
-const isActive = (value: string | number): boolean => {
-  return value === props.modelValue;
-};
+const isActive = (value: SegmentedControlValue) => value === props.modelValue;
 
-const updateIndicatorPosition = () => {
+const updateIndicator = () => {
   nextTick(() => {
-    const activeIndex = props.options.findIndex((option) => option.value === props.modelValue);
-    if (activeIndex !== -1 && buttonRefs.value[activeIndex]) {
-      const activeButton = buttonRefs.value[activeIndex];
-      const container = containerRef.value;
+    const index = props.options.findIndex((o) => o.value === props.modelValue);
+    const button = buttonRefs.value[index];
+    const container = containerRef.value;
 
-      if (activeButton && container) {
-        const buttonRect = activeButton.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
+    if (!button || !container) return;
 
-        indicatorStyle.value = {
-          width: `${buttonRect.width}px`,
-          transform: `translateX(${buttonRect.left - containerRect.left}px)`,
-          transition: isInitialized.value ? 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
-        };
+    const buttonRect = button.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
 
-        // Включаем анимацию после первой установки позиции
-        if (!isInitialized.value) {
-          setTimeout(() => {
-            isInitialized.value = true;
-          }, 50);
-        }
-      }
+    indicatorStyle.value = {
+      width: `${buttonRect.width}px`,
+      transform: `translateX(${buttonRect.left - containerRect.left}px)`,
+      transition: isReady.value ? 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+    };
+
+    if (!isReady.value) {
+      requestAnimationFrame(() => {
+        isReady.value = true;
+      });
     }
   });
 };
 
-const handleSelect = (value: string | number) => {
-  if (!props.disabled && value !== props.modelValue) {
-    emit('update:modelValue', value);
-    emit('change', value);
-  }
+const select = (value: SegmentedControlValue) => {
+  if (props.disabled || value === props.modelValue) return;
+  emit('update:modelValue', value);
+  emit('change', value);
 };
 
-watch(() => props.modelValue, updateIndicatorPosition);
-watch(() => props.options, updateIndicatorPosition);
+watch(() => props.modelValue, updateIndicator);
+watch(() => props.options, updateIndicator, { deep: true });
 
-onMounted(() => {
-  updateIndicatorPosition();
-});
+onMounted(updateIndicator);
 </script>
 
 <style scoped lang="scss">
 .segmented-control {
   position: relative;
   display: inline-flex;
-  background: #ffffff;
-  border: 1px solid var(--color-stroke-primary, #cfd7db);
-  border-radius: 30px;
-  padding: 4px;
+  align-items: stretch;
   gap: 4px;
+  padding: 4px;
+  background: var(--segmented-bg, #ffffff);
+  border: 1px solid var(--segmented-border, #cfd7db);
+  border-radius: 30px;
 
   &--disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-}
 
-.segmented-control__indicator {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  height: calc(100% - 8px);
-  background: #0f9d3b;
-  border-radius: 26px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.segmented-control__segment {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  padding: 12px 24px;
-  background: transparent;
-  border: none;
-  border-radius: 26px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: #000000;
-  transition: color 0.3s ease;
-  white-space: nowrap;
-  min-width: fit-content;
-
-  &:hover:not(:disabled):not(.segmented-control__segment--active) {
-    background: rgba(244, 247, 248, 0.5);
+  &__indicator {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    background: var(--segmented-indicator-bg, #0f9d3b);
+    border-radius: 26px;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  &--active {
-    color: #ffffff;
-    cursor: default;
+  &__segment {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 26px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--segmented-text, #000);
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: fit-content;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
 
-    &:hover {
-      background: transparent;
+    &:hover:not(:disabled):not(&--active) {
+      background: var(--segmented-hover-bg, rgba(244, 247, 248, 0.5));
+    }
+
+    &--active {
+      color: var(--segmented-active-text, #fff);
+      cursor: default;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--segmented-focus, #0f9d3b);
+      outline-offset: 2px;
     }
   }
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &:focus-visible {
-    outline: 2px solid #0f9d3b;
-    outline-offset: 2px;
-  }
-}
-
-.segmented-control--disabled .segmented-control__segment {
-  cursor: not-allowed;
 }
 </style>

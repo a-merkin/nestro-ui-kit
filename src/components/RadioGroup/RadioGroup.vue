@@ -1,25 +1,37 @@
-<!-- RadioGroup.vue -->
 <template>
-  <div class="radio-group" :class="{ 'radio-group--horizontal': props.direction === 'horizontal' }">
-    <label v-if="props.label" class="radio-group__title">{{ props.label }}</label>
+  <div
+    class="radio-group"
+    :class="[`radio-group--${direction}`, { 'radio-group--disabled': disabled }]"
+  >
+    <div v-if="label" class="radio-group__label">
+      {{ label }}
+    </div>
+
     <div class="radio-group__items">
       <label
-        v-for="option in props.options"
+        v-for="option in options"
         :key="option.value"
         class="radio-group__item"
-        :class="{ 'radio-group__item--disabled': props.disabled }"
+        :class="{
+          'radio-group__item--checked': option.value === modelValue,
+          'radio-group__item--disabled': disabled || option.disabled,
+        }"
       >
         <input
           type="radio"
-          :value="option.value"
-          :checked="option.value === props.modelValue"
-          :disabled="props.disabled"
-          :name="groupName"
           class="radio-group__input"
-          @change="handleChange(option.value)"
+          :name="groupName"
+          :value="option.value"
+          :checked="option.value === modelValue"
+          :disabled="disabled || option.disabled"
+          @change="onChange(option.value)"
         />
-        <span class="radio-group__circle"></span>
-        <span class="radio-group__label">{{ option.label }}</span>
+
+        <span class="radio-group__control" />
+
+        <span class="radio-group__text">
+          {{ option.label }}
+        </span>
       </label>
     </div>
   </div>
@@ -27,69 +39,47 @@
 
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
+import type { RadioGroupProps, RadioGroupValue } from './RadioGroup.types';
 
-export interface RadioGroupOption {
-  label: string;
-  value: string | number;
-}
+defineOptions({ name: 'NRadioGroup' });
 
-interface Props {
-  modelValue: string | number;
-  options: RadioGroupOption[];
-  name?: string;
-  label?: string;
-  disabled?: boolean;
-  direction?: 'vertical' | 'horizontal';
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  name: '',
-  label: '',
+const props = withDefaults(defineProps<RadioGroupProps>(), {
   disabled: false,
   direction: 'vertical',
 });
 
-const instance = getCurrentInstance();
-const defaultGroupName = `radio-group-${instance?.uid ?? Math.random().toString(36).slice(2)}`;
-const groupName = computed(() => props.name || defaultGroupName);
-
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void;
-  (e: 'change', value: string | number): void;
+  (e: 'update:modelValue', value: RadioGroupValue): void;
 }>();
 
-const handleChange = (value: string | number) => {
+const instance = getCurrentInstance();
+const autoName = `radio-group-${instance?.uid ?? Math.random().toString(36).slice(2)}`;
+const groupName = computed(() => props.name || autoName);
+
+const onChange = (value: RadioGroupValue) => {
   if (!props.disabled) {
     emit('update:modelValue', value);
-    emit('change', value);
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .radio-group {
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  &--horizontal {
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-  }
-
-  &--horizontal &__items {
-    flex-direction: row;
-    gap: 24px;
-  }
 }
 
-.radio-group__title {
+.radio-group--horizontal {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.radio-group__label {
   color: var(--color-text-tertiary, #464e56);
   font-size: 16px;
-  font-weight: 400;
-  line-height: 1.219;
-  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .radio-group__items {
@@ -98,69 +88,76 @@ const handleChange = (value: string | number) => {
   gap: 12px;
 }
 
+.radio-group--horizontal .radio-group__items {
+  flex-direction: row;
+  gap: 24px;
+}
+
 .radio-group__item {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   user-select: none;
+}
 
-  &--disabled {
-    cursor: not-allowed;
-  }
+.radio-group__item--disabled {
+  cursor: not-allowed;
 }
 
 .radio-group__input {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
+  inline-size: 1px;
+  block-size: 1px;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+  padding: 0;
 }
 
-.radio-group__circle {
+.radio-group__control {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  inline-size: 16px;
+  block-size: 16px;
   border: 2px solid #aabdc7;
   border-radius: 50%;
   background: transparent;
-  transition: all 0.3s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
   flex-shrink: 0;
 }
 
-.radio-group__input:checked + .radio-group__circle {
+.radio-group__input:checked + .radio-group__control {
   border-color: #0f9d3b;
   background: #0f9d3b;
 }
 
-.radio-group__input:disabled + .radio-group__circle {
+.radio-group__input:disabled + .radio-group__control {
   border-color: #d9d9d9;
   background: #f9f9f9;
 }
 
-.radio-group__input:disabled:checked + .radio-group__circle {
+.radio-group__input:disabled:checked + .radio-group__control {
   border-color: #d9d9d9;
   background: #d9d9d9;
 }
 
-.radio-group__label {
-  color: #000000;
+.radio-group__text {
+  color: #000;
   line-height: 1.4;
 }
 
-.radio-group__input:disabled ~ .radio-group__label {
+.radio-group__item--disabled .radio-group__text {
   color: #d9d9d9;
 }
 
-.radio-group__item:hover:not(.radio-group__item--disabled) .radio-group__circle {
+.radio-group__item:hover:not(.radio-group__item--disabled) .radio-group__control {
   border-color: #0f9d3b;
 }
 </style>

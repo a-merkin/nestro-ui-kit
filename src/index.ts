@@ -7,10 +7,42 @@ import Icon from './components/Icon/Icon.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import Input from './components/Input/Input.vue';
 import Loader from './components/Loader/Loader.vue';
+import ProgressBar from './components/ProgressBar/ProgressBar.vue';
+import WorkPlace from './components/WorkPlace/WorkPlace.vue';
+import RadioButton from './components/RadioButton/RadioButton.vue';
+import RadioGroup from './components/RadioGroup/RadioGroup.vue';
+import RangeSlider from './components/RangeSlider/RangeSlider.vue';
+import Tooltip from './components/Tooltip/Tooltip.vue';
 
-export { Button, Checkbox, Icon, Dropdown, Input, Loader };
+export {
+  Button,
+  Checkbox,
+  Icon,
+  Dropdown,
+  Input,
+  Loader,
+  ProgressBar,
+  WorkPlace,
+  RadioButton,
+  RadioGroup,
+  RangeSlider,
+  Tooltip,
+};
 
-const components = [Button, Checkbox, Icon, Dropdown, Input, Loader];
+const components = [
+  Button,
+  Checkbox,
+  Icon,
+  Dropdown,
+  Input,
+  Loader,
+  ProgressBar,
+  WorkPlace,
+  RadioButton,
+  RadioGroup,
+  RangeSlider,
+  Tooltip,
+];
 
 export const NestroUI = {
   install(app: App) {

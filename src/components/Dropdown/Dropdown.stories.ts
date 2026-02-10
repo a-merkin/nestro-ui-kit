@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import NDropdown from './Dropdown.vue';
 
 const meta = {
-  title: 'Components/Dropdown',
+  title: 'UI/Dropdown',
   component: NDropdown,
   tags: ['autodocs'],
   argTypes: {

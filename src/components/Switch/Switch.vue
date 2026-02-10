@@ -1,131 +1,131 @@
-<!-- Switch.vue -->
 <template>
-  <label class="switch">
+  <label
+    class="switch"
+    :class="{
+      'switch--disabled': disabled,
+    }"
+  >
+    <span v-if="$slots.before" class="switch__label switch__label--before">
+      <slot name="before" />
+    </span>
+
     <input
       v-bind="$attrs"
       type="checkbox"
+      class="switch__input"
       :checked="modelValue"
       :disabled="disabled"
-      class="switch__input"
-      @change="handleChange"
+      @change="onChange"
     />
-    <span v-if="$slots.labelBefore || labelBefore" class="switch__label switch__label--before">
-      <slot name="labelBefore">{{ labelBefore }}</slot>
-    </span>
+
     <span class="switch__track">
-      <span class="switch__thumb"></span>
+      <span class="switch__thumb" />
     </span>
-    <span
-      v-if="$slots.labelAfter || labelAfter || $slots.default"
-      class="switch__label switch__label--after"
-    >
-      <slot name="labelAfter">
-        <slot>{{ labelAfter }}</slot>
+
+    <span v-if="$slots.after || $slots.default" class="switch__label switch__label--after">
+      <slot name="after">
+        <slot />
       </slot>
     </span>
   </label>
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  inheritAttrs: false,
-});
+defineOptions({ inheritAttrs: false });
 
-interface Props {
-  modelValue: boolean;
-  disabled?: boolean;
-  labelBefore?: string;
-  labelAfter?: string;
-}
+import type { SwitchProps } from './Switch.types';
 
-const { modelValue, disabled, labelBefore, labelAfter } = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<SwitchProps>(), {
   disabled: false,
-  labelBefore: '',
-  labelAfter: '',
 });
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
+  (e: 'change', value: boolean): void;
 }>();
 
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.checked);
+const onChange = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  emit('update:modelValue', input.checked);
+  emit('change', input.checked);
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .switch {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   user-select: none;
-  border: 1px solid var(--color-stroke-primary);
-  border-radius: 60px;
-  padding: 14px;
-}
 
-.switch__input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
+  &--disabled {
+    cursor: not-allowed;
+  }
 
-.switch__track {
-  position: relative;
-  display: inline-block;
-  width: 26px;
-  height: 6px;
-  background: #cfd7db;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-}
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
 
-.switch__thumb {
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  background: #009639;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-  transform: translateX(0);
-}
+  &__track {
+    position: relative;
+    width: 26px;
+    height: 6px;
+    background: var(--switch-track-bg, #cfd7db);
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
 
-.switch__input:checked + .switch__track .switch__thumb {
-  transform: translateX(14px);
-}
+  &__thumb {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--switch-thumb-bg, #009639);
+    border-radius: 50%;
+    transform: translateX(0);
+    transition: transform 0.2s ease;
+  }
 
-.switch__input:disabled + .switch__track {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+  &__input:checked + &__track &__thumb {
+    transform: translateX(14px);
+  }
 
-.switch__input:disabled + .switch__track .switch__thumb {
-  cursor: not-allowed;
-}
+  &__input:disabled + &__track {
+    opacity: 0.4;
+  }
 
-.switch__label {
-  color: #000000;
-  font-size: 14px;
-  line-height: 1.4;
-}
+  &__label {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--switch-label, #000);
 
-.switch__input:disabled ~ .switch__label {
-  color: #cfd7db;
-  cursor: not-allowed;
-}
+    &--before,
+    &--after {
+      cursor: inherit;
+    }
+  }
 
-.switch:hover:not(:has(.switch__input:disabled)) .switch__track {
-  opacity: 0.8;
+  &--disabled &__label {
+    color: var(--switch-label-disabled, #cfd7db);
+  }
+
+  &:hover:not(&--disabled) &__track {
+    opacity: 0.85;
+  }
+
+  &__input:focus-visible + &__track {
+    outline: 2px solid var(--switch-focus, #009639);
+    outline-offset: 2px;
+  }
 }
 </style>

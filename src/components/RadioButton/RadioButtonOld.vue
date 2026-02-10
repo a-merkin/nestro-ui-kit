@@ -1,18 +1,17 @@
+<!-- RadioButton.vue -->
 <template>
-  <label class="radio" :class="{ 'radio--disabled': disabled }">
+  <label class="radio">
     <input
       v-bind="$attrs"
       type="radio"
-      class="radio__input"
-      :checked="isChecked"
+      :checked="checked"
       :disabled="disabled"
       :value="value"
       :name="name"
+      class="radio__input"
       @change="handleChange"
     />
-
-    <span class="radio__control" />
-
+    <span class="radio__circle"></span>
     <span v-if="$slots.default || label" class="radio__label">
       <slot>{{ label }}</slot>
     </span>
@@ -20,32 +19,37 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { RadioButtonProps, RadioValue } from './RadioButton.types';
-
 defineOptions({
-  name: 'NRadioButton',
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<RadioButtonProps>(), {
+interface Props {
+  value: string | number;
+  checked?: boolean;
+  disabled?: boolean;
+  name?: string;
+  label?: string;
+}
+
+const { checked, disabled, value, name, label } = withDefaults(defineProps<Props>(), {
+  checked: false,
   disabled: false,
+  name: '',
+  label: '',
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: RadioValue): void;
+  (e: 'change', value: string | number): void;
 }>();
 
-const isChecked = computed(() => props.modelValue === props.value);
-
 const handleChange = () => {
-  if (!props.disabled) {
-    emit('update:modelValue', props.value);
+  if (!disabled) {
+    emit('change', value);
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .radio {
   display: inline-flex;
   align-items: center;
@@ -54,62 +58,58 @@ const handleChange = () => {
   user-select: none;
 }
 
-.radio--disabled {
-  cursor: not-allowed;
-}
-
 .radio__input {
   position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-  padding: 0;
 }
 
-.radio__control {
+.radio__circle {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 16px;
-  block-size: 16px;
+  width: 16px;
+  height: 16px;
   border: 2px solid #aabdc7;
   border-radius: 50%;
   background: transparent;
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+  transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
-.radio__input:checked + .radio__control {
+.radio__input:checked + .radio__circle {
   border-color: #0f9d3b;
   background: #0f9d3b;
 }
 
-.radio__input:disabled + .radio__control {
+.radio__input:disabled + .radio__circle {
   border-color: #d9d9d9;
   background: #f9f9f9;
+  cursor: not-allowed;
 }
 
-.radio__input:disabled:checked + .radio__control {
+.radio__input:disabled:checked + .radio__circle {
   border-color: #d9d9d9;
   background: #d9d9d9;
 }
 
 .radio__label {
-  color: #000;
+  color: #000000;
 }
 
-.radio--disabled .radio__label {
+.radio__input:disabled ~ .radio__label {
   color: #d9d9d9;
+  cursor: not-allowed;
 }
 
-.radio:hover:not(.radio--disabled) .radio__control {
+.radio:hover:not(:has(.radio__input:disabled)) .radio__circle {
   border-color: #0f9d3b;
 }
 </style>
