@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import RadioButton from './RadioButton.vue';
 
 const meta: Meta<typeof RadioButton> = {
-  title: 'Form/RadioButton',
+  title: 'UI/RadioButton',
   component: RadioButton,
 };
 export default meta;

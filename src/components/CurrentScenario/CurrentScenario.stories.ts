@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import CurrentScenario from '../components/CurrentScenario.vue';
+import CurrentScenario from './CurrentScenario.vue';
 
 const meta = {
   title: 'UI/CurrentScenario',

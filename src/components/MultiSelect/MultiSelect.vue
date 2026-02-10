@@ -7,6 +7,7 @@
           <span class="multiselect__chip-text">{{ item.label }}</span>
         </div>
       </template>
+
       <input
         v-if="searchable"
         ref="searchInputRef"
@@ -18,6 +19,7 @@
         @click.stop
       />
     </div>
+
     <div ref="arrowRef" class="multiselect__arrow" @click.stop="toggleDropdown">
       <svg
         :class="{ 'multiselect__arrow-icon--rotated': isDropdownOpen }"
@@ -35,6 +37,7 @@
         />
       </svg>
     </div>
+
     <div v-if="isDropdownOpen" ref="dropdownRef" class="multiselect__dropdown">
       <div class="multiselect__options">
         <label
@@ -50,6 +53,7 @@
           />
           <span>{{ item.label }}</span>
         </label>
+
         <div v-if="filteredOptions.length === 0" class="multiselect__no-results">
           Ничего не найдено
         </div>
@@ -60,28 +64,21 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
+import type { MultiSelectProps, MultiSelectValue } from './MultiSelect.types';
 
-interface OptionItem {
-  value: string | number;
-  label: string;
-}
-
-interface Props {
-  modelValue: Array<string | number>;
-  options: OptionItem[];
-  searchable?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<MultiSelectProps>(), {
   searchable: false,
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: MultiSelectValue[]): void;
+}>();
 
 const chipsRef = ref<HTMLElement | null>(null);
 const dropdownRef = ref<HTMLElement | null>(null);
 const arrowRef = ref<HTMLElement | null>(null);
 const searchInputRef = ref<HTMLInputElement | null>(null);
+
 const isDropdownOpen = ref(false);
 const searchQuery = ref('');
 
@@ -89,10 +86,8 @@ const multiselectClasses = computed(() => ({
   'multiselect--open': isDropdownOpen.value,
 }));
 
-// Локальное состояние для отслеживания выбранных значений
-const localSelectedValues = ref<Array<string | number>>([]);
+const localSelectedValues = ref<MultiSelectValue[]>([]);
 
-// Синхронизация локального состояния с пропсами
 watch(
   () => props.modelValue,
   (newValue) => {
@@ -101,9 +96,9 @@ watch(
   { immediate: true }
 );
 
-const selectedItems = computed(() => {
-  return props.options.filter((item) => localSelectedValues.value.includes(item.value));
-});
+const selectedItems = computed(() =>
+  props.options.filter((item) => localSelectedValues.value.includes(item.value))
+);
 
 const filteredOptions = computed(() => {
   if (!props.searchable || !searchQuery.value.trim()) {
@@ -113,7 +108,7 @@ const filteredOptions = computed(() => {
   return props.options.filter((item) => item.label.toLowerCase().includes(query));
 });
 
-function toggleSelect(value: string | number) {
+function toggleSelect(value: MultiSelectValue) {
   const newValue = localSelectedValues.value.includes(value)
     ? localSelectedValues.value.filter((val) => val !== value)
     : [...localSelectedValues.value, value];
@@ -122,7 +117,7 @@ function toggleSelect(value: string | number) {
   emit('update:modelValue', newValue);
 }
 
-function removeSelected(value: string | number) {
+function removeSelected(value: MultiSelectValue) {
   const newValue = localSelectedValues.value.filter((val) => val !== value);
   localSelectedValues.value = newValue;
   emit('update:modelValue', newValue);
@@ -165,6 +160,7 @@ function handleClickOutside(event: MouseEvent) {
 onMounted(() => {
   document.addEventListener('mousedown', handleClickOutside);
 });
+
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', handleClickOutside);
 });

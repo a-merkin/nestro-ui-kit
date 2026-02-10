@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import RadioGroup from './RadioGroup.vue';
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'Form/RadioGroup',
+  title: 'UI/RadioGroup',
   component: RadioGroup,
 };
 export default meta;

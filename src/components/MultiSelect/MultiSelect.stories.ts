@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import MultiSelect from '../components/MultiSelect.vue';
+import MultiSelect from './MultiSelect.vue';
+import type { MultiSelectOption } from './MultiSelect.types';
 
-const options = [
+const options: MultiSelectOption[] = [
   { value: 1, label: 'Дебит нефти' },
   { value: 2, label: 'Дебит газа' },
   { value: 3, label: 'Дебит воды' },
@@ -34,6 +35,7 @@ const meta = {
 } satisfies Meta<typeof MultiSelect>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
@@ -41,11 +43,6 @@ export const Default: Story = {
     options,
     modelValue: [1, 2, 4, 5, 6, 7, 8, 9],
   },
-  render: (args) => ({
-    components: { MultiSelect },
-    setup: () => ({ args }),
-    template: '<MultiSelect v-bind="args" />',
-  }),
 };
 
 export const WithSearch: Story = {
@@ -54,11 +51,6 @@ export const WithSearch: Story = {
     modelValue: [1, 2, 4],
     searchable: true,
   },
-  render: (args) => ({
-    components: { MultiSelect },
-    setup: () => ({ args }),
-    template: '<MultiSelect v-bind="args" />',
-  }),
   parameters: {
     docs: {
       description: {
@@ -88,19 +80,6 @@ export const SearchWithManyOptions: Story = {
     modelValue: [1, 5, 10, 15],
     searchable: true,
   },
-  render: (args) => ({
-    components: { MultiSelect },
-    setup: () => ({ args }),
-    template: '<MultiSelect v-bind="args" />',
-  }),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Мультиселект с большим количеством опций и поиском. Попробуйте найти "дебит" или "сила".',
-      },
-    },
-  },
 };
 
 export const EmptyWithSearch: Story = {
@@ -109,11 +88,6 @@ export const EmptyWithSearch: Story = {
     modelValue: [],
     searchable: true,
   },
-  render: (args) => ({
-    components: { MultiSelect },
-    setup: () => ({ args }),
-    template: '<MultiSelect v-bind="args" />',
-  }),
   parameters: {
     docs: {
       description: {

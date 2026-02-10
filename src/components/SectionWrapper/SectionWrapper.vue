@@ -1,42 +1,62 @@
 <template>
-  <div class="accordion">
-    <div class="accordion__header">
-      <h2 class="accordion__title text-h1">{{ title }}</h2>
-      <div class="accordion__line"></div>
+  <section class="section-wrapper">
+    <header class="section-wrapper__header">
+      <slot name="header">
+        <h2 class="section-wrapper__title">{{ title }}</h2>
+      </slot>
 
-      <button class="accordion__button" type="button" :aria-expanded="isOpen" @click="toggle">
-        <svg
-          class="accordion__icon"
-          width="12"
-          height="13"
-          viewBox="0 0 12 13"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+      <div class="section-wrapper__line" />
+
+      <slot name="actions">
+        <button
+          class="section-wrapper__toggle"
+          type="button"
+          :aria-expanded="isOpen"
+          @click="toggle"
         >
-          <path d="M1 1L6 5L11 1" stroke="white" stroke-width="2" />
-          <path d="M1 7.66667L6 11L11 7.66667" stroke="white" stroke-width="2" />
-        </svg>
-      </button>
-    </div>
+          <svg
+            class="section-wrapper__icon"
+            width="12"
+            height="13"
+            viewBox="0 0 12 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M1 1L6 5L11 1" stroke="currentColor" stroke-width="2" />
+            <path d="M1 7.66667L6 11L11 7.66667" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </slot>
+    </header>
 
-    <Transition name="accordion-slide">
-      <div v-if="isOpen" class="accordion__content">
-        <slot name="content" />
+    <Transition name="section-wrapper-slide">
+      <div v-show="isOpen" class="section-wrapper__content">
+        <slot />
       </div>
     </Transition>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
+import type { SectionWrapperProps } from './SectionWrapper.types';
 
-interface Props {
-  title: string;
-}
+const props = withDefaults(defineProps<SectionWrapperProps>(), {
+  defaultOpen: true,
+});
 
-defineProps<Props>();
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void;
+}>();
 
-const isOpen = ref(true);
+const isOpen = computed({
+  get() {
+    return props.modelValue ?? props.defaultOpen;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  },
+});
 
 const toggle = () => {
   isOpen.value = !isOpen.value;
@@ -44,11 +64,11 @@ const toggle = () => {
 </script>
 
 <style lang="scss" scoped>
-$accordion-bg: #b6c7cf;
-$accordion-line: #cfd7db;
-$accordion-transition: 0.3s ease;
+$bg: #b6c7cf;
+$line: #cfd7db;
+$transition: 0.3s ease;
 
-.accordion {
+.section-wrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -57,7 +77,6 @@ $accordion-transition: 0.3s ease;
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
   }
 
   &__title {
@@ -69,55 +88,55 @@ $accordion-transition: 0.3s ease;
   &__line {
     flex: 1;
     height: 2px;
-    background-color: $accordion-line;
+    background-color: $line;
   }
 
-  &__button {
-    background-color: $accordion-bg;
+  &__toggle {
+    background-color: $bg;
     border: none;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    transition: transform $accordion-transition;
+    cursor: pointer;
+    transition: transform $transition;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 
     &:hover {
       transform: scale(1.1);
     }
+  }
 
-    .accordion__icon {
-      transition: transform $accordion-transition;
-    }
+  &__icon {
+    transition: transform $transition;
+  }
 
-    &[aria-expanded='true'] .accordion__icon {
-      transform: rotate(180deg);
-    }
+  &__toggle[aria-expanded='true'] &__icon {
+    transform: rotate(180deg);
   }
 
   &__content {
     overflow: hidden;
   }
+}
 
-  .accordion-slide-enter-active,
-  .accordion-slide-leave-active {
-    transition: all $accordion-transition;
-  }
+.section-wrapper-slide-enter-active,
+.section-wrapper-slide-leave-active {
+  transition: all $transition;
+}
 
-  .accordion-slide-enter-from,
-  .accordion-slide-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
-  }
+.section-wrapper-slide-enter-from,
+.section-wrapper-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+  max-height: 0;
+}
 
-  .accordion-slide-enter-to,
-  .accordion-slide-leave-from {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 500px;
-  }
+.section-wrapper-slide-enter-to,
+.section-wrapper-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px;
 }
 </style>

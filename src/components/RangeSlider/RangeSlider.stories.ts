@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import RangeSlider from './RangeSlider.vue';
 
 const meta: Meta<typeof RangeSlider> = {
-  title: 'Components/RangeSlider',
+  title: 'UI/RangeSlider',
   component: RangeSlider,
 };
 export default meta;

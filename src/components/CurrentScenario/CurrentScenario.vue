@@ -13,7 +13,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ scenarioParts: string[] }>();
+import type { CurrentScenarioProps } from './CurrentScenario.types';
+
+defineProps<CurrentScenarioProps>();
 </script>
 
 <style scoped>
@@ -26,6 +28,7 @@ defineProps<{ scenarioParts: string[] }>();
   background: none;
   gap: 8px;
 }
+
 .current-scenario__text {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
@@ -35,6 +38,7 @@ defineProps<{ scenarioParts: string[] }>();
   display: flex;
   align-items: center;
 }
+
 .scenario-separator {
   display: inline-block;
   width: 5px;

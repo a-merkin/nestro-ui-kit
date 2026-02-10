@@ -1,23 +1,11 @@
 <template>
   <Teleport v-if="teleport" to="body">
     <Transition name="modal-zoom">
-      <div
-        v-if="modelValue"
-        ref="overlayRef"
-        class="modal"
-        tabindex="-1"
-        @click.self="handleBackdrop"
-      >
-        <div
-          ref="dialogRef"
-          class="modal__dialog"
-          role="dialog"
-          aria-modal="true"
-          :style="dialogStyle"
-        >
+      <div v-if="modelValue" class="modal" tabindex="0" @click.self="close" @keydown.esc="close">
+        <div class="modal__dialog" role="dialog" aria-modal="true">
           <header v-if="$slots.title" class="modal__header">
             <h3 class="modal__title">
-              <slot name="title" />
+              <slot name="title"></slot>
             </h3>
           </header>
 
@@ -31,9 +19,7 @@
 
           <Transition name="fade">
             <div v-if="loading" class="modal__loading">
-              <slot name="loading">
-                <Loader size="large" variant="primary" text="Загрузка..." />
-              </slot>
+              <Loader size="large" variant="primary" text="Загрузка..." />
             </div>
           </Transition>
         </div>
@@ -43,68 +29,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 import Loader from '@/components/Loader/Loader.vue';
-import type { ModalProps } from './Modal.types';
 
-const props = withDefaults(defineProps<ModalProps>(), {
-  loading: false,
-  teleport: true,
-  closeOnBackdrop: true,
-  closeOnEsc: true,
-  width: 600,
-});
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-  (e: 'open'): void;
-  (e: 'close'): void;
-}>();
-
-const overlayRef = ref<HTMLElement | null>(null);
-const dialogRef = ref<HTMLElement | null>(null);
-
-const dialogStyle = computed(() => ({
-  maxWidth: typeof props.width === 'number' ? `${props.width}px` : props.width,
-}));
-
-const close = () => {
-  if (props.loading) return;
-  emit('update:modelValue', false);
-  emit('close');
-};
-
-const handleBackdrop = () => {
-  if (props.closeOnBackdrop) close();
-};
-
-const handleEsc = (e: KeyboardEvent) => {
-  if (e.key === 'Escape' && props.closeOnEsc) close();
-};
-
-/* body scroll lock + focus management */
-watch(
-  () => props.modelValue,
-  async (open) => {
-    if (open) {
-      emit('open');
-      document.body.style.overflow = 'hidden';
-      await nextTick();
-      dialogRef.value?.focus?.();
-    } else {
-      document.body.style.overflow = '';
-    }
-  },
-  { immediate: true }
+const props = withDefaults(
+  defineProps<{
+    modelValue: boolean;
+    loading?: boolean;
+    teleport?: boolean;
+  }>(),
+  {
+    loading: false,
+    teleport: true,
+  }
 );
 
+const emit = defineEmits(['update:modelValue']);
+
+function close() {
+  if (!props.loading) {
+    emit('update:modelValue', false);
+  }
+}
+
+function handleKey(e: KeyboardEvent) {
+  if (e.key === 'Escape' && !props.loading) close();
+}
+
 onMounted(() => {
-  document.addEventListener('keydown', handleEsc);
+  document.addEventListener('keydown', handleKey);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener('keydown', handleEsc);
-  document.body.style.overflow = '';
+  document.removeEventListener('keydown', handleKey);
 });
 </script>
 
@@ -116,19 +73,21 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 999;
   backdrop-filter: blur(2px);
   padding: 16px;
   overflow-y: auto;
 
   &__dialog {
     position: relative;
-    width: 100%;
-    background: var(--modal-bg, #fff);
+    background: #fff;
     border-radius: 16px;
     padding: 24px;
+    width: 100%;
+    max-width: 600px;
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
-    outline: none;
+    transform-origin: center;
+    overflow: hidden;
   }
 
   &__header {
@@ -141,13 +100,12 @@ onBeforeUnmount(() => {
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: var(--modal-title, #222);
-    margin: 0;
+    color: #222;
   }
 
   &__content {
     font-size: 16px;
-    color: var(--modal-text, #444);
+    color: #444;
   }
 
   &__footer {
@@ -169,7 +127,7 @@ onBeforeUnmount(() => {
   }
 }
 
-/* zoom animation */
+/* Анимация модалки */
 .modal-zoom-enter-active {
   animation: modalZoomIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -178,27 +136,28 @@ onBeforeUnmount(() => {
 }
 
 @keyframes modalZoomIn {
-  from {
+  0% {
     opacity: 0;
     transform: scale(0.94) translateY(10px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
 }
 
 @keyframes modalZoomOut {
-  from {
+  0% {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     transform: scale(0.96) translateY(10px);
   }
 }
 
+/* Анимация загрузки */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import WorkPlace from './WorkPlace.vue';
 
 const meta: Meta<typeof WorkPlace> = {
-  title: 'Layout/WorkPlace',
+  title: 'UI/WorkPlace',
   component: WorkPlace,
 };
 export default meta;
