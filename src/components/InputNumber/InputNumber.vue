@@ -43,7 +43,7 @@
           @mouseup="stopRepeat"
           @mouseleave="stopRepeat"
         >
-          <NIcon name="arrow-down" size="sm" />
+          <NIcon name="arrow-up" size="sm" />
         </button>
         <button
           class="input-number__btn input-number__btn--dec input-number__btn--stacked-bottom"
@@ -512,7 +512,6 @@ onUnmounted(() => {
 
   &__btn--stacked-top {
     border-bottom: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
-    transform: rotate(180deg);
   }
 
   // Error message
