@@ -14,7 +14,8 @@ export type IconName =
   | 'setting'
   | 'unite'
   | 'loading'
-  | 'calendar';
+  | 'calendar'
+  | 'minus';
 
 export interface IconProps {
   name: IconName;

@@ -54,6 +54,32 @@
           />
         </div>
 
+        <!-- INPUTNUMBER SHOWCASE -->
+        <div style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap">
+          <NInputNumber v-model="numValue" label="Количество" placeholder="Введите число" />
+          <NInputNumber
+            v-model="numDecimal"
+            label="Дробное"
+            :min-fraction-digits="2"
+            :max-fraction-digits="4"
+            :step="0.01"
+            show-buttons
+            button-layout="horizontal"
+          />
+          <NInputNumber
+            v-model="numTemp"
+            label="Температура"
+            suffix=" °C"
+            show-buttons
+            button-layout="stacked"
+            :step="0.1"
+            :min-fraction-digits="1"
+            :max-fraction-digits="1"
+            :min="0"
+            :max="100"
+          />
+        </div>
+
         <!-- DATEPICKER SHOWCASE -->
         <div style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap">
           <NDatePicker v-model="dateValue" label="Дата начала" clearable />
@@ -189,6 +215,11 @@ const sidebarFilters = [
 
 const onFiltersApply = () => console.log('Filters applied:', filterValues.value);
 const onFiltersClear = () => console.log('Filters cleared');
+
+// InputNumber
+const numValue = ref<number | null>(null);
+const numDecimal = ref<number | null>(3.14);
+const numTemp = ref<number | null>(36.6);
 
 // DatePicker
 const dateValue = ref<string | null>(null);
