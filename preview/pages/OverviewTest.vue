@@ -41,6 +41,31 @@
         <NProgressBar />
         <NLoader size="md" />
 
+        <!-- SIDEBAR FILTERS SHOWCASE -->
+        <div style="margin-top: 32px; max-width: 300px">
+          <h3 style="margin-bottom: 12px; font-size: 14px; font-weight: 600">SidebarFilters</h3>
+          <NSidebarFilters
+            v-model="filterValues"
+            :filters="sidebarFilters"
+            :show-all-option="['do', 'field']"
+            :all-option-labels="{ do: 'организации', field: 'месторождения', well: 'скважины' }"
+            @apply="onFiltersApply"
+            @clear="onFiltersClear"
+          />
+        </div>
+
+        <!-- DATEPICKER SHOWCASE -->
+        <div style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap">
+          <NDatePicker v-model="dateValue" label="Дата начала" clearable />
+          <NDatePicker
+            v-model="dateValue2"
+            label="Дата окончания"
+            min-date="2025-01-01"
+            max-date="2025-12-31"
+            placeholder="Только 2025 год"
+          />
+        </div>
+
         <!-- TOOLTIP SHOWCASE -->
         <div
           style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center"
@@ -124,4 +149,48 @@ const options = [
 const rangeValues = [10, 20, 30, 40, 50, 60];
 const rangeValue = ref<[number, number]>([20, 50]);
 const singleValue = ref<number>(30);
+
+// SidebarFilters
+const filterValues = ref<Record<string, string | number | null>>({
+  do: null,
+  field: null,
+  well: null,
+});
+
+const sidebarFilters = [
+  {
+    key: 'do',
+    label: 'Организация',
+    options: [
+      { value: '1', label: 'ООО Нефтедобыча' },
+      { value: '2', label: 'ПАО Нефтегаз' },
+      { value: '3', label: 'АО Ресурс' },
+    ],
+  },
+  {
+    key: 'field',
+    label: 'Месторождение',
+    options: [
+      { value: '10', label: 'Самотлорское' },
+      { value: '20', label: 'Ромашкинское' },
+      { value: '30', label: 'Приобское' },
+    ],
+  },
+  {
+    key: 'well',
+    label: 'Скважина',
+    options: [
+      { value: '100', label: 'Скважина №1' },
+      { value: '200', label: 'Скважина №2' },
+      { value: '300', label: 'Скважина №3' },
+    ],
+  },
+];
+
+const onFiltersApply = () => console.log('Filters applied:', filterValues.value);
+const onFiltersClear = () => console.log('Filters cleared');
+
+// DatePicker
+const dateValue = ref<string | null>(null);
+const dateValue2 = ref<string | null>(null);
 </script>

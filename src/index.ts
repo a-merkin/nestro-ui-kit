@@ -13,6 +13,8 @@ import RadioButton from './components/RadioButton/RadioButton.vue';
 import RadioGroup from './components/RadioGroup/RadioGroup.vue';
 import RangeSlider from './components/RangeSlider/RangeSlider.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
+import SidebarFilters from './components/SidebarFilters/SidebarFilters.vue';
+import DatePicker from './components/DatePicker/DatePicker.vue';
 
 export {
   Button,
@@ -27,6 +29,8 @@ export {
   RadioGroup,
   RangeSlider,
   Tooltip,
+  SidebarFilters,
+  DatePicker,
 };
 
 const components = [
@@ -42,6 +46,8 @@ const components = [
   RadioGroup,
   RangeSlider,
   Tooltip,
+  SidebarFilters,
+  DatePicker,
 ];
 
 export const NestroUI = {
