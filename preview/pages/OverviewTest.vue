@@ -92,6 +92,60 @@
           />
         </div>
 
+        <!-- MENU SHOWCASE -->
+        <div style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: start">
+          <div>
+            <h3 style="margin-bottom: 12px; font-size: 14px; font-weight: 600">Menu (inline)</h3>
+            <NMenu :model="menuItems" style="max-width: 240px" />
+          </div>
+          <div>
+            <h3 style="margin-bottom: 12px; font-size: 14px; font-weight: 600">Menu (popup)</h3>
+            <NButton variant="secondary" @click="togglePopupMenu">Открыть меню</NButton>
+            <NMenu ref="popupMenuRef" :model="menuItems" popup />
+          </div>
+        </div>
+
+        <!-- SPEEDDIAL SHOWCASE -->
+        <div style="margin-top: 32px; display: flex; gap: 48px; flex-wrap: wrap; align-items: center">
+          <div style="position: relative; min-height: 240px; display: flex; align-items: flex-end">
+            <NSpeedDial :model="speedDialActions" direction="up" type="static" />
+          </div>
+          <div style="position: relative; min-height: 240px; display: flex; align-items: flex-start">
+            <NSpeedDial :model="speedDialActions" direction="down" type="static" />
+          </div>
+          <div style="position: relative; min-width: 240px; display: flex; justify-content: flex-end">
+            <NSpeedDial :model="speedDialActions" direction="left" type="static" />
+          </div>
+          <div style="position: relative; min-width: 240px; display: flex; justify-content: flex-start">
+            <NSpeedDial :model="speedDialActions" direction="right" type="static" />
+          </div>
+        </div>
+
+        <!-- CONFIRM DIALOG SHOWCASE -->
+        <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap">
+          <NButton @click="confirmOpen = true">Подтверждение</NButton>
+          <NConfirmDialog
+            :open="confirmOpen"
+            title="Подтверждение действия"
+            description="Вы уверены, что хотите выполнить это действие?"
+            @update:open="confirmOpen = $event"
+            @confirm="confirmOpen = false"
+            @cancel="confirmOpen = false"
+          />
+
+          <NButton variant="secondary" @click="confirmDangerOpen = true">Danger диалог</NButton>
+          <NConfirmDialog
+            :open="confirmDangerOpen"
+            title="Удалить запись?"
+            description="Это действие необратимо. Все данные будут удалены."
+            variant="danger"
+            confirm-text="Удалить"
+            @update:open="confirmDangerOpen = $event"
+            @confirm="confirmDangerOpen = false"
+            @cancel="confirmDangerOpen = false"
+          />
+        </div>
+
         <!-- TOOLTIP SHOWCASE -->
         <div
           style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center"
@@ -221,7 +275,30 @@ const numValue = ref<number | null>(null);
 const numDecimal = ref<number | null>(3.14);
 const numTemp = ref<number | null>(36.6);
 
+// Menu
+const popupMenuRef = ref();
+const menuItems = [
+  { label: 'Редактировать', icon: 'edit' as const, command: () => console.log('edit') },
+  { label: 'Скачать', icon: 'download' as const, command: () => console.log('download') },
+  { separator: true },
+  { label: 'Настройки', icon: 'setting' as const, command: () => console.log('settings') },
+  { label: 'Удалить', icon: 'delete' as const, disabled: true },
+];
+const togglePopupMenu = (e: MouseEvent) => popupMenuRef.value?.toggle(e);
+
 // DatePicker
 const dateValue = ref<string | null>(null);
 const dateValue2 = ref<string | null>(null);
+
+// ConfirmDialog
+const confirmOpen = ref(false);
+const confirmDangerOpen = ref(false);
+
+// SpeedDial
+const speedDialActions = [
+  { icon: 'edit' as const, label: 'Редактировать', command: () => console.log('edit') },
+  { icon: 'download' as const, label: 'Скачать', command: () => console.log('download') },
+  { icon: 'delete' as const, label: 'Удалить', command: () => console.log('delete') },
+  { icon: 'setting' as const, label: 'Настройки', command: () => console.log('settings') },
+];
 </script>
