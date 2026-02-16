@@ -14,4 +14,7 @@
   --size-icon-sm: 16px;
   --size-icon-md: 20px;
   --size-icon-lg: 24px;
+
+  --size-tab-width: 216px;
+  --size-tab-bridge-height: 8px;
 }
