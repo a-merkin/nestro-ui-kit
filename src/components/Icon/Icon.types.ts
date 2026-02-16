@@ -4,6 +4,9 @@ export type IconName =
   | 'check'
   | 'close'
   | 'arrow-down'
+  | 'arrow-up'
+  | 'arrow-left'
+  | 'arrow-right'
   | 'edit'
   | 'delete'
   | 'plus'
@@ -11,7 +14,9 @@ export type IconName =
   | 'magnifier'
   | 'setting'
   | 'unite'
-  | 'loading';
+  | 'loading'
+  | 'calendar'
+  | 'minus';
 
 export interface IconProps {
   name: IconName;

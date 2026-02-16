@@ -13,6 +13,12 @@ import RadioButton from './components/RadioButton/RadioButton.vue';
 import RadioGroup from './components/RadioGroup/RadioGroup.vue';
 import RangeSlider from './components/RangeSlider/RangeSlider.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
+import SidebarFilters from './components/SidebarFilters/SidebarFilters.vue';
+import DatePicker from './components/DatePicker/DatePicker.vue';
+import InputNumber from './components/InputNumber/InputNumber.vue';
+import Menu from './components/Menu/Menu.vue';
+import SpeedDial from './components/SpeedDial/SpeedDial.vue';
+import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 
 export {
   Button,
@@ -20,13 +26,19 @@ export {
   Icon,
   Dropdown,
   Input,
+  InputNumber,
   Loader,
+  Menu,
   ProgressBar,
   WorkPlace,
   RadioButton,
   RadioGroup,
   RangeSlider,
   Tooltip,
+  SpeedDial,
+  ConfirmDialog,
+  SidebarFilters,
+  DatePicker,
 };
 
 const components = [
@@ -35,13 +47,19 @@ const components = [
   Icon,
   Dropdown,
   Input,
+  InputNumber,
   Loader,
+  Menu,
   ProgressBar,
   WorkPlace,
   RadioButton,
   RadioGroup,
   RangeSlider,
   Tooltip,
+  SpeedDial,
+  ConfirmDialog,
+  SidebarFilters,
+  DatePicker,
 ];
 
 export const NestroUI = {
