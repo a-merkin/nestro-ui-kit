@@ -1,7 +1,12 @@
 <template>
   <section class="container">
     <NWorkplace v-model="activeTab" :tabs="tabs">
-      <div class="block"></div>
+      <div class="block">
+        <div class="row">
+          <NButton>Пример</NButton>
+          <NCheckbox v-model="check"></NCheckbox>
+        </div>
+      </div>
     </NWorkplace>
   </section>
 </template>
@@ -10,6 +15,7 @@
 import { ref } from 'vue';
 
 const activeTab = ref('ui');
+const check = ref(false);
 
 const tabs = [
   { label: 'UI компоненты', value: 'ui' },
@@ -26,5 +32,11 @@ const tabs = [
 
 .block {
   height: 100vh;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>
