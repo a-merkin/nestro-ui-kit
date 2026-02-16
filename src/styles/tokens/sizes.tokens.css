@@ -17,4 +17,8 @@
 
   --size-tab-width: 216px;
   --size-tab-bridge-height: 8px;
+
+  --size-toggle-sm: 16px;
+  --size-toggle-md: 20px;
+  --size-toggle-lg: 24px;
 }
