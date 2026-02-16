@@ -80,9 +80,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed } from 'vue';
 import type { DatePickerProps, DatePickerEmits } from './DatePicker.types';
 import NIcon from '../Icon/Icon.vue';
+import { toDateString, formatDate } from '@/utils/date';
+import { useClickOutside } from '@/composables/useClickOutside';
 
 defineOptions({ name: 'NDatePicker' });
 
@@ -121,8 +123,6 @@ const monthNames = [
   'Декабрь',
 ];
 
-// --- Computed ---
-
 const triggerClasses = computed(() => ({
   'date-picker__trigger--disabled': props.disabled,
   'date-picker__trigger--error': props.error,
@@ -141,7 +141,7 @@ const yearRange = computed(() => {
 
 const displayValue = computed(() => {
   if (!props.modelValue) return props.placeholder;
-  return formatDate(props.modelValue);
+  return formatDate(props.modelValue, props.displayFormat);
 });
 
 interface CalendarDay {
@@ -162,13 +162,11 @@ const calendarDays = computed((): CalendarDay[] => {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
 
-  // Monday-based: 0=Mon..6=Sun
   let startWeekday = firstDay.getDay() - 1;
   if (startWeekday < 0) startWeekday = 6;
 
   const days: CalendarDay[] = [];
 
-  // Previous month fill
   const prevMonthLast = new Date(year, month, 0);
   for (let i = startWeekday - 1; i >= 0; i--) {
     const d = prevMonthLast.getDate() - i;
@@ -177,12 +175,10 @@ const calendarDays = computed((): CalendarDay[] => {
     days.push(makeDay(d, m, y, false));
   }
 
-  // Current month
   for (let d = 1; d <= lastDay.getDate(); d++) {
     days.push(makeDay(d, month, year, true));
   }
 
-  // Next month fill
   const remaining = 42 - days.length;
   for (let d = 1; d <= remaining; d++) {
     const m = month === 11 ? 0 : month + 1;
@@ -192,8 +188,6 @@ const calendarDays = computed((): CalendarDay[] => {
 
   return days;
 });
-
-// --- Methods ---
 
 function makeDay(date: number, month: number, year: number, isCurrentMonth: boolean): CalendarDay {
   const dateStr = toDateString(year, month, date);
@@ -215,25 +209,6 @@ function isDateDisabled(dateStr: string): boolean {
   if (props.minDate && dateStr < props.minDate) return true;
   if (props.maxDate && dateStr > props.maxDate) return true;
   return false;
-}
-
-function toDateString(year: number, month: number, date: number): string {
-  const m = String(month + 1).padStart(2, '0');
-  const d = String(date).padStart(2, '0');
-  return `${year}-${m}-${d}`;
-}
-
-function formatDate(dateStr: string): string {
-  const [y, m, d] = dateStr.split('-');
-  switch (props.displayFormat) {
-    case 'DD.MM.YYYY':
-      return `${d}.${m}.${y}`;
-    case 'DD/MM/YYYY':
-      return `${d}/${m}/${y}`;
-    case 'YYYY-MM-DD':
-    default:
-      return dateStr;
-  }
 }
 
 function handleTriggerClick() {
@@ -310,19 +285,9 @@ function getDayClasses(day: CalendarDay) {
   };
 }
 
-function handleClickOutside(event: MouseEvent) {
-  if (rootRef.value && !rootRef.value.contains(event.target as Node)) {
-    isOpen.value = false;
-    showYearSelect.value = false;
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside, true);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside, true);
+useClickOutside(rootRef, () => {
+  isOpen.value = false;
+  showYearSelect.value = false;
 });
 </script>
 
@@ -352,8 +317,8 @@ onUnmounted(() => {
     width: 100%;
     height: var(--size-height-md);
     padding: 0 var(--space-3) 0 var(--size-padding-horizontal-md);
-    background: rgba(182, 199, 207, 0.15);
-    border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-stroke-primary);
     border-radius: 60px;
     color: var(--color-grey-100);
     font-family: var(--font-family-base);
@@ -364,14 +329,14 @@ onUnmounted(() => {
     overflow: hidden;
 
     &--disabled {
-      background: rgba(218, 218, 218, 0.15);
-      border-color: rgba(225, 225, 225, 0.51);
-      color: var(--color-text-disabled, #e1e1e1);
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
 
     &--error {
-      border-color: var(--color-stroke-error, #ed6e1c);
+      border-color: var(--color-stroke-error);
     }
 
     &--open {
@@ -387,7 +352,7 @@ onUnmounted(() => {
     text-overflow: ellipsis;
 
     &--placeholder {
-      color: rgba(120, 151, 166, 0.6);
+      color: var(--color-text-placeholder);
     }
   }
 
@@ -435,10 +400,9 @@ onUnmounted(() => {
     margin-top: var(--space-1);
     padding-left: var(--size-padding-horizontal-md);
     font-size: var(--font-size-xs);
-    color: var(--color-text-error, #ed6e1c);
+    color: var(--color-text-error);
   }
 
-  // Popup
   &__popup {
     position: absolute;
     top: calc(100% + var(--space-2));
@@ -447,14 +411,13 @@ onUnmounted(() => {
     background: var(--color-white);
     border: 1px solid var(--color-blue-40);
     border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(31, 41, 55, 0.12);
+    box-shadow: var(--shadow-lg);
     z-index: var(--z-dropdown);
     padding: var(--space-4);
     animation: datepicker-fade-in 0.15s ease;
     box-sizing: border-box;
   }
 
-  // Header
   &__header {
     display: flex;
     align-items: center;
@@ -496,7 +459,6 @@ onUnmounted(() => {
     }
   }
 
-  // Year select
   &__years {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -533,7 +495,6 @@ onUnmounted(() => {
     }
   }
 
-  // Weekdays
   &__weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -551,7 +512,6 @@ onUnmounted(() => {
     user-select: none;
   }
 
-  // Days grid
   &__days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -601,7 +561,6 @@ onUnmounted(() => {
     }
   }
 
-  // Footer
   &__footer {
     display: flex;
     justify-content: center;

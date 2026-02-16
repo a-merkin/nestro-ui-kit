@@ -103,8 +103,6 @@ const editingRaw = ref<string | null>(null);
 let repeatTimer: ReturnType<typeof setTimeout> | null = null;
 let repeatInterval: ReturnType<typeof setInterval> | null = null;
 
-// --- Computed ---
-
 const rootClasses = computed(() => ({
   'input-number--disabled': props.disabled,
   'input-number--buttons-horizontal': props.showButtons && props.buttonLayout === 'horizontal',
@@ -139,8 +137,6 @@ const displayValue = computed(() => {
   if (props.modelValue === null || props.modelValue === undefined) return '';
   return formatNumber(props.modelValue);
 });
-
-// --- Formatting ---
 
 function formatNumber(value: number): string {
   const digits = Math.max(props.minFractionDigits, 0);
@@ -199,8 +195,6 @@ function roundToStep(value: number): number {
   }
   return Math.round(value);
 }
-
-// --- Handlers ---
 
 function onInput(e: Event) {
   const target = e.target as HTMLInputElement;
@@ -310,8 +304,6 @@ function onBlur(e: FocusEvent) {
   emit('blur', e);
 }
 
-// --- Increment / Decrement ---
-
 function increment() {
   const current = props.modelValue ?? 0;
   const next = clampValue(roundToStep(current + props.step));
@@ -377,14 +369,13 @@ onUnmounted(() => {
     text-overflow: ellipsis;
   }
 
-  // Wrapper (border container)
   &__wrapper {
     display: flex;
     align-items: center;
     width: 100%;
     height: var(--size-height-md);
-    background: rgba(182, 199, 207, 0.15);
-    border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-stroke-primary);
     border-radius: 60px;
     transition: all 0.2s ease;
     box-sizing: border-box;
@@ -395,17 +386,16 @@ onUnmounted(() => {
     }
 
     &--error {
-      border-color: var(--color-stroke-error, #ed6e1c);
+      border-color: var(--color-stroke-error);
     }
 
     &--disabled {
-      background: rgba(218, 218, 218, 0.15);
-      border-color: rgba(225, 225, 225, 0.51);
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
       cursor: not-allowed;
     }
   }
 
-  // Inner field (input + prefix/suffix)
   &__field {
     display: flex;
     align-items: center;
@@ -433,7 +423,6 @@ onUnmounted(() => {
     margin-left: var(--space-1);
   }
 
-  // Input control
   &__control {
     width: 100%;
     height: 100%;
@@ -448,16 +437,15 @@ onUnmounted(() => {
     min-width: 0;
 
     &::placeholder {
-      color: rgba(120, 151, 166, 0.6);
+      color: var(--color-text-placeholder);
     }
 
     &:disabled {
-      color: var(--color-text-disabled, #e1e1e1);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
   }
 
-  // Buttons - horizontal layout
   &__btn {
     display: flex;
     align-items: center;
@@ -493,12 +481,11 @@ onUnmounted(() => {
     }
   }
 
-  // Stacked buttons (right side)
   &__stacked {
     display: flex;
     flex-direction: column;
     height: 100%;
-    border-left: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
+    border-left: 1px solid var(--color-stroke-primary);
   }
 
   &__btn--stacked-top,
@@ -511,15 +498,14 @@ onUnmounted(() => {
   }
 
   &__btn--stacked-top {
-    border-bottom: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
+    border-bottom: 1px solid var(--color-stroke-primary);
   }
 
-  // Error message
   &__error {
     margin-top: var(--space-1);
     padding-left: var(--size-padding-horizontal-md);
     font-size: var(--font-size-xs);
-    color: var(--color-text-error, #ed6e1c);
+    color: var(--color-text-error);
   }
 }
 </style>

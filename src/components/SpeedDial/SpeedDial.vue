@@ -1,6 +1,5 @@
 <template>
   <div ref="rootRef" class="speed-dial" :class="rootClasses">
-    <!-- Main trigger button -->
     <slot name="button" :open="isOpen" :toggle="toggle">
       <button
         class="speed-dial__trigger"
@@ -13,7 +12,6 @@
       </button>
     </slot>
 
-    <!-- Actions container -->
     <Transition name="speed-dial-actions">
       <div v-if="isOpen" class="speed-dial__actions" :class="actionsClasses">
         <template v-for="(action, index) in visibleActions" :key="action.key || index">
@@ -37,9 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed } from 'vue';
 import type { SpeedDialProps, SpeedDialEmits, SpeedDialAction } from './SpeedDial.types';
 import NIcon from '../Icon/Icon.vue';
+import { useClickOutside } from '@/composables/useClickOutside';
 
 defineOptions({ name: 'NSpeedDial' });
 
@@ -54,8 +53,6 @@ const emit = defineEmits<SpeedDialEmits>();
 
 const rootRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
-
-// --- Computed ---
 
 const visibleActions = computed(() => {
   return props.model.filter((a) => a.visible !== false);
@@ -80,8 +77,6 @@ const triggerClasses = computed(() => ({
 const actionsClasses = computed(() => ({
   [`speed-dial__actions--${props.direction}`]: true,
 }));
-
-// --- Methods ---
 
 function toggle() {
   if (props.disabled) return;
@@ -110,20 +105,11 @@ function getActionDelay(index: number) {
   return { '--action-delay': `${index * 40}ms` };
 }
 
-function handleClickOutside(event: MouseEvent) {
-  if (!isOpen.value) return;
-  if (rootRef.value && !rootRef.value.contains(event.target as Node)) {
+useClickOutside(rootRef, () => {
+  if (isOpen.value) {
     isOpen.value = false;
     emit('close');
   }
-}
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside, true);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside, true);
 });
 
 defineExpose({ toggle });
@@ -144,7 +130,6 @@ defineExpose({ toggle });
     z-index: var(--z-popover);
   }
 
-  // Trigger button
   &__trigger {
     display: flex;
     align-items: center;
@@ -191,7 +176,6 @@ defineExpose({ toggle });
     }
   }
 
-  // Actions container — direction
   &__actions {
     position: absolute;
     display: flex;
@@ -227,7 +211,6 @@ defineExpose({ toggle });
     }
   }
 
-  // Individual action button
   &__action {
     display: flex;
     align-items: center;
@@ -239,7 +222,7 @@ defineExpose({ toggle });
     background: var(--color-white);
     color: var(--color-grey-70);
     cursor: pointer;
-    box-shadow: 0 2px 12px rgba(31, 41, 55, 0.12);
+    box-shadow: var(--shadow-md);
     transition:
       background-color 0.15s ease,
       color 0.15s ease,
@@ -266,7 +249,6 @@ defineExpose({ toggle });
   }
 }
 
-// Transition for actions container
 .speed-dial-actions-enter-active {
   transition: opacity 0.15s ease;
 }

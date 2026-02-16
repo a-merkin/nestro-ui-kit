@@ -126,7 +126,7 @@ defineExpose({ toggle, show, hide });
   background: var(--color-white);
   border: 1px solid var(--color-blue-40);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 24px rgba(31, 41, 55, 0.1);
+  box-shadow: var(--shadow-md);
   padding: var(--space-2) 0;
   min-width: 200px;
   box-sizing: border-box;

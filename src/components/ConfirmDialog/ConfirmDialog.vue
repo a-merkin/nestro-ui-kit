@@ -14,23 +14,20 @@
           :aria-labelledby="title ? 'cd-title' : undefined"
           :aria-describedby="description ? 'cd-desc' : undefined"
         >
-          <!-- Loading overlay -->
           <Transition name="fade">
             <div v-if="loading" class="confirm-dialog__loading">
               <span class="confirm-dialog__spinner" />
             </div>
           </Transition>
 
-          <!-- Icon -->
           <div
             v-if="!$slots.default"
             class="confirm-dialog__icon"
             :class="`confirm-dialog__icon--${variant}`"
           >
-            <NIcon :name="variant === 'danger' ? 'close' : 'check'" :size="24" />
+            <NIcon :name="variant === 'danger' ? 'close' : 'check'" size="lg" />
           </div>
 
-          <!-- Title -->
           <h3
             v-if="title"
             id="cd-title"
@@ -39,7 +36,6 @@
             {{ title }}
           </h3>
 
-          <!-- Description -->
           <p
             v-if="description && !$slots.default"
             id="cd-desc"
@@ -48,12 +44,10 @@
             {{ description }}
           </p>
 
-          <!-- Custom content slot -->
           <div v-if="$slots.default" class="confirm-dialog__content">
             <slot />
           </div>
 
-          <!-- Actions -->
           <div class="confirm-dialog__actions">
             <slot name="actions" :confirm="handleConfirm" :cancel="handleCancel">
               <button
@@ -178,7 +172,7 @@ onBeforeUnmount(() => {
     background: var(--color-white, #fff);
     border-radius: 16px;
     padding: 32px 24px 24px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-xl);
     text-align: center;
     outline: none;
   }
