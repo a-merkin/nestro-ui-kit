@@ -1,24 +1,22 @@
 <template>
-  <div class="workplace">
-    <div class="workplace__tabs-bg">
-      <div class="workplace__tabs">
+  <div class="workplace-container">
+    <div class="header-switcher-bg">
+      <div class="header-switcher">
         <button
           v-for="tab in tabs"
           :key="tab.value"
-          type="button"
-          :class="['workplace__tab', { 'workplace__tab--active': tab.value === modelValue }]"
+          :class="[
+            'header-switcher__tab',
+            { 'header-switcher__tab--active': tab.value === modelValue },
+          ]"
           :title="tab.label"
-          @click="emit('update:modelValue', tab.value)"
+          @click="$emit('update:modelValue', tab.value)"
         >
-          <span class="workplace__tab-label">{{ tab.label }}</span>
+          <p class="header-switcher__tab-label">{{ tab.label }}</p>
         </button>
       </div>
     </div>
-
-    <div
-      class="workplace__content"
-      :class="{ 'workplace__content--no-top-left': isFirstTabActive }"
-    >
+    <div class="workplace-content" :class="{ 'workplace-content--no-top-left': isFirstTabActive }">
       <slot />
     </div>
   </div>
@@ -32,7 +30,7 @@ defineOptions({ name: 'NWorkplace' });
 
 const props = defineProps<WorkPlaceProps>();
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
@@ -42,98 +40,130 @@ const isFirstTabActive = computed(() => {
 </script>
 
 <style scoped>
-.workplace {
-  width: 1900px;
+.workplace-container {
+  width: 100%;
+  max-width: var(--max-width-fullhd);
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
-.workplace__tabs-bg {
+.header-switcher-bg {
   background: none;
 }
 
-.workplace__tabs {
+.header-switcher {
   display: flex;
-  gap: 8px;
+  background: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   align-items: flex-end;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-raised);
+  gap: var(--space-2);
 }
 
-.workplace__tab {
-  background: #fff;
-  color: rgba(46, 57, 67, 0.8);
+.header-switcher__tab {
+  background: var(--color-white);
+  color: var(--color-grey-70);
   border: none;
-  border-radius: 10px;
-  padding: 16px 32px;
-  margin-bottom: 8px;
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-8);
+  margin: 0 0 var(--space-2) 0;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    box-shadow 0.2s;
   position: relative;
-  z-index: 2;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  min-width: 215px;
-  max-width: 215px;
+  /* box-shadow: var(--shadow-sm); */
+  min-width: var(--size-tab-width);
+  max-width: var(--size-tab-width);
+  font-weight: var(--font-weight-medium);
+
+  transition:
+    background var(--motion-hover-duration) var(--easing-standard),
+    color var(--motion-hover-duration) var(--easing-standard),
+    box-shadow var(--motion-hover-duration) var(--easing-standard),
+    transform var(--motion-hover-duration) var(--easing-standard);
 }
 
-.workplace__tab-label {
-  display: block;
-  width: 100%;
+.header-switcher__tab:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.header-switcher__tab-label {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight-bold);
   margin: 0;
-  font-size: 18px;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 }
 
-.workplace__tab--active {
-  color: #2e3943;
-  background: #fafafa;
-  font-weight: 700;
-  border-top: 1px solid #b3d3f9;
-  border-left: 1px solid #b3d3f9;
-  border-right: 1px solid #b3d3f9;
+.header-switcher__tab:last-child {
+  margin-right: 0;
+}
+
+.header-switcher__tab--active {
+  color: var(--color-grey-100);
+  background: var(--color-blue-60);
+  font-weight: var(--font-weight-bold);
+
+  border-top: var(--border-width-sm) solid var(--color-stroke-primary);
+  border-left: var(--border-width-sm) solid var(--color-stroke-primary);
+  border-right: var(--border-width-sm) solid var(--color-stroke-primary);
   border-bottom: none;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
-  z-index: 3;
+
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  /* box-shadow: var(--shadow-md); */
+
+  z-index: calc(var(--z-raised) + 1);
+
+  transition:
+    background var(--motion-enter-duration) var(--easing-decelerate),
+    box-shadow var(--motion-enter-duration) var(--easing-decelerate);
 }
 
-.workplace__tab--active::after {
+.header-switcher__tab--active::after {
   content: '';
   position: absolute;
-  left: -1px;
-  right: -1px;
-  bottom: -9px;
-  height: 9px;
-  background: #fafafa;
-  border-left: 1px solid #b3d3f9;
-  border-right: 1px solid #b3d3f9;
-  z-index: 4;
+
+  left: calc(-1 * var(--border-width-sm));
+  right: calc(-1 * var(--border-width-sm));
+
+  bottom: calc(-1 * (var(--space-2) + var(--border-width-sm)));
+  height: calc(var(--space-2) + var(--border-width-sm));
+
+  background: var(--color-blue-60);
+
+  border-left: var(--border-width-sm) solid var(--color-stroke-primary);
+  border-right: var(--border-width-sm) solid var(--color-stroke-primary);
+
+  z-index: calc(var(--z-raised) + 2);
 }
 
-.workplace__content {
+.workplace-content {
   flex: 1 1 auto;
-  min-height: 0;
   overflow: auto;
+  min-height: 0;
   height: 100%;
-  background: #fafafa;
-  border: 1px solid #b3d3f9;
-  border-radius: 15px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+
+  background: var(--color-blue-60);
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
+  border-radius: var(--radius-lg);
+  /* box-shadow: var(--shadow-lg); */
+
   position: relative;
-  z-index: 1;
-  padding: 10px;
+  z-index: var(--z-base);
+
+  padding: var(--space-3);
+
+  transition: box-shadow var(--duration-medium) var(--easing-standard);
 }
 
-.workplace__content--no-top-left {
+.workplace-content--no-top-left {
   border-top-left-radius: 0;
 }
 </style>
