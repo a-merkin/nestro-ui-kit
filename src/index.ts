@@ -19,6 +19,7 @@ import InputNumber from './components/InputNumber/InputNumber.vue';
 import Menu from './components/Menu/Menu.vue';
 import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
+import Toolbar from './components/Toolbar/Toolbar.vue';
 
 export {
   Button,
@@ -37,6 +38,7 @@ export {
   Tooltip,
   SpeedDial,
   ConfirmDialog,
+  Toolbar,
   SidebarFilters,
   DatePicker,
 };
@@ -58,6 +60,7 @@ const components = [
   Tooltip,
   SpeedDial,
   ConfirmDialog,
+  Toolbar,
   SidebarFilters,
   DatePicker,
 ];
