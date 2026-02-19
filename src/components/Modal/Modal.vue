@@ -32,7 +32,7 @@
           <Transition name="fade">
             <div v-if="loading" class="modal__loading">
               <slot name="loading">
-                <Loader size="large" variant="primary" text="Загрузка..." />
+                <Loader size="lg" variant="primary" text="Загрузка..." />
               </slot>
             </div>
           </Transition>
