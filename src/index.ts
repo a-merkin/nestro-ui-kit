@@ -20,6 +20,7 @@ import Menu from './components/Menu/Menu.vue';
 import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
+import Chip from './components/Chip/Chip.vue';
 
 export {
   Button,
@@ -37,6 +38,7 @@ export {
   RangeSlider,
   Tooltip,
   SpeedDial,
+  Chip,
   ConfirmDialog,
   Toolbar,
   SidebarFilters,
@@ -59,6 +61,7 @@ const components = [
   RangeSlider,
   Tooltip,
   SpeedDial,
+  Chip,
   ConfirmDialog,
   Toolbar,
   SidebarFilters,
