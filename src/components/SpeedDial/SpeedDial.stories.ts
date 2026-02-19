@@ -33,7 +33,7 @@ const defaultActions = [
 ];
 
 // Helper wrapper to position static dials with enough space
-const wrapStatic = (direction: string, template: string) => `
+const wrapStatic = (_direction: string, template: string) => `
   <div style="display: flex; align-items: center; justify-content: center;
               min-height: 320px; min-width: 320px; position: relative;">
     ${template}

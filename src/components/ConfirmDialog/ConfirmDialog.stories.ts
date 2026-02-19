@@ -31,6 +31,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   name: 'По умолчанию',
   args: {
+    open: false,
     title: 'Подтверждение действия',
     description: 'Вы уверены, что хотите выполнить это действие? Отменить его будет невозможно.',
     confirmText: 'Подтвердить',
@@ -61,6 +62,7 @@ export const Default: Story = {
 export const Danger: Story = {
   name: 'Danger вариант',
   args: {
+    open: false,
     title: 'Удалить запись?',
     description: 'Это действие необратимо. Все связанные данные будут удалены безвозвратно.',
     confirmText: 'Удалить',
@@ -91,6 +93,7 @@ export const Danger: Story = {
 export const WithLoading: Story = {
   name: 'С загрузкой',
   args: {
+    open: false,
     title: 'Сохранение данных',
     description: 'Подтвердите сохранение изменений.',
     confirmText: 'Сохранить',
@@ -129,6 +132,7 @@ export const WithLoading: Story = {
 export const Disabled: Story = {
   name: 'Заблокировано',
   args: {
+    open: false,
     title: 'Подтверждение',
     description: 'Кнопка подтверждения заблокирована.',
     confirmText: 'Подтвердить',
@@ -158,6 +162,7 @@ export const Disabled: Story = {
 export const CustomContent: Story = {
   name: 'Кастомный контент',
   args: {
+    open: false,
     title: 'Экспорт данных',
     confirmText: 'Экспорт',
     cancelText: 'Назад',
@@ -195,6 +200,7 @@ export const CustomContent: Story = {
 export const NoOverlayClose: Story = {
   name: 'Без закрытия по overlay',
   args: {
+    open: false,
     title: 'Важное подтверждение',
     description: 'Этот диалог можно закрыть только кнопками.',
     confirmText: 'Принять',
