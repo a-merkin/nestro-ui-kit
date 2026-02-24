@@ -156,14 +156,14 @@ const onBlur = (event: FocusEvent) => {
 
   outline: none;
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    border-color var(--motion-standard),
+    box-shadow var(--motion-standard),
+    background-color var(--motion-standard);
 }
 
 .textarea__field:focus {
   border-color: var(--color-green-90);
-  box-shadow: 0 0 0 3px var(--color-bg-input);
+  box-shadow: var(--shadow-sm) var(--color-bg-input);
 }
 
 .textarea--disabled .textarea__field {
@@ -181,7 +181,7 @@ const onBlur = (event: FocusEvent) => {
 }
 
 .textarea--invalid .textarea__field:focus {
-  box-shadow: 0 0 0 3px var(--color-bg-input);
+  box-shadow: var(--shadow-sm) var(--color-bg-input);
 }
 
 .textarea__bottom {
