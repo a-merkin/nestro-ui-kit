@@ -168,7 +168,7 @@ onBeforeUnmount(() => stopTimer());
 
 .notification {
   position: fixed;
-  z-index: 9999;
+  z-index: var(--z-max);
 
   display: flex;
   align-items: flex-start;
@@ -179,13 +179,13 @@ onBeforeUnmount(() => stopTimer());
 
   padding: var(--space-4);
   border-radius: var(--radius-xl);
-  border: 1px solid transparent;
+  border: var(--border-width-sm) solid transparent;
 
   font-family: var(--font-family-base);
   background: var(--color-white);
   color: var(--color-black);
 
-  box-shadow: 0 10px 28px var(--color-bg-input);
+  box-shadow: var(--shadow-lg);
 }
 
 .notification--top-right {
@@ -241,7 +241,7 @@ onBeforeUnmount(() => stopTimer());
   height: var(--size-height-md);
 
   border-radius: var(--radius-round);
-  border: 1px solid var(--color-grey-20);
+  border: var(--border-width-sm) solid var(--color-grey-20);
   background: var(--color-white);
   cursor: pointer;
 
