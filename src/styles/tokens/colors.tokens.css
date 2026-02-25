@@ -21,4 +21,23 @@
   --color-grey-20:  #D9D9D9;
 
   --color-orange: #ED6E1C;
+
+  --color-bg-input: rgba(182, 199, 207, 0.15);
+  --color-bg-input-disabled: rgba(218, 218, 218, 0.15);
+  --color-text-error: #ED6E1C;
+  --color-text-disabled: #E1E1E1;
+  --color-text-placeholder: rgba(120, 151, 166, 0.6);
+  --color-stroke-primary: rgba(162, 177, 184, 0.51);
+  --color-stroke-error: #ED6E1C;
+  --color-stroke-disabled: rgba(225, 225, 225, 0.51);
+
+  --color-scrollbar-thumb: #91acc5;
+  --color-scrollbar-track: transparent;
+
+  --color-bg-primary: linear-gradient(148deg, #d4dfe4 5.76%, #fff 100%);
+  --color-bg-overlay-white-1: radial-gradient(32.66% 38.4% at 82.06% 39.23%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  --color-bg-overlay-white-2: radial-gradient(75.88% 74.87% at 16.09% 15.2%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  --color-bg-overlay-green: radial-gradient(52.7% 37.28% at 12.59% 7.41%, rgba(0, 150, 57, 0.2) 0%, rgba(0, 150, 57, 0) 100%);
+  --color-bg-overlay-blue: radial-gradient(199.02% 83.88% at 50% 50.75%, rgba(20, 83, 171, 0.2) 0%, rgba(20, 83, 171, 0.15) 65.4%, rgba(20, 83, 171, 0) 100%);
+  --color-bg-secondary: var(--color-blue-60);
 }

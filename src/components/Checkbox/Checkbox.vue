@@ -82,10 +82,10 @@ const handleChange = (event: Event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-height-sm);
-  height: var(--size-height-sm);
+  width: var(--size-toggle-md);
+  height: var(--size-toggle-md);
   border: 1px solid var(--color-grey-70);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-toggle-md);
   background: transparent;
   transition: all 0.3s ease;
 }
@@ -102,8 +102,8 @@ const handleChange = (event: Event) => {
 }
 
 .checkbox__icon {
-  width: var(--size-icon-sm);
-  height: var(--size-icon-sm);
+  width: var(--size-toggle-lg);
+  height: var(--size-toggle-lg);
   color: var(--color-white);
 }
 

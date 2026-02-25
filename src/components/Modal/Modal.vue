@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
     background: var(--modal-bg, #fff);
     border-radius: 16px;
     padding: 24px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-xl);
     outline: none;
   }
 

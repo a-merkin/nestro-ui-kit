@@ -215,7 +215,7 @@ onUnmounted(() => {
     font-size: var(--font-size-sm);
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(31, 41, 55, 0.06);
+    box-shadow: var(--shadow-sm);
     box-sizing: border-box;
 
     &--disabled {
@@ -323,7 +323,7 @@ onUnmounted(() => {
     background: var(--color-white);
     border: 1px solid var(--color-blue-40);
     border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(31, 41, 55, 0.12);
+    box-shadow: var(--shadow-lg);
     z-index: var(--z-dropdown);
     animation: dropdown-fade-in 0.15s ease;
     max-height: 400px;

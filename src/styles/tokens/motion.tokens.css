@@ -1,0 +1,25 @@
+:root {
+  --duration-instant: 0s;
+
+  --duration-fast: 0.15s;
+  --duration-normal: 0.2s;
+  --duration-medium: 0.3s;
+  --duration-slow: 0.4s;
+  --duration-slower: 0.6s;
+
+  --easing-linear: linear;
+
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  --motion-hover-duration: var(--duration-fast);
+  --motion-enter-duration: var(--duration-medium);
+  --motion-exit-duration: var(--duration-fast);
+
+  --motion-standard: var(--duration-normal) var(--easing-standard);
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Overview from './pages/OverviewTest.vue';
+import Overview from './pages/RadarOverview.vue';
 </script>
 
 <template>
