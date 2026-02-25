@@ -1,18 +1,13 @@
 import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import FileUpload from './FileUpload.vue';
-import type { FileUploadMode, FileUploadVariant } from './FileUpload.types';
+import type { FileUploadVariant } from './FileUpload.types';
 
 const meta = {
   title: 'UI/FileUpload',
   component: FileUpload,
   tags: ['autodocs'],
   argTypes: {
-    mode: {
-      control: 'select',
-      options: ['basic', 'advanced'] satisfies FileUploadMode[],
-      description: 'Режим компонента',
-    },
     variant: {
       control: 'select',
       options: ['primary', 'secondary'] satisfies FileUploadVariant[],
@@ -42,63 +37,29 @@ const meta = {
       control: 'number',
       description: 'Максимальное количество файлов',
     },
-    auto: {
-      control: 'boolean',
-      description: 'Автоматически вызывать upload после выбора файлов',
-    },
     dragDrop: {
       control: 'boolean',
-      description: 'Разрешить drag&drop (в advanced)',
+      description: 'Показывать dropzone (если false — будет кнопка)',
     },
-
     chooseLabel: {
       control: 'text',
-      description: 'Текст кнопки выбора',
-    },
-    uploadLabel: {
-      control: 'text',
-      description: 'Текст кнопки загрузки',
-    },
-    clearLabel: {
-      control: 'text',
-      description: 'Текст кнопки очистки',
+      description: 'Текст кнопки (когда dragDrop=false)',
     },
     dropzoneLabel: {
       control: 'text',
-      description: 'Текст dropzone (в advanced)',
-    },
-    emptyLabel: {
-      control: 'text',
-      description: 'Текст при пустом списке (в advanced)',
+      description: 'Текст dropzone',
     },
     showHint: {
       control: 'boolean',
-      description: 'Показывать подсказку (accept/maxFileSize/fileLimit)',
+      description: 'Показывать подсказку (accept/maxFileSize/fileLimit) в dropzone',
     },
 
-    hint: {
-      control: 'text',
-      description: 'Слот подсказки (hint)',
-    },
     dropzone: {
       control: 'text',
       description: 'Слот зоны перетаскивания (dropzone)',
     },
-    empty: {
-      control: 'text',
-      description: 'Слот пустого состояния (empty)',
-    },
-    'icon-left': {
-      control: 'text',
-      description: 'Слот для иконки слева (basic)',
-    },
-    'icon-right': {
-      control: 'text',
-      description: 'Слот для иконки справа (basic)',
-    },
   },
   args: {
-    mode: 'advanced',
     variant: 'primary',
     disabled: false,
     loading: false,
@@ -106,19 +67,12 @@ const meta = {
     accept: 'image/*,.pdf',
     maxFileSize: 2 * 1024 * 1024,
     fileLimit: 5,
-    auto: false,
     dragDrop: true,
     showHint: true,
-    chooseLabel: 'Choose',
-    uploadLabel: 'Upload',
-    clearLabel: 'Clear',
+    chooseLabel: 'Choose file',
     dropzoneLabel: 'Drag and drop files or click',
-    emptyLabel: 'No files selected',
 
     onSelect: fn(),
-    onUpload: fn(),
-    onRemove: fn(),
-    onClear: fn(),
     'onUpdate:modelValue': fn(),
   },
 } satisfies Meta<typeof FileUpload>;
@@ -126,20 +80,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Advanced: Story = {
-  args: {
-    mode: 'advanced',
-  },
-};
-
-export const Basic: Story = {
-  args: {
-    mode: 'basic',
-    multiple: false,
-    dragDrop: false,
-    chooseLabel: 'Select file',
-  },
-};
+export const Default: Story = {};
 
 export const Secondary: Story = {
   args: {
@@ -159,31 +100,15 @@ export const Loading: Story = {
   },
 };
 
-export const AutoUpload: Story = {
+export const WithoutDropzone: Story = {
   args: {
-    auto: true,
+    dragDrop: false,
+    chooseLabel: 'Select file',
   },
-};
-
-export const WithHintSlot: Story = {
-  render: (args) => ({
-    components: { FileUpload },
-    setup() {
-      return { args };
-    },
-    template: `
-      <FileUpload v-bind="args">
-        <template #hint>
-          <span>Можно загрузить до 5 файлов, не больше 2MB каждый.</span>
-        </template>
-      </FileUpload>
-    `,
-  }),
 };
 
 export const WithDropzoneSlot: Story = {
   args: {
-    mode: 'advanced',
     dragDrop: true,
   },
   render: (args) => ({
@@ -204,41 +129,11 @@ export const WithDropzoneSlot: Story = {
   }),
 };
 
-export const WithEmptySlot: Story = {
+export const StrictLimits: Story = {
   args: {
-    mode: 'advanced',
+    accept: '.png,.jpg',
+    maxFileSize: 300 * 1024,
+    fileLimit: 2,
+    dropzoneLabel: 'Only PNG/JPG, up to 300KB (max 2 files)',
   },
-  render: (args) => ({
-    components: { FileUpload },
-    setup() {
-      return { args };
-    },
-    template: `
-      <FileUpload v-bind="args">
-        <template #empty>
-          <span style="opacity:.7;">Пока файлов нет — выберите или перетащите.</span>
-        </template>
-      </FileUpload>
-    `,
-  }),
-};
-
-export const BasicWithIcons: Story = {
-  args: {
-    mode: 'basic',
-    multiple: false,
-    dragDrop: false,
-  },
-  render: (args) => ({
-    components: { FileUpload },
-    setup() {
-      return { args };
-    },
-    template: `
-      <FileUpload v-bind="args">
-        <template #icon-left>📁</template>
-        <template #icon-right>➕</template>
-      </FileUpload>
-    `,
-  }),
 };
