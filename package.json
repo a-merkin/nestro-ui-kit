@@ -24,6 +24,7 @@
     "@storybook/test": "^8.6.9",
     "@storybook/vue3": "^8.6.9",
     "@storybook/vue3-vite": "^8.6.9",
+    "@types/node": "^25.3.0",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-vue": "^5.2.1",
@@ -57,5 +58,8 @@
       "require": "./dist/nestro-ui-kit.umd.js"
     },
     "./nestro-ui-kit.css": "./dist/nestro-ui-kit.css"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.0"
   }
 }

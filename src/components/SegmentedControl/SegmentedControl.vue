@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted } from 'vue';
+import { ref, watch, nextTick, onMounted, type ComponentPublicInstance } from 'vue';
 import type { SegmentedControlProps, SegmentedControlValue } from './SegmentedControl.types';
 
 const props = withDefaults(defineProps<SegmentedControlProps>(), {
@@ -47,8 +47,8 @@ const containerRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<(HTMLElement | null)[]>([]);
 const isReady = ref(false);
 
-const setButtonRef = (el: HTMLElement | null, index: number) => {
-  buttonRefs.value[index] = el;
+const setButtonRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  buttonRefs.value[index] = el as HTMLElement | null;
 };
 
 const indicatorStyle = ref<Record<string, string>>({

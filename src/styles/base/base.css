@@ -4,7 +4,12 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--color-bg-primary);
+  background:
+    var(--color-bg-overlay-white-1),
+    var(--color-bg-overlay-white-2),
+    var(--color-bg-overlay-green),
+    var(--color-bg-overlay-blue),
+    var(--color-bg-primary);
   color: var(--color-text-primary);
 }
 
@@ -25,4 +30,22 @@ a:hover {
 
 figure {
   margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: var(--scrollbar-thumb-radius);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
