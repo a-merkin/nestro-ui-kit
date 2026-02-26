@@ -73,26 +73,26 @@ const bodyClasses = computed(() => ({
   color: var(--color-black);
 
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    background-color var(--motion-standard),
+    border-color var(--motion-standard),
+    box-shadow var(--motion-standard),
+    transform var(--motion-standard);
 }
 
 .card--default {
   background-color: var(--color-white);
-  border: 1px solid transparent;
+  border: var(--border-width-sm) solid transparent;
 }
 
 .card--outlined {
   background-color: var(--color-white);
-  border: 1px solid var(--color-grey-20);
+  border: var(--border-width-sm) solid var(--color-grey-20);
 }
 
 .card--elevated {
   background-color: var(--color-white);
-  border: 1px solid transparent;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: var(--border-width-sm) solid transparent;
+  box-shadow: var(--shadow-sm) var(--color-bg-input);
 }
 
 .card--clickable {
@@ -106,11 +106,11 @@ const bodyClasses = computed(() => ({
 }
 
 .card--elevated.card--clickable:hover:not(.card--disabled) {
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg) var(--color-bg-input);
 }
 
 .card--clickable:focus-visible:not(.card--disabled) {
-  box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.18);
+  box-shadow: var(--shadow-sm) var(--color-bg-input);
 }
 
 .card--disabled {
@@ -125,11 +125,11 @@ const bodyClasses = computed(() => ({
 }
 
 .card__header {
-  border-bottom: 1px solid var(--color-grey-20);
+  border-bottom: var(--border-width-sm) solid var(--color-grey-20);
 }
 
 .card__footer {
-  border-top: 1px solid var(--color-grey-20);
+  border-top: var(--border-width-sm) solid var(--color-grey-20);
 }
 
 .card__body {
