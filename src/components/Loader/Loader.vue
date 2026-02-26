@@ -44,7 +44,7 @@ const classes = computed(() => [
 
 .loader__spinner {
   border-radius: var(--radius-round);
-  animation: spin 0.9s var(--easing-linear) infinite;
+  animation: spin 0.9s linear infinite;
   box-sizing: border-box;
 }
 
@@ -63,7 +63,7 @@ const classes = computed(() => [
 .loader--lg .loader__spinner {
   width: var(--size-height-sm);
   height: var(--size-height-sm);
-  border: 4px solid transparent;
+  border: var(--border-width-xl) solid transparent;
 }
 
 .loader--primary {

@@ -102,8 +102,8 @@ const handleChange = (event: Event) => {
 }
 
 .checkbox__icon {
-  width: var(--size-toggle-lg);
-  height: var(--size-toggle-lg);
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   color: var(--color-white);
 }
 

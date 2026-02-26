@@ -21,38 +21,29 @@
     </div>
 
     <div ref="arrowRef" class="multiselect__arrow" @click.stop="toggleDropdown">
-      <svg
+      <Icon
+        name="arrow-down"
+        size="md"
         :class="{ 'multiselect__arrow-icon--rotated': isDropdownOpen }"
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-      >
-        <path
-          d="M10 13L16 19L22 13"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      />
     </div>
 
     <div v-if="isDropdownOpen" ref="dropdownRef" class="multiselect__dropdown">
       <div class="multiselect__options">
-        <label
+        <div
           v-for="item in filteredOptions"
           :key="item.value"
           class="multiselect__option"
-          @click.stop
+          @click.stop="toggleSelect(item.value)"
         >
-          <input
-            type="checkbox"
-            :checked="localSelectedValues.includes(item.value)"
-            @change="toggleSelect(item.value)"
-          />
-          <span>{{ item.label }}</span>
-        </label>
+          <Checkbox
+            :model-value="localSelectedValues.includes(item.value)"
+            @update:model-value="toggleSelect(item.value)"
+            @click.stop
+          >
+            {{ item.label }}
+          </Checkbox>
+        </div>
 
         <div v-if="filteredOptions.length === 0" class="multiselect__no-results">
           Ничего не найдено
@@ -65,6 +56,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import type { MultiSelectProps, MultiSelectValue } from './MultiSelect.types';
+import Checkbox from '@/components/Checkbox/Checkbox.vue';
+import Icon from '@/components/Icon/Icon.vue';
 
 defineOptions({ name: 'NMultiSelect' });
 
@@ -334,11 +327,6 @@ onBeforeUnmount(() => {
     &:hover {
       background: var(--color-blue-60);
       color: var(--color-green-100);
-    }
-
-    input[type='checkbox'] {
-      margin: 0;
-      cursor: pointer;
     }
   }
 
