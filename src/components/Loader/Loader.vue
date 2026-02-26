@@ -39,7 +39,7 @@ const classes = computed(() => [
   position: fixed;
   inset: 0;
   z-index: var(--z-max);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-bg-backdrop);
 }
 
 .loader__spinner {
