@@ -41,6 +41,8 @@
 import { computed } from 'vue';
 import type { SectionWrapperProps } from './SectionWrapper.types';
 
+defineOptions({ name: 'NSectionWrapper' });
+
 const props = withDefaults(defineProps<SectionWrapperProps>(), {
   defaultOpen: true,
 });
@@ -64,41 +66,37 @@ const toggle = () => {
 </script>
 
 <style lang="scss" scoped>
-$bg: #b6c7cf;
-$line: #cfd7db;
-$transition: 0.3s ease;
-
 .section-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-5);
 
   &__header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-2);
   }
 
   &__title {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
     margin: 0;
   }
 
   &__line {
     flex: 1;
-    height: 2px;
-    background-color: $line;
+    height: var(--border-width-md);
+    background-color: var(--color-blue-30);
   }
 
   &__toggle {
-    background-color: $bg;
+    background-color: var(--color-blue-50);
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-round);
     width: 30px;
     height: 30px;
     cursor: pointer;
-    transition: transform $transition;
+    transition: transform var(--duration-medium) var(--easing-standard);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,7 +107,7 @@ $transition: 0.3s ease;
   }
 
   &__icon {
-    transition: transform $transition;
+    transition: transform var(--duration-medium) var(--easing-standard);
   }
 
   &__toggle[aria-expanded='true'] &__icon {
@@ -123,7 +121,7 @@ $transition: 0.3s ease;
 
 .section-wrapper-slide-enter-active,
 .section-wrapper-slide-leave-active {
-  transition: all $transition;
+  transition: all var(--duration-medium) var(--easing-standard);
 }
 
 .section-wrapper-slide-enter-from,
