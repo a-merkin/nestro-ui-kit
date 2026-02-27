@@ -116,17 +116,17 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
   backdrop-filter: blur(2px);
-  padding: 16px;
+  padding: var(--space-4);
   overflow-y: auto;
 
   &__dialog {
     position: relative;
     width: 100%;
-    background: var(--modal-bg, #fff);
-    border-radius: 16px;
-    padding: 24px;
+    background: var(--modal-bg, var(--color-white));
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
     box-shadow: var(--shadow-xl);
     outline: none;
   }
@@ -135,26 +135,26 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: var(--space-4);
   }
 
   &__title {
     font-size: 20px;
-    font-weight: 600;
-    color: var(--modal-title, #222);
+    font-weight: var(--font-weight-semibold);
+    color: var(--modal-title, var(--color-grey-100));
     margin: 0;
   }
 
   &__content {
     font-size: 16px;
-    color: var(--modal-text, #444);
+    color: var(--modal-text, var(--color-grey-70));
   }
 
   &__footer {
-    margin-top: 24px;
+    margin-top: var(--space-6);
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
+    gap: var(--space-3);
   }
 
   &__loading {
@@ -165,16 +165,16 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: var(--z-raised);
   }
 }
 
 /* zoom animation */
 .modal-zoom-enter-active {
-  animation: modalZoomIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalZoomIn var(--motion-enter-duration) var(--easing-decelerate);
 }
 .modal-zoom-leave-active {
-  animation: modalZoomOut 0.25s ease forwards;
+  animation: modalZoomOut var(--duration-normal) var(--easing-standard) forwards;
 }
 
 @keyframes modalZoomIn {
@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.25s ease;
+  transition: opacity var(--duration-normal) var(--easing-standard);
 }
 .fade-enter-from,
 .fade-leave-to {
