@@ -22,6 +22,10 @@ import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
 import Chip from './components/Chip/Chip.vue';
+import BridgeModal from './components/BridgeModal/BridgeModal.vue';
+
+export { openBridgeModal } from './components/BridgeModal/BridgeModalService';
+export type { BridgeModalOptions, BridgeModalHandle, BridgeMessage } from './components/BridgeModal/BridgeModal.types';
 
 // Экспорт компонентов для named import
 export {
@@ -45,6 +49,7 @@ export {
   Toolbar,
   SidebarFilters,
   DatePicker,
+  BridgeModal,
 };
 
 // Список для глобальной регистрации через install
@@ -69,6 +74,7 @@ const components = [
   Toolbar,
   SidebarFilters,
   DatePicker,
+  BridgeModal,
 ];
 
 // Default экспорт как Vue плагин

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import Overview from './pages/RadarOverview.vue';
+import { computed } from 'vue';
+import BridgeModalDemo from './pages/BridgeModalDemo.vue';
+import BridgeModalTab from './pages/BridgeModalTab.vue';
+
+const isBridgeTab = computed(() => new URLSearchParams(window.location.search).has('bridge'));
 </script>
 
 <template>
-  <Overview />
+  <BridgeModalTab v-if="isBridgeTab" />
+  <BridgeModalDemo v-else />
 </template>
