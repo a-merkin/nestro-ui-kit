@@ -22,6 +22,7 @@ import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
 import Chip from './components/Chip/Chip.vue';
+import SearchFilterPanel from './components/SearchFilterPanel/SearchFilterPanel.vue';
 
 // Экспорт компонентов для named import
 export {
@@ -45,6 +46,7 @@ export {
   Toolbar,
   SidebarFilters,
   DatePicker,
+  SearchFilterPanel,
 };
 
 // Список для глобальной регистрации через install
@@ -69,6 +71,7 @@ const components = [
   Toolbar,
   SidebarFilters,
   DatePicker,
+  SearchFilterPanel,
 ];
 
 // Default экспорт как Vue плагин
