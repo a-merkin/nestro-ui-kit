@@ -7,33 +7,18 @@
         class="navbar__item-wrapper"
       >
         <!--
-          === "Connected active state" — перетекание активного элемента в рабочую область ===
-
-          Эффект достигается за счёт двух псевдоэлементов (::before / ::after),
-          которые рисуют инвертированные скругления ("ушки") сверху и снизу
-          активной кнопки. Они создают визуальное "слияние" белого фона кнопки
-          с белым фоном контент-области справа.
-
-          Как это работает:
-          1. Активная кнопка получает белый фон и border-radius слева,
-             а правая сторона — прямая (radius: 0), чтобы "слиться" с контентом.
-          2. Кнопка выезжает на 1px вправо через margin-right: -1px + position: relative + z-index,
-             чтобы перекрыть границу между sidebar и контентом (убирает шов).
-          3. .navbar__item-wrapper у активного элемента получает ::before и ::after —
-             два блока 16x16px с фоном sidebar, замаскированные через
-             radial-gradient (прозрачный круг на цветном фоне).
-             Это создаёт иллюзию вогнутых скруглений, плавно "перетекающих"
-             из sidebar в белый фон активного пункта.
-          4. z-index: активная кнопка выше sidebar-фона, но ниже контент-области,
-             что обеспечивает правильное наложение.
+          "Connected active state" — перетекание активной кнопки в контент-область.
+          Реализовано через ::before/::after на активной кнопке:
+          1. Белый фон + border-radius только слева (правая сторона = 0).
+          2. margin-right отрицательный — кнопка выезжает вправо, перекрывая шов.
+          3. ::before / ::after рисуют инвертированные скругления ("ушки")
+             через radial-gradient (прозрачный круг на белом фоне).
         -->
         <button
           :class="[
             'navbar__button',
             {
               'navbar__button--active': modelValue === item.id,
-              'navbar__button--before-active': isBeforeActive(index),
-              'navbar__button--after-active': isAfterActive(index),
             },
           ]"
           :title="item.label"
@@ -51,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { NavBarProps, NavBarEmits } from './NavBar.types';
 
 defineOptions({ name: 'NNavBar' });
@@ -61,12 +45,6 @@ const props = withDefaults(defineProps<NavBarProps>(), {
 });
 
 const emit = defineEmits<NavBarEmits>();
-
-const activeIndex = computed(() => props.items.findIndex((item) => item.id === props.modelValue));
-
-const isBeforeActive = (index: number) => activeIndex.value >= 0 && index === activeIndex.value - 1;
-
-const isAfterActive = (index: number) => activeIndex.value >= 0 && index === activeIndex.value + 1;
 
 const handleClick = (id: string) => {
   emit('update:modelValue', id);
@@ -78,23 +56,34 @@ const handleClick = (id: string) => {
  * ============================================================
  * NavBar — вертикальный sidebar с neumorphism-эффектом
  * и "connected active state" перетеканием в контент-область
+ *
+ * Размеры выверены по Figma-макету (node 1:1499):
+ *   кнопка 50×50, gap 16, radius 10, иконка 30×30, padding 10
  * ============================================================
  */
+
+.navbar {
+  --_ear-size: 16px;
+  --_btn-size: 50px;
+  --_sidebar-w: 78px;
+  --_sidebar-pad-x: 14px;
+  --_btn-radius: 10px;
+}
 
 .navbar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 72px;
+  width: var(--_sidebar-w);
   height: 100%;
-  padding: var(--space-3) 0;
+  padding: var(--space-8) 0 var(--space-6);
   box-sizing: border-box;
 
-  /* Мягкий серо-голубой фон sidebar (soft UI) */
-  background: linear-gradient(180deg, #d6e2e8 0%, #e0eaef 50%, #d6e2e8 100%);
+  /* Мягкий серо-голубой фон sidebar */
+  background: linear-gradient(180deg, #d2dfe6 0%, #dde8ed 50%, #d2dfe6 100%);
 
   /* Скругления по правой стороне */
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
 
   position: relative;
   z-index: var(--z-raised);
@@ -104,11 +93,11 @@ const handleClick = (id: string) => {
 .navbar__list {
   list-style: none;
   margin: 0;
-  padding: var(--space-2) 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-4); /* 16px — из Figma */
   width: 100%;
 }
 
@@ -117,36 +106,37 @@ const handleClick = (id: string) => {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 var(--space-2);
+  padding: 0 var(--_sidebar-pad-x);
   box-sizing: border-box;
 }
 
 /* ----------------------------------------------------------------
  * Кнопка — default (неактивный): мягкий neumorphism
+ * Figma: bg #f4f7f8, 50×50, radius 10, padding 10, icon 30×30
  * ---------------------------------------------------------------- */
 .navbar__button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: var(--_btn-size);
+  height: var(--_btn-size);
   border: none;
   cursor: pointer;
   position: relative;
   z-index: 1;
-  padding: var(--space-3);
+  padding: 10px;
   box-sizing: border-box;
 
-  /* Фон почти совпадает с sidebar */
-  background: linear-gradient(145deg, #e4edf2, #d0dbe1);
-  border-radius: var(--radius-md);
+  /* Figma: var(--background-secondary, #f4f7f8) */
+  background: var(--color-blue-60, #f4f7f8);
+  border-radius: var(--_btn-radius);
 
-  /* Neumorphism: мягкая выпуклая тень */
+  /* Neumorphism: мягкая выпуклая тень (присутствует в макете, но не экспортируется Figma) */
   box-shadow:
-    3px 3px 6px rgba(163, 180, 190, 0.5),
-    -3px -3px 6px rgba(255, 255, 255, 0.7);
+    4px 4px 8px rgba(155, 172, 183, 0.5),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
 
-  color: var(--color-grey-80);
+  color: #a0a8ae;
 
   transition:
     background var(--duration-normal) var(--easing-standard),
@@ -155,121 +145,120 @@ const handleClick = (id: string) => {
     border-radius var(--duration-normal) var(--easing-standard);
 }
 
+/* Figma: icon 30×30 */
 .navbar__button :deep(svg) {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   color: inherit;
-  transition: color var(--duration-normal) var(--easing-standard);
+  opacity: 0.4;
+  transition:
+    color var(--duration-normal) var(--easing-standard),
+    opacity var(--duration-normal) var(--easing-standard);
 }
 
 /* Плейсхолдер если нет иконки */
 .navbar__icon-placeholder {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--radius-sm);
   background: var(--color-grey-40);
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 /* ----------------------------------------------------------------
  * Hover — чуть контрастнее, тень сильнее
  * ---------------------------------------------------------------- */
 .navbar__button:hover:not(.navbar__button--active) {
-  background: linear-gradient(145deg, #eaf2f6, #d6e1e7);
+  background: #f8fbfc;
   box-shadow:
-    4px 4px 8px rgba(163, 180, 190, 0.55),
-    -4px -4px 8px rgba(255, 255, 255, 0.8);
+    5px 5px 10px rgba(155, 172, 183, 0.5),
+    -5px -5px 10px rgba(255, 255, 255, 0.9);
   color: var(--color-grey-70);
+}
+
+.navbar__button:hover:not(.navbar__button--active) :deep(svg) {
+  opacity: 0.6;
 }
 
 /* ----------------------------------------------------------------
  * Active (выбранный) — ключевой эффект "connected state"
  *
- * Белый фон, скруглён только слева; справа прямой + margin-right: -1px
- * перекрывает границу sidebar → контент.
+ * Figma: bg white, radius 10, icon полная непрозрачность
+ * Белый фон, скруглён только слева; справа = 0 + выезд вправо
+ * через отрицательный margin, чтобы перекрыть границу sidebar ↔ контент.
  * ---------------------------------------------------------------- */
 .navbar__button--active {
   background: var(--color-white);
 
   /* Скругления только слева; справа — 0, чтобы "слиться" с контент-областью */
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
 
-  /* Убираем neumorphism-тень, добавляем мягкую "плавающую" */
-  box-shadow: -3px 0 8px rgba(163, 180, 190, 0.25);
+  /* Убираем neumorphism-тень, мягкая тень только слева */
+  box-shadow: -3px 0 8px rgba(150, 168, 180, 0.18);
 
   color: var(--color-grey-70);
 
-  /* Выезд вправо: перекрываем границу sidebar ↔ контент */
-  margin-right: calc(-1 * var(--space-2));
-  padding-right: calc(var(--space-3) + var(--space-2));
-  width: calc(48px + var(--space-2));
+  /*
+   * Выезд вправо: кнопка расширяется на величину правого padding sidebar,
+   * чтобы её правый край совпал с правым краем navbar.
+   * Это "стирает" шов между sidebar и контентом.
+   */
+  margin-right: calc(-1 * var(--_sidebar-pad-x));
+  padding-right: calc(10px + var(--_sidebar-pad-x));
+  width: calc(var(--_btn-size) + var(--_sidebar-pad-x));
   z-index: 2;
+}
+
+/* Активная иконка — полная непрозрачность (Figma: opacity 1) */
+.navbar__button--active :deep(svg) {
+  opacity: 1;
 }
 
 .navbar__button--active:hover {
   background: var(--color-white);
-  box-shadow: -3px 0 8px rgba(163, 180, 190, 0.25);
+  box-shadow: -3px 0 8px rgba(150, 168, 180, 0.18);
 }
 
 /* ----------------------------------------------------------------
- * Инвертированные скругления ("ушки") — псевдоэлементы
+ * Инвертированные скругления ("ушки") — ::before / ::after
  *
- * Рисуем на wrapper-е элементов ДО и ПОСЛЕ активного.
- * Используем radial-gradient: прозрачный круг на фоне sidebar,
- * что создаёт визуальный "вырез" / вогнутое скругление.
- * Позиционируем у правого края, точно в углу,
- * чтобы вогнутость стыковалась с белым фоном активной кнопки.
+ * Рисуются на самой активной кнопке.
+ * Используем radial-gradient: прозрачный круг на белом фоне.
+ * Это создаёт "вогнутое" скругление, визуально соединяющее
+ * белый фон кнопки с белым контентом справа,
+ * при этом плавно "перетекая" из фона sidebar.
+ *
+ * Размер = 16px (совпадает с gap между кнопками).
  * ---------------------------------------------------------------- */
-
-/* "Ушко" снизу у элемента ПЕРЕД активным */
-.navbar__button--before-active::after {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle at 0% 0%, transparent 16px, var(--color-white) 16px);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* "Ушко" сверху у элемента ПОСЛЕ активного */
-.navbar__button--after-active::before {
-  content: '';
-  position: absolute;
-  top: -16px;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle at 0% 100%, transparent 16px, var(--color-white) 16px);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* "Ушко" сверху на самом активном элементе (если он первый) */
 .navbar__button--active::before {
   content: '';
   position: absolute;
-  top: -16px;
+  top: calc(-1 * var(--_ear-size));
   right: 0;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle at 0% 100%, transparent 16px, var(--color-white) 16px);
+  width: var(--_ear-size);
+  height: var(--_ear-size);
+  background: radial-gradient(
+    circle at 0% 100%,
+    transparent var(--_ear-size),
+    var(--color-white) var(--_ear-size)
+  );
   z-index: 2;
   pointer-events: none;
 }
 
-/* "Ушко" снизу на самом активном элементе (если он последний) */
 .navbar__button--active::after {
   content: '';
   position: absolute;
-  bottom: -16px;
+  bottom: calc(-1 * var(--_ear-size));
   right: 0;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle at 0% 0%, transparent 16px, var(--color-white) 16px);
+  width: var(--_ear-size);
+  height: var(--_ear-size);
+  background: radial-gradient(
+    circle at 0% 0%,
+    transparent var(--_ear-size),
+    var(--color-white) var(--_ear-size)
+  );
   z-index: 2;
   pointer-events: none;
 }
