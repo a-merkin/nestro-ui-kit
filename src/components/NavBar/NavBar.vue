@@ -6,14 +6,6 @@
         :key="item.id"
         class="navbar__item-wrapper"
       >
-        <!--
-          "Connected active state" — перетекание активной кнопки в контент-область.
-          Реализовано через ::before/::after на активной кнопке:
-          1. Белый фон + border-radius только слева (правая сторона = 0).
-          2. margin-right отрицательный — кнопка выезжает вправо, перекрывая шов.
-          3. ::before / ::after рисуют инвертированные скругления ("ушки")
-             через radial-gradient (прозрачный круг на белом фоне).
-        -->
         <button
           :class="[
             'navbar__button',
@@ -52,16 +44,6 @@ const handleClick = (id: string) => {
 </script>
 
 <style scoped>
-/*
- * ============================================================
- * NavBar — вертикальный sidebar с neumorphism-эффектом
- * и "connected active state" перетеканием в контент-область
- *
- * Размеры выверены по Figma-макету (node 1:1499):
- *   кнопка 50×50, gap 16, radius 10, иконка 30×30, padding 10
- * ============================================================
- */
-
 .navbar {
   --_ear-size: 16px;
   --_btn-size: 50px;
@@ -78,10 +60,7 @@ const handleClick = (id: string) => {
   height: 100%;
   padding: var(--space-8) 0 var(--space-6);
   box-sizing: border-box;
-
-  /* Мягкий серо-голубой фон sidebar */
   background: linear-gradient(180deg, #d2dfe6 0%, #dde8ed 50%, #d2dfe6 100%);
-
   position: relative;
   z-index: var(--z-raised);
   flex-shrink: 0;
@@ -94,7 +73,7 @@ const handleClick = (id: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4); /* 16px — из Figma */
+  gap: var(--space-4);
   width: 100%;
 }
 
@@ -107,10 +86,6 @@ const handleClick = (id: string) => {
   box-sizing: border-box;
 }
 
-/* ----------------------------------------------------------------
- * Кнопка — default (неактивный): мягкий neumorphism
- * Figma: bg #f4f7f8, 50×50, radius 10, padding 10, icon 30×30
- * ---------------------------------------------------------------- */
 .navbar__button {
   display: flex;
   align-items: center;
@@ -123,15 +98,10 @@ const handleClick = (id: string) => {
   z-index: 1;
   padding: 10px;
   box-sizing: border-box;
-
-  /* Figma: var(--background-secondary, #f4f7f8) */
   background: var(--color-blue-60, #f4f7f8);
   border-radius: var(--_btn-radius);
-
   box-shadow: none;
-
   color: #a0a8ae;
-
   transition:
     background var(--duration-normal) var(--easing-standard),
     box-shadow var(--duration-normal) var(--easing-standard),
@@ -139,7 +109,6 @@ const handleClick = (id: string) => {
     border-radius var(--duration-normal) var(--easing-standard);
 }
 
-/* Figma: icon 30×30 */
 .navbar__button :deep(svg) {
   width: 30px;
   height: 30px;
@@ -150,7 +119,6 @@ const handleClick = (id: string) => {
     opacity var(--duration-normal) var(--easing-standard);
 }
 
-/* Плейсхолдер если нет иконки */
 .navbar__icon-placeholder {
   display: block;
   width: 30px;
@@ -160,9 +128,6 @@ const handleClick = (id: string) => {
   opacity: 0.3;
 }
 
-/* ----------------------------------------------------------------
- * Hover — чуть контрастнее, тень сильнее
- * ---------------------------------------------------------------- */
 .navbar__button:hover:not(.navbar__button--active) {
   background: #f8fbfc;
   color: var(--color-grey-70);
@@ -172,36 +137,17 @@ const handleClick = (id: string) => {
   opacity: 0.6;
 }
 
-/* ----------------------------------------------------------------
- * Active (выбранный) — ключевой эффект "connected state"
- *
- * Figma: bg white, radius 10, icon полная непрозрачность
- * Белый фон, скруглён только слева; справа = 0 + выезд вправо
- * через отрицательный margin, чтобы перекрыть границу sidebar ↔ контент.
- * ---------------------------------------------------------------- */
 .navbar__button--active {
   background: var(--color-white);
-
-  /* Скругления только слева; справа — 0, чтобы "слиться" с контент-областью */
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
-
-  /* Без тени — белый фон бесшовно сливается с контентом справа */
   box-shadow: none;
-
   color: var(--color-grey-70);
-
-  /*
-   * Выезд вправо: кнопка расширяется на величину правого padding sidebar,
-   * чтобы её правый край совпал с правым краем navbar.
-   * Это "стирает" шов между sidebar и контентом.
-   */
   margin-right: calc(-1 * var(--_sidebar-pad-x));
   padding-right: calc(10px + var(--_sidebar-pad-x));
   width: calc(var(--_btn-size) + var(--_sidebar-pad-x));
   z-index: 2;
 }
 
-/* Активная иконка — полная непрозрачность (Figma: opacity 1) */
 .navbar__button--active :deep(svg) {
   opacity: 1;
 }
@@ -210,16 +156,4 @@ const handleClick = (id: string) => {
   background: var(--color-white);
   box-shadow: none;
 }
-
-/* ----------------------------------------------------------------
- * Инвертированные скругления ("ушки") — ::before / ::after
- *
- * Рисуются на самой активной кнопке.
- * Используем radial-gradient: прозрачный круг на белом фоне.
- * Это создаёт "вогнутое" скругление, визуально соединяющее
- * белый фон кнопки с белым контентом справа,
- * при этом плавно "перетекая" из фона sidebar.
- *
- * Размер = 16px (совпадает с gap между кнопками).
- * ---------------------------------------------------------------- */
 </style>
