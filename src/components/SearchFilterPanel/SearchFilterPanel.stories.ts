@@ -262,6 +262,7 @@ export const WithActiveGroup: Story = {
     activeGroupId: 'user-1',
     groups: [systemGroup, userGroup1, userGroup2],
     availableFilters,
+    placeholder: 'Поиск...',
   },
   render: renderTemplate,
 };
@@ -273,6 +274,7 @@ export const OnlySystemGroups: Story = {
     activeGroupId: 'system-1',
     groups: [systemGroup],
     availableFilters,
+    placeholder: 'Поиск...',
   },
   render: renderTemplate,
 };
@@ -284,6 +286,7 @@ export const WithSearchQuery: Story = {
     activeGroupId: null,
     groups: [systemGroup, userGroup1, userGroup2],
     availableFilters,
+    placeholder: 'Поиск...',
   },
   render: renderTemplate,
 };

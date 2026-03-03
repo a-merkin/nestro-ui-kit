@@ -15,7 +15,7 @@
         ref="barInputRef"
         :value="props.searchQuery"
         class="search-filter-panel__input"
-        :placeholder="activeGroup ? '' : placeholder"
+        :placeholder="activeGroup ? '+ Поиск' : placeholder"
         @click.stop="openModal"
         @input="onBarInput"
         @keydown.enter="handleSearch"
@@ -50,7 +50,7 @@
               ref="modalInputRef"
               :value="props.searchQuery"
               class="search-filter-dialog__input"
-              :placeholder="activeGroup ? '' : placeholder"
+              :placeholder="activeGroup ? '+ Поиск' : placeholder"
               @input="onModalInput"
               @keydown.enter="handleSearch"
             />
