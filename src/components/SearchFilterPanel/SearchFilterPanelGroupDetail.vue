@@ -56,7 +56,7 @@
                 v-else-if="item.type === 'multiselect'"
                 :model-value="(draft.values[item.key] as string[]) ?? []"
                 :options="item.config?.options ?? []"
-                @update:model-value="(v) => setDraftValue(item.key, v)"
+                @update:model-value="(v) => setDraftValue(item.key, v as string[])"
               />
 
               <!-- number (single) -->
@@ -283,7 +283,8 @@ const formatValue = (item: FilterGroupItem): string => {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-4) var(--space-6);
+  padding: 0 var(--space-6);
+  height: var(--size-height-lg);
   border-bottom: 1px solid var(--color-stroke-primary);
   flex-shrink: 0;
 }
@@ -473,7 +474,7 @@ const formatValue = (item: FilterGroupItem): string => {
   position: absolute;
   bottom: calc(100% + var(--space-1));
   left: 0;
-  z-index: 10;
+  z-index: var(--z-raised);
   min-width: 220px;
   background: var(--color-white);
   border: 1px solid var(--color-stroke-primary);

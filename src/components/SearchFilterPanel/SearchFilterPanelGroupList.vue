@@ -54,7 +54,7 @@
             title="Сделать по умолчанию"
             @click="$emit('setDefault', group)"
           >
-            <NIcon name="setting" size="sm" />
+            <NIcon name="bookmark" size="sm" />
           </button>
         </div>
       </div>
@@ -97,8 +97,10 @@ defineEmits<{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-4) var(--space-3);
+  padding: 0 var(--space-4);
+  height: var(--size-height-lg);
   border-bottom: 1px solid var(--color-stroke-primary);
+  flex-shrink: 0;
 }
 
 .sfp-group-list__title {
@@ -132,7 +134,7 @@ defineEmits<{
 .sfp-group-list__items {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-2) 0;
+  padding: 0;
 }
 
 .sfp-group-list__item {

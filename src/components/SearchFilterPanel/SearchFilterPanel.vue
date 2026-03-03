@@ -70,7 +70,7 @@
             <!-- Left: groups -->
             <SearchFilterPanelGroupList
               :groups="props.groups"
-              :active-group-id="localActiveGroupId"
+              :active-group-id="viewGroupId"
               @select="handleGroupSelect"
               @edit="handleGroupEdit"
               @delete="handleGroupDeleteRequest"
@@ -151,14 +151,23 @@ const pendingDeleteId = ref<string | null>(null);
 // ─── Computed ─────────────────────────────────────────────────────────────────
 
 const activeGroup = computed<FilterGroup | null>(
-  () => props.groups.find((g) => g.id === localActiveGroupId.value) ?? null,
+  () => props.groups.find((g) => g.id === localActiveGroupId.value) ?? null
 );
+
+// While the modal is open, pre-select the default group when no group is
+// explicitly active. This makes "set default" meaningful: the pinned group
+// is shown first on next open without committing it to the search bar chip.
+const viewGroupId = computed<string | null>(() => {
+  if (localActiveGroupId.value) return localActiveGroupId.value;
+  if (isOpen.value) return props.groups.find((g) => g.isDefault)?.id ?? null;
+  return null;
+});
 
 const selectedGroup = computed<FilterGroup | null>(() => {
   if (editingGroupId.value) {
     return props.groups.find((g) => g.id === editingGroupId.value) ?? null;
   }
-  return activeGroup.value;
+  return props.groups.find((g) => g.id === viewGroupId.value) ?? null;
 });
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
@@ -258,7 +267,7 @@ watch(
   () => props.activeGroupId,
   (id) => {
     localActiveGroupId.value = id ?? null;
-  },
+  }
 );
 </script>
 
@@ -327,7 +336,9 @@ watch(
   color: var(--color-grey-80);
   cursor: pointer;
   padding: 0;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .search-filter-panel__clear:hover {
@@ -344,7 +355,7 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
   backdrop-filter: blur(2px);
   padding: var(--space-4);
 }
