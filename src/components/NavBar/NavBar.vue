@@ -93,7 +93,7 @@ const handleClick = (id: string) => {
   border: none;
   cursor: pointer;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   padding: var(--space-3);
   box-sizing: border-box;
   background: var(--color-blue-60);
@@ -131,7 +131,7 @@ const handleClick = (id: string) => {
   margin-right: calc(-1 * var(--_sidebar-pad-x));
   padding-right: calc(var(--space-3) + var(--_sidebar-pad-x));
   width: calc(var(--_btn-size) + var(--_sidebar-pad-x));
-  z-index: 2;
+  z-index: var(--z-raised);
 }
 
 .navbar__button--active :deep(svg) {
