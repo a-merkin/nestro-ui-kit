@@ -59,13 +59,9 @@
           </button>
         </div>
 
-        <NIcon
-          v-if="group.isDefault"
-          name="bookmark"
-          size="sm"
-          color="green-90"
-          class="sfp-group-list__item-default-icon"
-        />
+        <div v-if="group.isDefault" class="sfp-group-list__item-default-icon">
+          <NIcon name="bookmark" size="sm" color="green-90" />
+        </div>
       </div>
 
       <div v-if="!groups.length" class="sfp-group-list__empty">Нет доступных групп</div>
@@ -159,6 +155,13 @@ defineEmits<{
   min-height: var(--size-height-sm);
 }
 
+.sfp-group-list__item::before {
+  content: '';
+  height: 24px;
+  width: 0;
+  flex-shrink: 0;
+}
+
 .sfp-group-list__item:hover {
   background: var(--color-blue-70);
 }
@@ -191,16 +194,14 @@ defineEmits<{
 }
 
 .sfp-group-list__item-actions {
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-1);
-  opacity: 0;
-  transition: opacity 0.15s ease;
 }
 
 .sfp-group-list__item:hover .sfp-group-list__item-actions,
 .sfp-group-list__item--active .sfp-group-list__item-actions {
-  opacity: 1;
+  display: flex;
 }
 
 .sfp-group-list__action {
@@ -235,14 +236,18 @@ defineEmits<{
 }
 
 .sfp-group-list__item-default-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
-  transition: opacity 0.15s ease;
   pointer-events: none;
 }
 
 .sfp-group-list__item:hover .sfp-group-list__item-default-icon,
 .sfp-group-list__item--active .sfp-group-list__item-default-icon {
-  opacity: 0;
+  display: none;
 }
 
 .sfp-group-list--disabled .sfp-group-list__items {
