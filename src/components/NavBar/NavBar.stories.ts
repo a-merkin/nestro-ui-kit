@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import NavBar from './NavBar.vue';
 
 const meta: Meta<typeof NavBar> = {
-  title: 'Components/NavBar',
+  title: 'UI/NavBar',
   component: NavBar,
   tags: ['autodocs'],
   parameters: {

@@ -19,7 +19,7 @@
           @click="handleClick(item.id)"
         >
           <slot :name="`icon-${item.id}`" :item="item" :active="modelValue === item.id">
-            <span class="navbar__icon-placeholder" />
+            <NIcon v-if="item.icon" :name="item.icon" size="lg" />
           </slot>
         </button>
       </li>
@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import type { NavBarProps, NavBarEmits } from './NavBar.types';
+import NIcon from '../Icon/Icon.vue';
 
 defineOptions({ name: 'NNavBar' });
 
@@ -47,8 +48,8 @@ const handleClick = (id: string) => {
 .navbar {
   --_btn-size: 50px;
   --_sidebar-w: 78px;
-  --_sidebar-pad-x: 14px;
-  --_btn-radius: 10px;
+  --_sidebar-pad-x: var(--space-4);
+  --_btn-radius: var(--radius-md);
 
   display: flex;
   flex-direction: column;
@@ -57,7 +58,7 @@ const handleClick = (id: string) => {
   height: 100%;
   padding: var(--space-8) 0 var(--space-6);
   box-sizing: border-box;
-  background: linear-gradient(180deg, #d2dfe6 0%, #dde8ed 50%, #d2dfe6 100%);
+  background: transparent;
   position: relative;
   z-index: var(--z-raised);
   flex-shrink: 0;
@@ -93,11 +94,11 @@ const handleClick = (id: string) => {
   cursor: pointer;
   position: relative;
   z-index: 1;
-  padding: 10px;
+  padding: var(--space-3);
   box-sizing: border-box;
-  background: var(--color-blue-60, #f4f7f8);
+  background: var(--color-blue-60);
   border-radius: var(--_btn-radius);
-  color: #a0a8ae;
+  color: var(--color-blue-50);
   transition:
     background var(--duration-normal) var(--easing-standard),
     color var(--duration-normal) var(--easing-standard),
@@ -105,8 +106,8 @@ const handleClick = (id: string) => {
 }
 
 .navbar__button :deep(svg) {
-  width: 30px;
-  height: 30px;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
   color: inherit;
   opacity: 0.4;
   transition:
@@ -114,17 +115,8 @@ const handleClick = (id: string) => {
     opacity var(--duration-normal) var(--easing-standard);
 }
 
-.navbar__icon-placeholder {
-  display: block;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-sm);
-  background: var(--color-grey-40);
-  opacity: 0.3;
-}
-
 .navbar__button:hover:not(.navbar__button--active) {
-  background: #f8fbfc;
+  background: var(--color-grey-50);
   color: var(--color-grey-70);
 }
 
@@ -137,7 +129,7 @@ const handleClick = (id: string) => {
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
   color: var(--color-grey-70);
   margin-right: calc(-1 * var(--_sidebar-pad-x));
-  padding-right: calc(10px + var(--_sidebar-pad-x));
+  padding-right: calc(var(--space-3) + var(--_sidebar-pad-x));
   width: calc(var(--_btn-size) + var(--_sidebar-pad-x));
   z-index: 2;
 }
@@ -145,5 +137,4 @@ const handleClick = (id: string) => {
 .navbar__button--active :deep(svg) {
   opacity: 1;
 }
-
 </style>

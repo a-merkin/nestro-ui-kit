@@ -1,6 +1,9 @@
+import type { IconName } from '../Icon/Icon.types';
+
 export interface NavBarItem {
   id: string;
   label?: string;
+  icon?: IconName;
 }
 
 export interface NavBarProps {
