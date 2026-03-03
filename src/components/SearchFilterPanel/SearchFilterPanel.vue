@@ -71,18 +71,20 @@
             <SearchFilterPanelGroupList
               :groups="props.groups"
               :active-group-id="viewGroupId"
+              :disabled="!!editingGroupId || isCreating"
               @select="handleGroupSelect"
               @edit="handleGroupEdit"
               @delete="handleGroupDeleteRequest"
               @set-default="handleGroupSetDefault"
-              @create="$emit('groupCreate')"
+              @create="handleGroupCreate"
             />
 
             <!-- Right: filters -->
             <SearchFilterPanelGroupDetail
               v-if="selectedGroup"
               :group="selectedGroup"
-              :edit-mode="!!editingGroupId"
+              :edit-mode="!!editingGroupId || isCreating"
+              :is-new="isCreating"
               :available-filters="props.availableFilters"
               @save="handleGroupSave"
               @cancel-edit="cancelEdit"
@@ -123,6 +125,7 @@ import type {
   SearchFilterPanelEmits,
   FilterGroup,
   FilterGroupSavePayload,
+  FilterGroupCreatePayload,
 } from './SearchFilterPanel.types';
 
 defineOptions({ name: 'NSearchFilterPanel' });
@@ -144,6 +147,7 @@ const modalInputRef = ref<HTMLInputElement | null>(null);
 
 const localActiveGroupId = ref<string | null>(props.activeGroupId ?? null);
 const editingGroupId = ref<string | null>(null);
+const isCreating = ref(false);
 
 const deleteConfirmOpen = ref(false);
 const pendingDeleteId = ref<string | null>(null);
@@ -154,16 +158,29 @@ const activeGroup = computed<FilterGroup | null>(
   () => props.groups.find((g) => g.id === localActiveGroupId.value) ?? null
 );
 
+// Empty group used as a template when creating a new group.
+const emptyGroup: FilterGroup = {
+  id: '',
+  name: '',
+  moduleId: '',
+  isSystem: false,
+  isDefault: false,
+  items: [],
+  values: {},
+};
+
 // While the modal is open, pre-select the default group when no group is
 // explicitly active. This makes "set default" meaningful: the pinned group
 // is shown first on next open without committing it to the search bar chip.
 const viewGroupId = computed<string | null>(() => {
+  if (isCreating.value) return null;
   if (localActiveGroupId.value) return localActiveGroupId.value;
   if (isOpen.value) return props.groups.find((g) => g.isDefault)?.id ?? null;
   return null;
 });
 
 const selectedGroup = computed<FilterGroup | null>(() => {
+  if (isCreating.value) return emptyGroup;
   if (editingGroupId.value) {
     return props.groups.find((g) => g.id === editingGroupId.value) ?? null;
   }
@@ -181,6 +198,7 @@ const openModal = async () => {
 const closeModal = () => {
   isOpen.value = false;
   editingGroupId.value = null;
+  isCreating.value = false;
 };
 
 const handleEsc = (e: KeyboardEvent) => {
@@ -252,13 +270,30 @@ const handleGroupSetDefault = (group: FilterGroup) => {
   emit('groupSetDefault', group);
 };
 
-const handleGroupSave = (payload: FilterGroupSavePayload) => {
-  emit('groupSave', payload);
+const handleGroupCreate = () => {
+  isCreating.value = true;
   editingGroupId.value = null;
+  if (!isOpen.value) openModal();
+};
+
+const handleGroupSave = (payload: FilterGroupSavePayload) => {
+  if (isCreating.value) {
+    const createPayload: FilterGroupCreatePayload = {
+      name: payload.name,
+      items: payload.items,
+      values: payload.values,
+    };
+    emit('groupCreate', createPayload);
+    isCreating.value = false;
+  } else {
+    emit('groupSave', payload);
+    editingGroupId.value = null;
+  }
 };
 
 const cancelEdit = () => {
   editingGroupId.value = null;
+  isCreating.value = false;
 };
 
 // ─── Sync activeGroupId prop → local ─────────────────────────────────────────

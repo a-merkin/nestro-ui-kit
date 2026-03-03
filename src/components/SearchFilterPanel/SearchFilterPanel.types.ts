@@ -45,6 +45,12 @@ export interface FilterGroupSavePayload {
   values: Record<string, FilterValue>;
 }
 
+export interface FilterGroupCreatePayload {
+  name: string;
+  items: FilterGroupItem[];
+  values: Record<string, FilterValue>;
+}
+
 export interface SearchFilterPanelProps {
   searchQuery: string;
   groups: FilterGroup[];
@@ -62,5 +68,5 @@ export interface SearchFilterPanelEmits {
   (e: 'groupSetDefault', group: FilterGroup): void;
   (e: 'groupSave', payload: FilterGroupSavePayload): void;
   (e: 'groupDelete', groupId: string): void;
-  (e: 'groupCreate'): void;
+  (e: 'groupCreate', payload: FilterGroupCreatePayload): void;
 }

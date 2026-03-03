@@ -1,11 +1,12 @@
 <template>
-  <div class="sfp-group-list">
+  <div class="sfp-group-list" :class="{ 'sfp-group-list--disabled': disabled }">
     <div class="sfp-group-list__header">
       <span class="sfp-group-list__title">Группы фильтров</span>
       <button
         type="button"
         class="sfp-group-list__add"
         title="Создать группу"
+        :disabled="disabled"
         @click="$emit('create')"
       >
         <NIcon name="plus" size="md" />
@@ -57,6 +58,14 @@
             <NIcon name="bookmark" size="sm" />
           </button>
         </div>
+
+        <NIcon
+          v-if="group.isDefault"
+          name="bookmark"
+          size="sm"
+          color="green-90"
+          class="sfp-group-list__item-default-icon"
+        />
       </div>
 
       <div v-if="!groups.length" class="sfp-group-list__empty">Нет доступных групп</div>
@@ -73,6 +82,7 @@ defineOptions({ name: 'NSearchFilterPanelGroupList' });
 defineProps<{
   groups: FilterGroup[];
   activeGroupId?: string | null;
+  disabled?: boolean;
 }>();
 
 defineEmits<{
@@ -222,6 +232,27 @@ defineEmits<{
 .sfp-group-list__action--danger:hover {
   background: rgba(237, 110, 28, 0.1);
   color: var(--color-orange);
+}
+
+.sfp-group-list__item-default-icon {
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.sfp-group-list__item:hover .sfp-group-list__item-default-icon,
+.sfp-group-list__item--active .sfp-group-list__item-default-icon {
+  opacity: 0;
+}
+
+.sfp-group-list--disabled .sfp-group-list__items {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.sfp-group-list--disabled .sfp-group-list__add {
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .sfp-group-list__empty {

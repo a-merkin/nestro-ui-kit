@@ -23,7 +23,9 @@
     <!-- ───── Edit mode ───── -->
     <template v-else>
       <div class="sfp-group-detail__header">
-        <h3 class="sfp-group-detail__title">Редактирование группы</h3>
+        <h3 class="sfp-group-detail__title">
+          {{ props.isNew ? 'Создание группы' : 'Редактирование группы' }}
+        </h3>
       </div>
 
       <div class="sfp-group-detail__edit-form">
@@ -163,6 +165,7 @@ defineOptions({ name: 'NSearchFilterPanelGroupDetail' });
 const props = defineProps<{
   group: FilterGroup;
   editMode: boolean;
+  isNew?: boolean;
   availableFilters?: FilterGroupItem[];
 }>();
 
