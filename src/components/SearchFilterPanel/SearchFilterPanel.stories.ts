@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 import NSearchFilterPanel from './SearchFilterPanel.vue';
-import type { FilterGroup, FilterGroupItem, FilterGroupSavePayload } from './SearchFilterPanel.types';
+import type {
+  FilterGroup,
+  FilterGroupItem,
+  FilterGroupSavePayload,
+} from './SearchFilterPanel.types';
 
 const meta = {
   title: 'UI/SearchFilterPanel',
@@ -11,7 +15,10 @@ const meta = {
     searchQuery: { control: 'text', description: 'Текст поискового запроса' },
     groups: { control: 'object', description: 'Список групп фильтров' },
     activeGroupId: { control: 'text', description: 'ID активной группы' },
-    availableFilters: { control: 'object', description: 'Доступные фильтры для добавления в режиме редактирования' },
+    availableFilters: {
+      control: 'object',
+      description: 'Доступные фильтры для добавления в режиме редактирования',
+    },
     placeholder: { control: 'text', description: 'Placeholder строки поиска' },
     loading: { control: 'boolean', description: 'Состояние загрузки' },
   },
@@ -199,7 +206,7 @@ const renderTemplate = (args: any) => ({
       groups.value = groups.value.map((gr) =>
         gr.id === payload.id
           ? { ...gr, name: payload.name, items: payload.items, values: payload.values }
-          : gr,
+          : gr
       );
       console.log('groupSave:', payload);
     };
