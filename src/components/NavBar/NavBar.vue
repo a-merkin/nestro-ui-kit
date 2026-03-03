@@ -82,9 +82,6 @@ const handleClick = (id: string) => {
   /* Мягкий серо-голубой фон sidebar */
   background: linear-gradient(180deg, #d2dfe6 0%, #dde8ed 50%, #d2dfe6 100%);
 
-  /* Скругления по правой стороне */
-  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
-
   position: relative;
   z-index: var(--z-raised);
   flex-shrink: 0;
@@ -131,10 +128,7 @@ const handleClick = (id: string) => {
   background: var(--color-blue-60, #f4f7f8);
   border-radius: var(--_btn-radius);
 
-  /* Neumorphism: мягкая выпуклая тень (присутствует в макете, но не экспортируется Figma) */
-  box-shadow:
-    4px 4px 8px rgba(155, 172, 183, 0.5),
-    -4px -4px 8px rgba(255, 255, 255, 0.8);
+  box-shadow: none;
 
   color: #a0a8ae;
 
@@ -171,9 +165,6 @@ const handleClick = (id: string) => {
  * ---------------------------------------------------------------- */
 .navbar__button:hover:not(.navbar__button--active) {
   background: #f8fbfc;
-  box-shadow:
-    5px 5px 10px rgba(155, 172, 183, 0.5),
-    -5px -5px 10px rgba(255, 255, 255, 0.9);
   color: var(--color-grey-70);
 }
 
@@ -194,8 +185,8 @@ const handleClick = (id: string) => {
   /* Скругления только слева; справа — 0, чтобы "слиться" с контент-областью */
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
 
-  /* Убираем neumorphism-тень, мягкая тень только слева */
-  box-shadow: -3px 0 8px rgba(150, 168, 180, 0.18);
+  /* Без тени — белый фон бесшовно сливается с контентом справа */
+  box-shadow: none;
 
   color: var(--color-grey-70);
 
@@ -217,7 +208,7 @@ const handleClick = (id: string) => {
 
 .navbar__button--active:hover {
   background: var(--color-white);
-  box-shadow: -3px 0 8px rgba(150, 168, 180, 0.18);
+  box-shadow: none;
 }
 
 /* ----------------------------------------------------------------
@@ -231,35 +222,4 @@ const handleClick = (id: string) => {
  *
  * Размер = 16px (совпадает с gap между кнопками).
  * ---------------------------------------------------------------- */
-.navbar__button--active::before {
-  content: '';
-  position: absolute;
-  top: calc(-1 * var(--_ear-size));
-  right: 0;
-  width: var(--_ear-size);
-  height: var(--_ear-size);
-  background: radial-gradient(
-    circle at 0% 100%,
-    transparent var(--_ear-size),
-    var(--color-white) var(--_ear-size)
-  );
-  z-index: 2;
-  pointer-events: none;
-}
-
-.navbar__button--active::after {
-  content: '';
-  position: absolute;
-  bottom: calc(-1 * var(--_ear-size));
-  right: 0;
-  width: var(--_ear-size);
-  height: var(--_ear-size);
-  background: radial-gradient(
-    circle at 0% 0%,
-    transparent var(--_ear-size),
-    var(--color-white) var(--_ear-size)
-  );
-  z-index: 2;
-  pointer-events: none;
-}
 </style>
