@@ -16,7 +16,8 @@ export type IconName =
   | 'unite'
   | 'loading'
   | 'calendar'
-  | 'minus';
+  | 'minus'
+  | 'bookmark';
 
 export interface IconProps {
   name: IconName;
