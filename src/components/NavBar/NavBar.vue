@@ -2,7 +2,7 @@
   <nav class="navbar">
     <ul class="navbar__list">
       <li
-        v-for="(item, index) in items"
+        v-for="item in items"
         :key="item.id"
         class="navbar__item-wrapper"
       >
@@ -32,7 +32,7 @@ import type { NavBarProps, NavBarEmits } from './NavBar.types';
 
 defineOptions({ name: 'NNavBar' });
 
-const props = withDefaults(defineProps<NavBarProps>(), {
+withDefaults(defineProps<NavBarProps>(), {
   modelValue: '',
 });
 
@@ -45,14 +45,11 @@ const handleClick = (id: string) => {
 
 <style scoped>
 .navbar {
-  --_ear-size: 16px;
   --_btn-size: 50px;
   --_sidebar-w: 78px;
   --_sidebar-pad-x: 14px;
   --_btn-radius: 10px;
-}
 
-.navbar {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,11 +97,9 @@ const handleClick = (id: string) => {
   box-sizing: border-box;
   background: var(--color-blue-60, #f4f7f8);
   border-radius: var(--_btn-radius);
-  box-shadow: none;
   color: #a0a8ae;
   transition:
     background var(--duration-normal) var(--easing-standard),
-    box-shadow var(--duration-normal) var(--easing-standard),
     color var(--duration-normal) var(--easing-standard),
     border-radius var(--duration-normal) var(--easing-standard);
 }
@@ -140,7 +135,6 @@ const handleClick = (id: string) => {
 .navbar__button--active {
   background: var(--color-white);
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
-  box-shadow: none;
   color: var(--color-grey-70);
   margin-right: calc(-1 * var(--_sidebar-pad-x));
   padding-right: calc(10px + var(--_sidebar-pad-x));
@@ -152,8 +146,4 @@ const handleClick = (id: string) => {
   opacity: 1;
 }
 
-.navbar__button--active:hover {
-  background: var(--color-white);
-  box-shadow: none;
-}
 </style>

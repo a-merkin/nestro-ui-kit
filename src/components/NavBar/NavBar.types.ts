@@ -1,6 +1,5 @@
 export interface NavBarItem {
   id: string;
-  icon?: string;
   label?: string;
 }
 
