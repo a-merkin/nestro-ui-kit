@@ -22,6 +22,8 @@ import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
 import Chip from './components/Chip/Chip.vue';
+import SearchFilterPanel from './components/SearchFilterPanel/SearchFilterPanel.vue';
+import NavBar from './components/NavBar/NavBar.vue';
 
 // Примитивные компоненты
 import Box from './components/primitives/Box/Box.vue';
@@ -53,6 +55,8 @@ export {
   Toolbar,
   SidebarFilters,
   DatePicker,
+  SearchFilterPanel,
+  NavBar,
   Box,
   Flex,
   Heading,
@@ -83,6 +87,8 @@ const components = [
   Toolbar,
   SidebarFilters,
   DatePicker,
+  SearchFilterPanel,
+  NavBar,
   Box,
   Flex,
   Heading,
