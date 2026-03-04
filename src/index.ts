@@ -23,6 +23,14 @@ import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
 import Chip from './components/Chip/Chip.vue';
 
+// Примитивные компоненты
+import Box from './components/primitives/Box/Box.vue';
+import Flex from './components/primitives/Flex/Flex.vue';
+import Heading from './components/primitives/Heading/Heading.vue';
+import Label from './components/primitives/Label/Label.vue';
+import Stack from './components/primitives/Stack/Stack.vue';
+import Text from './components/primitives/Text/Text.vue';
+
 // Экспорт компонентов для named import
 export {
   Button,
@@ -45,6 +53,12 @@ export {
   Toolbar,
   SidebarFilters,
   DatePicker,
+  Box,
+  Flex,
+  Heading,
+  Label,
+  Stack,
+  Text
 };
 
 // Список для глобальной регистрации через install
@@ -69,6 +83,12 @@ const components = [
   Toolbar,
   SidebarFilters,
   DatePicker,
+  Box,
+  Flex,
+  Heading,
+  Label,
+  Stack,
+  Text
 ];
 
 // Default экспорт как Vue плагин
