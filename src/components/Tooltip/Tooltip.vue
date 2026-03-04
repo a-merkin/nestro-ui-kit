@@ -112,22 +112,22 @@ const style = computed(() => {
 
 .n-tooltip__content {
   position: absolute;
-  z-index: 3000;
+  z-index: var(--z-tooltip);
   padding: 6px 10px;
-  font-size: 13px;
-  color: var(--color-text-invert, #fff);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-invert, var(--color-white));
   background: var(--color-bg-tooltip, #222c37);
-  border-radius: var(--radius-sm, 6px);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
   pointer-events: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .tooltip-fade-enter-active,
 .tooltip-fade-leave-active {
   transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
+    opacity var(--duration-fast) ease,
+    transform var(--duration-fast) ease;
 }
 
 .tooltip-fade-enter-from,

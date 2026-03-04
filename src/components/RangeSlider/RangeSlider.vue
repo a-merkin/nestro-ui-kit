@@ -208,7 +208,7 @@ const emitRange = () => {
 .range-slider {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .range-slider__labels-row {
@@ -218,8 +218,8 @@ const emitRange = () => {
 
 .range-slider__track-container {
   position: relative;
-  height: 16px;
-  margin: 0 8px;
+  height: var(--size-toggle-sm);
+  margin: 0 var(--space-2);
 }
 
 .range-slider__track {
@@ -228,7 +228,7 @@ const emitRange = () => {
   left: 0;
   width: 100%;
   height: 6px;
-  background-color: #cfd7db;
+  background-color: var(--color-blue-30);
   border-radius: 3px;
   transform: translateY(-50%);
 }
@@ -237,7 +237,7 @@ const emitRange = () => {
   position: absolute;
   top: 50%;
   height: 6px;
-  background-color: #009639;
+  background-color: var(--color-green-90);
   border-radius: 3px;
   transform: translateY(-50%);
 }
@@ -247,7 +247,7 @@ const emitRange = () => {
   top: 50%;
   width: 4px;
   height: 17px;
-  background-color: #cfd7db;
+  background-color: var(--color-blue-30);
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
@@ -255,22 +255,22 @@ const emitRange = () => {
 .range-slider__thumb {
   position: absolute;
   top: 50%;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border: 2px solid #009639;
-  border-radius: 50%;
+  width: var(--size-toggle-sm);
+  height: var(--size-toggle-sm);
+  background: var(--color-white);
+  border: 2px solid var(--color-green-90);
+  border-radius: var(--radius-round);
   cursor: grab;
   transform: translate(-50%, -50%);
 }
 
 .range-slider__thumb--single {
-  background-color: #ed6e1c;
-  border-color: #ed6e1c;
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
 }
 
 .range-slider--disabled .range-slider__thumb {
   cursor: not-allowed;
-  border-color: #cdcdcd;
+  border-color: var(--color-grey-40);
 }
 </style>
