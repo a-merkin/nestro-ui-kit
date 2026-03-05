@@ -115,7 +115,7 @@ const style = computed(() => {
   z-index: var(--z-tooltip);
   padding: 6px 10px;
   font-size: var(--font-size-xs);
-  color: var(--color-text-invert, var(--color-white));
+  color: var(--color-white);
   background: var(--color-bg-tooltip, #222c37);
   border-radius: var(--radius-sm);
   white-space: nowrap;

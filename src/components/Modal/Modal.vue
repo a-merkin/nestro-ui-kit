@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
   }
 
   &__title {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
     color: var(--color-black);
     margin: 0;

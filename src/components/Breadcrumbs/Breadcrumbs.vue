@@ -1,9 +1,6 @@
 <template>
   <div class="breadcrumbs">
-    <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 20L9 11L3 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5" />
-      <path d="M13 20L18 11L13 2" stroke="#B6C7CF" stroke-opacity="0.3" stroke-width="5" />
-    </svg>
+    <Icon name="chevrons-right" size="sm" class="breadcrumbs__icon" />
 
     <template v-for="(part, idx) in scenarioParts" :key="idx">
       <span class="breadcrumbs__text">{{ part }}</span>
@@ -13,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import Icon from '@/components/Icon/Icon.vue';
 import type { BreadcrumbsProps } from './Breadcrumbs.types';
 
 defineOptions({ name: 'NBreadcrumbs' });
@@ -24,18 +22,22 @@ defineProps<BreadcrumbsProps>();
 .breadcrumbs {
   position: relative;
   width: max-content;
-  height: 18px;
   display: flex;
   align-items: center;
   background: none;
   gap: var(--space-2);
 }
 
+.breadcrumbs__icon {
+  color: var(--color-blue-30);
+  opacity: 0.3;
+}
+
 .breadcrumbs__text {
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-sm);
-  line-height: 1.22;
+  line-height: var(--line-height-sm);
   color: var(--color-blue-50);
   display: flex;
   align-items: center;

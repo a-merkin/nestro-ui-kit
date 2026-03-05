@@ -77,7 +77,7 @@ const handleChange = () => {
   justify-content: center;
   inline-size: var(--size-toggle-sm);
   block-size: var(--size-toggle-sm);
-  border: 2px solid var(--color-blue-50);
+  border: var(--border-width-md) solid var(--color-blue-50);
   border-radius: var(--radius-round);
   background: transparent;
   transition:

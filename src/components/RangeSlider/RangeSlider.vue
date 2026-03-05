@@ -229,7 +229,7 @@ const emitRange = () => {
   width: 100%;
   height: 6px;
   background-color: var(--color-blue-30);
-  border-radius: 3px;
+  border-radius: var(--border-width-lg);
   transform: translateY(-50%);
 }
 
@@ -238,7 +238,7 @@ const emitRange = () => {
   top: 50%;
   height: 6px;
   background-color: var(--color-green-90);
-  border-radius: 3px;
+  border-radius: var(--border-width-lg);
   transform: translateY(-50%);
 }
 
@@ -258,7 +258,7 @@ const emitRange = () => {
   width: var(--size-toggle-sm);
   height: var(--size-toggle-sm);
   background: var(--color-white);
-  border: 2px solid var(--color-green-90);
+  border: var(--border-width-md) solid var(--color-green-90);
   border-radius: var(--radius-round);
   cursor: grab;
   transform: translate(-50%, -50%);

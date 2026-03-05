@@ -100,7 +100,7 @@ const inputStyles = computed(() => ({
   border-radius: var(--radius-xl);
   border: var(--border-width-sm) solid var(--color-stroke-primary);
   background: var(--color-bg-input);
-  color: var(--color-text-primary);
+  color: var(--color-black);
   font-family: var(--font-family-base);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
@@ -131,7 +131,7 @@ const inputStyles = computed(() => ({
   height: var(--size-height-md);
   width: var(--size-icon-md);
   pointer-events: none;
-  color: var(--color-text-primary);
+  color: var(--color-black);
   z-index: var(--z-raised);
 }
 

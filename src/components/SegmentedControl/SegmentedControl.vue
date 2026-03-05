@@ -75,9 +75,7 @@ const updateIndicator = () => {
     indicatorStyle.value = {
       width: `${buttonRect.width}px`,
       transform: `translateX(${buttonRect.left - containerRect.left}px)`,
-      transition: isReady.value
-        ? `all var(--duration-fast) var(--easing-standard)`
-        : 'none',
+      transition: isReady.value ? 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
     };
 
     if (!isReady.value) {
@@ -108,7 +106,7 @@ onMounted(updateIndicator);
   gap: var(--space-1);
   padding: var(--space-1);
   background: var(--segmented-bg, var(--color-white));
-  border: 1px solid var(--segmented-border, var(--color-blue-30));
+  border: var(--border-width-sm) solid var(--segmented-border, var(--color-blue-30));
   border-radius: var(--radius-xl);
 
   &--disabled {

@@ -79,7 +79,7 @@ const onChange = (value: RadioGroupValue) => {
 .radio-group__label {
   color: var(--color-grey-70);
   font-size: var(--font-size-sm);
-  line-height: 1.2;
+  line-height: var(--line-height-sm);
 }
 
 .radio-group__items {
@@ -124,7 +124,7 @@ const onChange = (value: RadioGroupValue) => {
   justify-content: center;
   inline-size: var(--size-toggle-sm);
   block-size: var(--size-toggle-sm);
-  border: 2px solid var(--color-blue-50);
+  border: var(--border-width-md) solid var(--color-blue-50);
   border-radius: var(--radius-round);
   background: transparent;
   transition:

@@ -42,7 +42,4 @@
   --color-bg-secondary: var(--color-blue-60);
   --color-bg-backdrop: rgba(0, 0, 0, 0.5);
   --color-bg-tooltip: #222C37;
-
-  --color-text-primary: var(--color-black);
-  --color-text-invert: var(--color-white);
 }

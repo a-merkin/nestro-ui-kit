@@ -17,7 +17,8 @@ export type IconName =
   | 'loading'
   | 'calendar'
   | 'minus'
-  | 'bookmark';
+  | 'bookmark'
+  | 'chevrons-right';
 
 export interface IconProps {
   name: IconName;
