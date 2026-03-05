@@ -429,7 +429,7 @@ onUnmounted(() => {
     border: none;
     background: transparent;
     outline: none;
-    color: var(--color-text-primary);
+    color: var(--color-black);
     font-family: var(--font-family-base);
     font-size: 16px;
     font-weight: 400;

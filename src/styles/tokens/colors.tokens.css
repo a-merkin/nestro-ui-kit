@@ -41,4 +41,5 @@
   --color-bg-overlay-blue: radial-gradient(199.02% 83.88% at 50% 50.75%, rgba(20, 83, 171, 0.2) 0%, rgba(20, 83, 171, 0.15) 65.4%, rgba(20, 83, 171, 0) 100%);
   --color-bg-secondary: var(--color-blue-60);
   --color-bg-backdrop: rgba(0, 0, 0, 0.5);
+  --color-bg-tooltip: #222C37;
 }
