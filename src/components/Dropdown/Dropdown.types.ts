@@ -7,6 +7,9 @@ export interface DropdownProps {
   options: DropdownOption[];
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
+  error?: boolean;
+  errorMessage?: string;
   searchable?: boolean;
   clearable?: boolean;
   valueKey?: string;

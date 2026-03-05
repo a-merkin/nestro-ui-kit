@@ -13,4 +13,7 @@ export interface RadioGroupProps {
   label?: string;
   disabled?: boolean;
   direction?: 'vertical' | 'horizontal';
+  error?: boolean;
+  errorMessage?: string;
+  required?: boolean;
 }

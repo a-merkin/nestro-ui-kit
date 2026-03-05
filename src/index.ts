@@ -27,6 +27,7 @@ import NavBar from './components/NavBar/NavBar.vue';
 
 // Примитивные компоненты
 import Box from './components/primitives/Box/Box.vue';
+import Field from './components/primitives/Field/Field.vue';
 import Flex from './components/primitives/Flex/Flex.vue';
 import Heading from './components/primitives/Heading/Heading.vue';
 import Label from './components/primitives/Label/Label.vue';
@@ -58,12 +59,20 @@ export {
   SearchFilterPanel,
   NavBar,
   Box,
+  Field,
   Flex,
   Heading,
   Label,
   Stack,
   Text
 };
+
+// Экспорт типов
+export type { BaseFieldProps } from './types/form';
+export type { NFieldProps } from './components/primitives/Field/Field.types';
+
+// Экспорт composables
+export { useForm } from './composables/useForm';
 
 // Список для глобальной регистрации через install
 const components = [
@@ -90,6 +99,7 @@ const components = [
   SearchFilterPanel,
   NavBar,
   Box,
+  Field,
   Flex,
   Heading,
   Label,
