@@ -21,7 +21,7 @@ const meta = {
       control: 'boolean',
       description: 'Только для чтения',
     },
-    invalid: {
+    error: {
       control: 'boolean',
       description: 'Состояние ошибки (красная рамка)',
     },
@@ -49,7 +49,7 @@ const meta = {
       control: 'text',
       description: 'Подсказка (props) / слот hint',
     },
-    error: {
+    errorMessage: {
       control: 'text',
       description: 'Текст ошибки (props) / слот error',
     },
@@ -85,12 +85,12 @@ const meta = {
     variant: 'default',
     disabled: false,
     readonly: false,
-    invalid: false,
+    error: false,
     rows: 4,
     placeholder: 'Введите текст...',
     label: 'Комментарий',
     hint: 'Опишите задачу подробнее',
-    error: 'Поле заполнено неверно',
+    errorMessage: 'Поле заполнено неверно',
     resize: 'vertical',
     showCount: false,
     maxlength: undefined,
@@ -106,7 +106,7 @@ export const Default: Story = {
     variant: 'default',
     label: 'Комментарий',
     hint: 'Опишите задачу подробнее',
-    invalid: false,
+    error: false,
   },
 };
 
@@ -163,8 +163,8 @@ export const WithHintSlot: Story = {
 
 export const Invalid: Story = {
   args: {
-    invalid: true,
-    error: 'Обязательное поле',
+    error: true,
+    errorMessage: 'Обязательное поле',
     hint: '',
   },
 };
