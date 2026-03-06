@@ -1,9 +1,9 @@
-<script setup lang="ts">
-import RadarOverview from './pages/RadarOverview.vue';
-import LoginForm from './pages/LoginForm.vue';
-</script>
-
 <template>
-  <RadarOverview />
-  <LoginForm />
+  <AppLayout v-slot="{ activeTab }">
+    <p>Вкладка: {{ activeTab }}</p>
+  </AppLayout>
 </template>
+
+<script setup lang="ts">
+import AppLayout from './layouts/AppLayout.vue';
+</script>
