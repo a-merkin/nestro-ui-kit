@@ -26,6 +26,7 @@ defineProps<BreadcrumbsProps>();
   align-items: center;
   background: none;
   gap: var(--space-2);
+  padding: var(--space-2) 0;
 }
 
 .breadcrumbs__icon {

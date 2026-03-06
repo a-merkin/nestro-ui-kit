@@ -31,8 +31,8 @@ withDefaults(defineProps<ToolbarProps>(), {
   max-width: var(--max-width-fullhd);
   margin: 0 auto;
   padding: var(--space-3) var(--space-5);
-  background: var(--color-blue-60);
-  border: var(--border-width-sm) solid var(--color-blue-30);
+  background: none;
+  border: none;
   min-height: var(--size-height-lg);
   gap: var(--space-4);
   position: sticky;

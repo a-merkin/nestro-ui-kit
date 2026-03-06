@@ -55,13 +55,13 @@ const handleClick = (id: string) => {
   flex-direction: column;
   align-items: center;
   width: var(--_sidebar-w);
-  flex: 1;
   padding: 0;
   box-sizing: border-box;
   background: transparent;
   position: relative;
   z-index: var(--z-raised);
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .navbar__list {
