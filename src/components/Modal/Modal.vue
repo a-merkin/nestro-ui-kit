@@ -47,6 +47,8 @@ import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick } from 'vue'
 import Loader from '@/components/Loader/Loader.vue';
 import type { ModalProps } from './Modal.types';
 
+defineOptions({ name: 'NModal' });
+
 const props = withDefaults(defineProps<ModalProps>(), {
   loading: false,
   teleport: true,
@@ -112,7 +114,7 @@ onBeforeUnmount(() => {
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--color-bg-backdrop);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,8 +126,8 @@ onBeforeUnmount(() => {
   &__dialog {
     position: relative;
     width: 100%;
-    background: var(--modal-bg, var(--color-white));
-    border-radius: var(--radius-md);
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
     padding: var(--space-6);
     box-shadow: var(--shadow-xl);
     outline: none;
@@ -139,15 +141,15 @@ onBeforeUnmount(() => {
   }
 
   &__title {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
-    color: var(--modal-title, var(--color-grey-100));
+    color: var(--color-black);
     margin: 0;
   }
 
   &__content {
-    font-size: 16px;
-    color: var(--modal-text, var(--color-grey-70));
+    font-size: var(--font-size-sm);
+    color: var(--color-grey-70);
   }
 
   &__footer {
@@ -171,10 +173,10 @@ onBeforeUnmount(() => {
 
 /* zoom animation */
 .modal-zoom-enter-active {
-  animation: modalZoomIn var(--motion-enter-duration) var(--easing-decelerate);
+  animation: modalZoomIn var(--duration-medium) cubic-bezier(0.16, 1, 0.3, 1);
 }
 .modal-zoom-leave-active {
-  animation: modalZoomOut var(--duration-normal) var(--easing-standard) forwards;
+  animation: modalZoomOut var(--duration-normal) ease forwards;
 }
 
 @keyframes modalZoomIn {
@@ -201,7 +203,7 @@ onBeforeUnmount(() => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity var(--duration-normal) var(--easing-standard);
+  transition: opacity var(--motion-standard);
 }
 .fade-enter-from,
 .fade-leave-to {

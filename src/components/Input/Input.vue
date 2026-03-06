@@ -75,8 +75,8 @@ const inputClasses = computed(() => ({
 }));
 
 const inputStyles = computed(() => ({
-  paddingLeft: slots.iconLeft ? 'var(--space-11)' : 'var(--padding-md)',
-  paddingRight: slots.iconRight ? 'var(--space-11)' : 'var(--padding-md)',
+  paddingLeft: slots.iconLeft ? 'var(--space-10)' : 'var(--size-padding-horizontal-md)',
+  paddingRight: slots.iconRight ? 'var(--space-10)' : 'var(--size-padding-horizontal-md)',
 }));
 </script>
 
@@ -95,31 +95,31 @@ const inputStyles = computed(() => ({
 
 .input__control {
   width: 100%;
-  height: var(--space-10);
-  padding: 0 var(--padding-md);
-  border-radius: 60px;
-  border: 1px solid var(--color-stroke-primary, rgba(162, 177, 184, 0.51));
-  background: rgba(182, 199, 207, 0.15);
-  color: var(--color-text-primary);
-  font-family: var(--font-family-base, 'Montserrat', sans-serif);
-  font-size: 16px;
-  font-weight: 400;
-  transition: all 0.2s ease;
+  height: var(--size-height-md);
+  padding: 0 var(--size-padding-horizontal-md);
+  border-radius: var(--radius-xl);
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
+  background: var(--color-bg-input);
+  color: var(--color-black);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  transition: all var(--motion-standard);
   outline: none;
 }
 
 .input__control::placeholder {
-  color: rgba(120, 151, 166, 0.6);
+  color: var(--color-text-placeholder);
 }
 
 .input__control--error {
-  border-color: var(--color-stroke-error, #ed6e1c);
+  border-color: var(--color-stroke-error);
 }
 
 .input__control--disabled {
-  background: rgba(218, 218, 218, 0.15);
-  border-color: rgba(225, 225, 225, 0.51);
-  color: var(--color-text-disabled, #e1e1e1);
+  background: var(--color-bg-input-disabled);
+  border-color: var(--color-stroke-disabled);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
@@ -128,11 +128,11 @@ const inputStyles = computed(() => ({
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--space-10);
-  width: var(--space-5);
+  height: var(--size-height-md);
+  width: var(--size-icon-md);
   pointer-events: none;
-  color: var(--color-text-primary);
-  z-index: 2;
+  color: var(--color-black);
+  z-index: var(--z-raised);
 }
 
 .input__icon--left {
@@ -144,15 +144,15 @@ const inputStyles = computed(() => ({
 }
 
 .input__icon :deep(svg) {
-  width: var(--space-5);
-  height: var(--space-5);
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
 }
 
 .input__error {
   margin-top: var(--space-1);
-  padding-left: var(--padding-md);
-  font-size: 12px;
-  color: var(--color-text-error, #ed6e1c);
+  padding-left: var(--size-padding-horizontal-md);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-error);
 }
 
 .input__control[type='date'] {
@@ -163,7 +163,7 @@ const inputStyles = computed(() => ({
   cursor: pointer;
   filter: invert(0.5);
   opacity: 0.6;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-standard);
 }
 
 .input__control[type='date']::-webkit-calendar-picker-indicator:hover {

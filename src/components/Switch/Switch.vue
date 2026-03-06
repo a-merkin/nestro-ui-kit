@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: 'NSwitch', inheritAttrs: false });
 
 import type { SwitchProps } from './Switch.types';
 
@@ -55,7 +55,7 @@ const onChange = (event: Event) => {
 .switch {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   cursor: pointer;
   user-select: none;
 
@@ -79,9 +79,9 @@ const onChange = (event: Event) => {
     position: relative;
     width: 26px;
     height: 6px;
-    background: var(--switch-track-bg, #cfd7db);
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+    background: var(--switch-track-bg, var(--color-blue-30));
+    border-radius: var(--radius-toggle-md);
+    transition: background-color var(--motion-standard);
   }
 
   &__thumb {
@@ -90,10 +90,10 @@ const onChange = (event: Event) => {
     left: 0;
     width: 12px;
     height: 12px;
-    background: var(--switch-thumb-bg, #009639);
-    border-radius: 50%;
+    background: var(--switch-thumb-bg, var(--color-green-90));
+    border-radius: var(--radius-round);
     transform: translateX(0);
-    transition: transform 0.2s ease;
+    transition: transform var(--motion-standard);
   }
 
   &__input:checked + &__track &__thumb {
@@ -105,9 +105,9 @@ const onChange = (event: Event) => {
   }
 
   &__label {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     line-height: 1.4;
-    color: var(--switch-label, #000);
+    color: var(--switch-label, var(--color-black));
 
     &--before,
     &--after {
@@ -116,7 +116,7 @@ const onChange = (event: Event) => {
   }
 
   &--disabled &__label {
-    color: var(--switch-label-disabled, #cfd7db);
+    color: var(--switch-label-disabled, var(--color-blue-30));
   }
 
   &:hover:not(&--disabled) &__track {
@@ -124,7 +124,7 @@ const onChange = (event: Event) => {
   }
 
   &__input:focus-visible + &__track {
-    outline: 2px solid var(--switch-focus, #009639);
+    outline: 2px solid var(--switch-focus, var(--color-green-90));
     outline-offset: 2px;
   }
 }

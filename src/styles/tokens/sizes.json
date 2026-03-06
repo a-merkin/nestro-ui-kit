@@ -1,0 +1,24 @@
+{
+  "size-height-sm": "32px",
+  "size-height-md": "40px",
+  "size-height-lg": "48px",
+
+  "size-padding-horizontal-sm": "12px",
+  "size-padding-horizontal-md": "16px",
+  "size-padding-horizontal-lg": "20px",
+
+  "size-min-width-sm": "80px",
+  "size-min-width-md": "96px",
+  "size-min-width-lg": "112px",
+
+  "size-icon-sm": "16px",
+  "size-icon-md": "20px",
+  "size-icon-lg": "24px",
+
+  "size-tab-width": "216px",
+  "size-tab-bridge-height": "8px",
+
+  "size-toggle-sm": "16px",
+  "size-toggle-md": "20px",
+  "size-toggle-lg": "24px"
+}

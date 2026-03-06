@@ -32,38 +32,38 @@ const classes = computed(() => [
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .loader--overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-max);
+  background: var(--color-bg-backdrop);
 }
 
 .loader__spinner {
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   animation: spin 0.9s linear infinite;
   box-sizing: border-box;
 }
 
 .loader--sm .loader__spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+  border: var(--border-width-md) solid transparent;
 }
 
 .loader--md .loader__spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid transparent;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  border: var(--border-width-lg) solid transparent;
 }
 
 .loader--lg .loader__spinner {
-  width: 32px;
-  height: 32px;
-  border: 4px solid transparent;
+  width: var(--size-height-sm);
+  height: var(--size-height-sm);
+  border: var(--border-width-xl) solid transparent;
 }
 
 .loader--primary {
@@ -94,8 +94,8 @@ const classes = computed(() => [
 }
 
 .loader__text {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
   text-align: center;
 }
 

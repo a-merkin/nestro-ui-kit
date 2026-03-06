@@ -5,6 +5,9 @@ export interface RangeSliderProps {
   minLabel?: string;
   maxLabel?: string;
   cutoffs?: number[];
+  error?: boolean;
+  errorMessage?: string;
+  required?: boolean;
 }
 
 export type RangeSliderEmit = {
