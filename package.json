@@ -58,7 +58,8 @@
       "import": "./dist/nestro-ui-kit.es.js",
       "require": "./dist/nestro-ui-kit.umd.js"
     },
-    "./nestro-ui-kit.css": "./dist/nestro-ui-kit.css"
+    "./nestro-ui-kit.css": "./dist/nestro-ui-kit.css",
+    "./style.css": "./dist/nestro-ui-kit.css"
   },
   "peerDependencies": {
     "vue": "^3.2.0"
