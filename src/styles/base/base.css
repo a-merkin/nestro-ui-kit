@@ -10,7 +10,7 @@ body {
     var(--color-bg-overlay-green),
     var(--color-bg-overlay-blue),
     var(--color-bg-primary);
-  color: var(--color-text-primary);
+  color: var(--color-black);
 }
 
 ul, ol {
@@ -20,7 +20,7 @@ ul, ol {
 }
 
 a {
-  color: var(--color-text-primary);
+  color: var(--color-black);
   text-decoration: none;
 }
 

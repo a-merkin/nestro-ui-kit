@@ -34,6 +34,8 @@
 import { ref, watch, nextTick, onMounted, type ComponentPublicInstance } from 'vue';
 import type { SegmentedControlProps, SegmentedControlValue } from './SegmentedControl.types';
 
+defineOptions({ name: 'NSegmentedControl' });
+
 const props = withDefaults(defineProps<SegmentedControlProps>(), {
   disabled: false,
 });
@@ -101,11 +103,11 @@ onMounted(updateIndicator);
   position: relative;
   display: inline-flex;
   align-items: stretch;
-  gap: 4px;
-  padding: 4px;
-  background: var(--segmented-bg, #ffffff);
-  border: 1px solid var(--segmented-border, #cfd7db);
-  border-radius: 30px;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--segmented-bg, var(--color-white));
+  border: var(--border-width-sm) solid var(--segmented-border, var(--color-blue-30));
+  border-radius: var(--radius-xl);
 
   &--disabled {
     opacity: 0.5;
@@ -114,11 +116,11 @@ onMounted(updateIndicator);
 
   &__indicator {
     position: absolute;
-    top: 4px;
-    left: 4px;
-    height: calc(100% - 8px);
-    background: var(--segmented-indicator-bg, #0f9d3b);
-    border-radius: 26px;
+    top: var(--space-1);
+    left: var(--space-1);
+    height: calc(100% - var(--space-2));
+    background: var(--segmented-indicator-bg, var(--color-green-90));
+    border-radius: var(--radius-xl);
     pointer-events: none;
     z-index: 0;
   }
@@ -127,26 +129,26 @@ onMounted(updateIndicator);
     position: relative;
     z-index: 1;
     flex: 1;
-    padding: 12px 24px;
+    padding: var(--space-3) var(--space-6);
     border: none;
-    border-radius: 26px;
+    border-radius: var(--radius-xl);
     background: transparent;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--segmented-text, #000);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--segmented-text, var(--color-black));
     cursor: pointer;
     white-space: nowrap;
     min-width: fit-content;
     transition:
-      color 0.2s ease,
-      background 0.2s ease;
+      color var(--motion-standard),
+      background var(--motion-standard);
 
     &:hover:not(:disabled):not(&--active) {
       background: var(--segmented-hover-bg, rgba(244, 247, 248, 0.5));
     }
 
     &--active {
-      color: var(--segmented-active-text, #fff);
+      color: var(--segmented-active-text, var(--color-white));
       cursor: default;
     }
 
@@ -155,7 +157,7 @@ onMounted(updateIndicator);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--segmented-focus, #0f9d3b);
+      outline: 2px solid var(--segmented-focus, var(--color-green-90));
       outline-offset: 2px;
     }
   }

@@ -19,6 +19,7 @@ export type ColorToken =
   | 'color-bg-overlay-white-2'
   | 'color-bg-primary'
   | 'color-bg-secondary'
+  | 'color-bg-tooltip'
   | 'color-black'
   | 'color-blue-30'
   | 'color-blue-40'

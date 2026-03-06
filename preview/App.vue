@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import Overview from './pages/RadarOverview.vue';
+import RadarOverview from './pages/RadarOverview.vue';
+import LoginForm from './pages/LoginForm.vue';
 </script>
 
 <template>
-  <Overview />
+  <RadarOverview />
+  <LoginForm />
 </template>

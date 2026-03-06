@@ -11,6 +11,7 @@ export interface InputNumberProps {
   suffix?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: boolean;
   errorMessage?: string;
   label?: string;

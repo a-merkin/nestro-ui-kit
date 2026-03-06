@@ -19,6 +19,7 @@
   --color-bg-overlay-white-2: radial-gradient(75.88% 74.87% at 16.09% 15.2%, #fff 0%, rgba(255, 255, 255, 0) 100%);
   --color-bg-primary: linear-gradient(148deg, #d4dfe4 5.76%, #fff 100%);
   --color-bg-secondary: var(--color-blue-60);
+  --color-bg-tooltip: #222C37;
   --color-black: #000000;
   --color-blue-30: #CFD7DB;
   --color-blue-40: #D3DDE2;

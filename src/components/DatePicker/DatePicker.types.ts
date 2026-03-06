@@ -4,6 +4,7 @@ export interface DatePickerProps {
   modelValue: string | null;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: boolean;
   errorMessage?: string;
   label?: string;

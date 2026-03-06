@@ -46,7 +46,7 @@ export const Default: Story = {
     },
     template: `
       <div>
-        <SegmentedControl v-model="value" v-bind="args" />
+        <SegmentedControl v-bind="args" v-model="value" />
         <p style="margin-top: 16px;">Выбрано: <strong>{{ value }}</strong></p>
       </div>
     `,
@@ -67,7 +67,7 @@ export const TwoOptions: Story = {
       const value = ref(args.modelValue);
       return { args, value };
     },
-    template: `<SegmentedControl v-model="value" v-bind="args" />`,
+    template: `<SegmentedControl v-bind="args" v-model="value" />`,
   }),
 };
 
@@ -88,7 +88,7 @@ export const WithNumbers: Story = {
     },
     template: `
       <div>
-        <SegmentedControl v-model="value" v-bind="args" />
+        <SegmentedControl v-bind="args" v-model="value" />
         <p style="margin-top: 16px;">Выбрано: <strong>{{ value }}</strong></p>
       </div>
     `,
@@ -115,7 +115,7 @@ export const CustomSegment: Story = {
       return { args, value };
     },
     template: `
-      <SegmentedControl v-model="value" v-bind="args">
+      <SegmentedControl v-bind="args" v-model="value">
         <template #segment="{ option, active }">
           <span :style="{ fontWeight: active ? 700 : 500 }">
             {{ option.label.toUpperCase() }}
