@@ -2,6 +2,13 @@ import type { FilterGroup, FilterGroupItem } from 'nestro-ui-kit';
 
 export const breadcrumbs = ['Зарубежнефть', 'ЗНДХ', 'Харьягинское', 'Иванов И.И', 'Препроцессор'];
 
+export const navBarItems = [
+  { id: 'main', icon: 'bookmark' as const },
+  { id: 'catalog', icon: 'unite' as const },
+  { id: 'settings', icon: 'setting' as const },
+  { id: 'download', icon: 'download' as const },
+];
+
 export const workplaceTabs = [
   { label: 'Основное', value: 'main' },
   { label: 'Фильтры', value: 'filters' },

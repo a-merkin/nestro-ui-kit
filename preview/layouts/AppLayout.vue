@@ -14,18 +14,23 @@
 
     <NBreadcrumbs :scenario-parts="breadcrumbs" />
 
-    <NWorkplace v-model="activeTab" :tabs="tabs">
-      <slot :active-tab="activeTab" />
-    </NWorkplace>
+    <div class="app-layout__body">
+      <NNavBar v-model="activeNav" :items="navBarItems" />
+
+      <NWorkplace v-model="activeTab" :tabs="tabs">
+        <slot :active-tab="activeTab" />
+      </NWorkplace>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { breadcrumbs, workplaceTabs } from '../mocks/index';
+import { breadcrumbs, navBarItems, workplaceTabs } from '../mocks/index';
 
 const tabs = workplaceTabs;
 const activeTab = ref(tabs[0].value);
+const activeNav = ref(navBarItems[0].id);
 </script>
 
 <style scoped>
@@ -35,5 +40,10 @@ const activeTab = ref(tabs[0].value);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+.app-layout__body {
+  display: flex;
+  flex: 1;
 }
 </style>
