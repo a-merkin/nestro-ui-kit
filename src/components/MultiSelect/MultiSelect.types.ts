@@ -13,4 +13,6 @@ export interface MultiSelectProps {
   error?: boolean;
   errorMessage?: string;
   required?: boolean;
+  placeholder?: string;
+  noResultsText?: string;
 }

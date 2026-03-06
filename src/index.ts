@@ -29,9 +29,19 @@ import Chip from './components/Chip/Chip.vue';
 import BridgeModal from './components/BridgeModal/BridgeModal.vue';
 
 export { openBridgeModal } from './components/BridgeModal/BridgeModalService';
-export type { BridgeModalOptions, BridgeModalHandle, BridgeMessage } from './components/BridgeModal/BridgeModal.types';
+export type {
+  BridgeModalOptions,
+  BridgeModalHandle,
+  BridgeMessage,
+} from './components/BridgeModal/BridgeModal.types';
 import SearchFilterPanel from './components/SearchFilterPanel/SearchFilterPanel.vue';
 import NavBar from './components/NavBar/NavBar.vue';
+import Card from './components/Card/Card.vue';
+import Textarea from './components/Textarea/Textarea.vue';
+import FileUpload from './components/FileUpload/FileUpload.vue';
+import Notification from './components/Notification/Notification.vue';
+import SectionWrapper from './components/SectionWrapper/SectionWrapper.vue';
+import MultiSelect from './components/MultiSelect/MultiSelect.vue';
 
 // Примитивные компоненты
 import Box from './components/primitives/Box/Box.vue';
@@ -71,13 +81,19 @@ export {
   BridgeModal,
   SearchFilterPanel,
   NavBar,
+  Card,
+  Textarea,
+  FileUpload,
+  Notification,
+  SectionWrapper,
+  MultiSelect,
   Box,
   Field,
   Flex,
   Heading,
   Label,
   Stack,
-  Text
+  Text,
 };
 
 // Экспорт типов
@@ -116,6 +132,12 @@ const components = [
   BridgeModal,
   SearchFilterPanel,
   NavBar,
+  Card,
+  Textarea,
+  FileUpload,
+  Notification,
+  SectionWrapper,
+  MultiSelect,
   Box,
   Field,
   Flex,
