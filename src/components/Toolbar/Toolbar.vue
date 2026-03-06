@@ -27,11 +27,17 @@ withDefaults(defineProps<ToolbarProps>(), {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width-fullhd);
+  margin: 0 auto;
   padding: var(--space-3) var(--space-5);
   background: var(--color-blue-60);
-  border: 1px solid var(--color-blue-30);
+  border: var(--border-width-sm) solid var(--color-blue-30);
   min-height: var(--size-height-lg);
   gap: var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-raised);
 }
 
 .toolbar__start,
