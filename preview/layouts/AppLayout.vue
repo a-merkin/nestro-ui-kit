@@ -15,7 +15,9 @@
     <NBreadcrumbs :scenario-parts="breadcrumbs" />
 
     <div class="app-layout__body">
-      <NNavBar v-model="activeNav" :items="navBarItems" />
+      <div class="app-layout__navbar">
+        <NNavBar v-model="activeNav" :items="navBarItems" />
+      </div>
 
       <NWorkplace v-model="activeTab" :tabs="tabs">
         <slot :active-tab="activeTab" />
@@ -45,5 +47,13 @@ const activeNav = ref(navBarItems[0].id);
 .app-layout__body {
   display: flex;
   flex: 1;
+}
+
+.app-layout__navbar {
+  padding-top: calc(var(--space-4) + var(--line-height-base) + var(--space-4) + var(--space-2));
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
 }
 </style>
