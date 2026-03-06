@@ -99,6 +99,15 @@ export {
 // Экспорт типов
 export type { BaseFieldProps } from './types/form';
 export type { NFieldProps } from './components/primitives/Field/Field.types';
+export type {
+  FilterGroup,
+  FilterGroupItem,
+  FilterGroupSavePayload,
+  FilterGroupCreatePayload,
+  FilterType,
+  FilterValue,
+  FilterConfigOption,
+} from './components/SearchFilterPanel/SearchFilterPanel.types';
 
 // Экспорт composables
 export { useForm } from './composables/useForm';
