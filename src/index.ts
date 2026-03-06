@@ -26,6 +26,10 @@ import SpeedDial from './components/SpeedDial/SpeedDial.vue';
 import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog.vue';
 import Toolbar from './components/Toolbar/Toolbar.vue';
 import Chip from './components/Chip/Chip.vue';
+import BridgeModal from './components/BridgeModal/BridgeModal.vue';
+
+export { openBridgeModal } from './components/BridgeModal/BridgeModalService';
+export type { BridgeModalOptions, BridgeModalHandle, BridgeMessage } from './components/BridgeModal/BridgeModal.types';
 import SearchFilterPanel from './components/SearchFilterPanel/SearchFilterPanel.vue';
 import NavBar from './components/NavBar/NavBar.vue';
 
@@ -64,6 +68,7 @@ export {
   Toolbar,
   SidebarFilters,
   DatePicker,
+  BridgeModal,
   SearchFilterPanel,
   NavBar,
   Box,
@@ -108,6 +113,7 @@ const components = [
   Toolbar,
   SidebarFilters,
   DatePicker,
+  BridgeModal,
   SearchFilterPanel,
   NavBar,
   Box,
@@ -116,7 +122,7 @@ const components = [
   Heading,
   Label,
   Stack,
-  Text
+  Text,
 ];
 
 // Default экспорт как Vue плагин
