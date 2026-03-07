@@ -20,7 +20,7 @@
       <NButton variant="secondary">Настройки</NButton>
     </template>
 
-    <template #default>
+    <template #default="{ activeTab }">
       <div class="oil-content">
         <NSidebarFilters
           v-model="filterValues"
@@ -30,7 +30,8 @@
           @clear="onClear"
         />
         <div class="oil-content__main">
-          <p>Контент</p>
+          <Controls v-if="activeTab === 'controls'" />
+          <p v-else>Вкладка: {{ activeTab }}</p>
         </div>
       </div>
     </template>
@@ -40,6 +41,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ToolsLayout from '../layouts/ToolsLayout.vue';
+import Controls from './Controls.vue';
 import { oilToolFilters, oilFilterGroups, oilAvailableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 

@@ -21,7 +21,8 @@
     </template>
 
     <template #default="{ activeTab }">
-      <p>Вкладка: {{ activeTab }}</p>
+      <Controls v-if="activeTab === 'controls'" />
+      <p v-else>Вкладка: {{ activeTab }}</p>
     </template>
   </NestroLayout>
 </template>
@@ -29,6 +30,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NestroLayout from '../layouts/NestroLayout.vue';
+import Controls from './Controls.vue';
 import { filterGroups, availableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 

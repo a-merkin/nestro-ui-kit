@@ -16,12 +16,14 @@ export const workplaceTabs = [
   { label: 'Фильтры', value: 'filters' },
   { label: 'Форма', value: 'form' },
   { label: 'Оверлеи', value: 'overlays' },
+  { label: 'Контролы', value: 'controls' },
 ];
 
 export const oilToolTabs = [
   { label: 'Обзор', value: 'overview' },
   { label: 'Скважины', value: 'wells' },
   { label: 'Анализ', value: 'analysis' },
+  { label: 'Контролы', value: 'controls' },
 ];
 
 export const oilToolFilters = [
