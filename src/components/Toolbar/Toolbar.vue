@@ -30,7 +30,7 @@ withDefaults(defineProps<ToolbarProps>(), {
   width: 100%;
   max-width: var(--max-width-fullhd);
   margin: 0 auto;
-  padding: var(--space-3) var(--space-5);
+  padding: var(--space-3) 0;
   background: none;
   border: none;
   min-height: var(--size-height-lg);
