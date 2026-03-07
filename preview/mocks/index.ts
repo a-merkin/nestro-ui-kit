@@ -24,6 +24,7 @@ export const oilToolTabs = [
   { label: 'Скважины', value: 'wells' },
   { label: 'Анализ', value: 'analysis' },
   { label: 'Контролы', value: 'controls' },
+  { label: 'Оверлеи', value: 'overlays' },
 ];
 
 export const oilToolFilters = [

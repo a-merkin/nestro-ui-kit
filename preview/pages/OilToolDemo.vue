@@ -31,6 +31,7 @@
         />
         <div class="oil-content__main">
           <Controls v-if="activeTab === 'controls'" />
+          <Overlays v-else-if="activeTab === 'overlays'" />
           <p v-else>Вкладка: {{ activeTab }}</p>
         </div>
       </div>
@@ -42,6 +43,7 @@
 import { ref } from 'vue';
 import ToolsLayout from '../layouts/ToolsLayout.vue';
 import Controls from './Controls.vue';
+import Overlays from './Overlays.vue';
 import { oilToolFilters, oilFilterGroups, oilAvailableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 
