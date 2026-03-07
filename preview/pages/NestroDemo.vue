@@ -31,8 +31,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NestroLayout from '../layouts/NestroLayout.vue';
-import Controls from './Controls.vue';
-import Overlays from './Overlays.vue';
+import Controls from '../components/Controls.vue';
+import Overlays from '../components/Overlays.vue';
 import { filterGroups, availableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 

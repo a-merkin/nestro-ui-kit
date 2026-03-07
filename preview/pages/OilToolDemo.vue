@@ -42,8 +42,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ToolsLayout from '../layouts/ToolsLayout.vue';
-import Controls from './Controls.vue';
-import Overlays from './Overlays.vue';
+import Controls from '../components/Controls.vue';
+import Overlays from '../components/Overlays.vue';
 import { oilToolFilters, oilFilterGroups, oilAvailableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 
