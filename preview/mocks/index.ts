@@ -12,19 +12,13 @@ export const navBarItems = [
 ];
 
 export const workplaceTabs = [
-  { label: 'Основное', value: 'main' },
-  { label: 'Фильтры', value: 'filters' },
-  { label: 'Форма', value: 'form' },
-  { label: 'Оверлеи', value: 'overlays' },
   { label: 'Контролы', value: 'controls' },
+  { label: 'Оверлеи', value: 'overlays' },
   { label: 'Misc', value: 'misc' },
   { label: 'Примитивы', value: 'primitives' },
 ];
 
 export const oilToolTabs = [
-  { label: 'Обзор', value: 'overview' },
-  { label: 'Скважины', value: 'wells' },
-  { label: 'Анализ', value: 'analysis' },
   { label: 'Контролы', value: 'controls' },
   { label: 'Оверлеи', value: 'overlays' },
   { label: 'Misc', value: 'misc' },
