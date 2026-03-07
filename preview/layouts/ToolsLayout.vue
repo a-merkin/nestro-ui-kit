@@ -12,6 +12,8 @@
       </template>
     </NToolbar>
 
+    <NBreadcrumbs :scenario-parts="oilBreadcrumbs" />
+
     <NWorkplace v-model="activeTab" :tabs="tabs">
       <slot :active-tab="activeTab" />
     </NWorkplace>
@@ -20,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { oilToolTabs } from '../mocks/index';
+import { oilToolTabs, oilBreadcrumbs } from '../mocks/index';
 
 const tabs = oilToolTabs;
 const activeTab = ref(tabs[0].value);
