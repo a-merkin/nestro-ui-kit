@@ -33,6 +33,7 @@
           <Controls v-if="activeTab === 'controls'" />
           <Overlays v-else-if="activeTab === 'overlays'" />
           <Misc v-else-if="activeTab === 'misc'" />
+          <Primitives v-else-if="activeTab === 'primitives'" />
           <p v-else>Вкладка: {{ activeTab }}</p>
         </div>
       </div>
@@ -46,6 +47,7 @@ import ToolsLayout from '../layouts/ToolsLayout.vue';
 import Controls from '../components/Controls.vue';
 import Overlays from '../components/Overlays.vue';
 import Misc from '../components/Misc.vue';
+import Primitives from '../components/Primitives.vue';
 import { oilToolFilters, oilFilterGroups, oilAvailableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 

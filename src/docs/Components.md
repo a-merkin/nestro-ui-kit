@@ -6,7 +6,7 @@ NavBar ✅, Toolbar ✅, WorkPlace ✅, SectionWrapper ❌, Card ❌
 
 Primitives — базовые строительные блоки
 
-Box ❌, Flex ❌, Stack ❌, Heading ✅, Text ✅, Label ❌, Field ❌
+Box ✅, Flex ✅, Stack ✅, Heading ✅, Text ✅, Label ✅, Field ✅
 
 Controls — пользовательский ввод
 
