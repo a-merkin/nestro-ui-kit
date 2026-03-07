@@ -16,6 +16,12 @@ export const workplaceTabs = [
   { label: 'Оверлеи', value: 'overlays' },
 ];
 
+export const oilToolTabs = [
+  { label: 'Обзор', value: 'overview' },
+  { label: 'Скважины', value: 'wells' },
+  { label: 'Анализ', value: 'analysis' },
+];
+
 export const availableFilters: FilterGroupItem[] = [
   {
     id: 'f1',
