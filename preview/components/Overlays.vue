@@ -67,6 +67,33 @@
     </section>
 
     <section class="overlays__section">
+      <NText class="overlays__label">BridgeModal</NText>
+      <NText class="overlays__hint">Симуляция дочернего окна. Кнопка «Отправить» посылает init-сообщение через BroadcastChannel.</NText>
+      <div class="overlays__row">
+        <NButton variant="secondary" @click="sendBridgeInit">Отправить init</NButton>
+        <NText v-if="bridgeLog" class="overlays__log">{{ bridgeLog }}</NText>
+      </div>
+      <div class="bridge-preview">
+        <NBridgeModal channel-name="nestro-bridge-preview" debug>
+          <template #header>
+            <NHeading :level="4">Редактор параметров</NHeading>
+          </template>
+          <template #default="{ initData, postEvent, close }">
+            <NText v-if="initData">Получено: {{ JSON.stringify(initData) }}</NText>
+            <NText v-else>Ожидание данных от родителя...</NText>
+            <div class="overlays__row" style="margin-top: 12px">
+              <NButton variant="secondary" @click="postEvent('saved', { ok: true })">Сохранить</NButton>
+              <NButton variant="secondary" @click="close()">Закрыть</NButton>
+            </div>
+          </template>
+          <template #footer>
+            <NText class="overlays__hint">footer слот</NText>
+          </template>
+        </NBridgeModal>
+      </div>
+    </section>
+
+    <section class="overlays__section">
       <NText class="overlays__label">ConfirmDialog</NText>
       <div class="overlays__row">
         <NButton variant="secondary" @click="confirmOpen = true">Подтверждение</NButton>
@@ -118,6 +145,19 @@ const showNotification = (type: NotificationType) => {
   notificationMessage.value = notificationMap[type].message;
   notificationVisible.value = true;
 };
+
+const bridgeLog = ref('');
+
+const sendBridgeInit = () => {
+  try {
+    const ch = new BroadcastChannel('nestro-bridge-preview');
+    ch.postMessage({ type: 'init', payload: { well: 'Харьяга-42', depth: 3200 } });
+    ch.close();
+    bridgeLog.value = 'init отправлен';
+  } catch {
+    bridgeLog.value = 'BroadcastChannel недоступен';
+  }
+};
 </script>
 
 <style scoped>
@@ -151,5 +191,22 @@ const showNotification = (type: NotificationType) => {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+.overlays__hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-grey-60);
+}
+
+.overlays__log {
+  font-size: var(--font-size-xs);
+  color: var(--color-green-90);
+}
+
+.bridge-preview {
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
+  border-radius: var(--radius-md);
+  height: 260px;
+  overflow: hidden;
 }
 </style>

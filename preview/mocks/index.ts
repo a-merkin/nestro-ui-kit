@@ -17,6 +17,7 @@ export const workplaceTabs = [
   { label: 'Форма', value: 'form' },
   { label: 'Оверлеи', value: 'overlays' },
   { label: 'Контролы', value: 'controls' },
+  { label: 'Misc', value: 'misc' },
 ];
 
 export const oilToolTabs = [
@@ -25,6 +26,7 @@ export const oilToolTabs = [
   { label: 'Анализ', value: 'analysis' },
   { label: 'Контролы', value: 'controls' },
   { label: 'Оверлеи', value: 'overlays' },
+  { label: 'Misc', value: 'misc' },
 ];
 
 export const oilToolFilters = [

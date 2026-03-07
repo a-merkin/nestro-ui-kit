@@ -23,6 +23,7 @@
     <template #default="{ activeTab }">
       <Controls v-if="activeTab === 'controls'" />
       <Overlays v-else-if="activeTab === 'overlays'" />
+      <Misc v-else-if="activeTab === 'misc'" />
       <p v-else>Вкладка: {{ activeTab }}</p>
     </template>
   </NestroLayout>
@@ -33,6 +34,7 @@ import { ref } from 'vue';
 import NestroLayout from '../layouts/NestroLayout.vue';
 import Controls from '../components/Controls.vue';
 import Overlays from '../components/Overlays.vue';
+import Misc from '../components/Misc.vue';
 import { filterGroups, availableFilters } from '../mocks/index';
 import logoUrl from '../assets/logo.svg?url';
 

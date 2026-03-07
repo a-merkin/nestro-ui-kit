@@ -30,6 +30,15 @@
     </section>
 
     <section class="controls__section">
+      <NText class="controls__label">RadioButton</NText>
+      <div class="controls__row">
+        <NRadioButton v-model="radioValue" value="production" name="well-type" label="Добывающая" />
+        <NRadioButton v-model="radioValue" value="injection" name="well-type" label="Нагнетательная" />
+        <NRadioButton v-model="radioValue" value="exploration" name="well-type" label="Разведочная" />
+      </div>
+    </section>
+
+    <section class="controls__section">
       <NText class="controls__label">RadioGroup</NText>
       <NRadioGroup v-model="radioValue" :options="radioOptions" direction="horizontal" />
     </section>
