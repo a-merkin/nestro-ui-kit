@@ -6,6 +6,7 @@
 
     <div class="textarea__control">
       <textarea
+        :id="id"
         class="textarea__field"
         :value="modelValue"
         :placeholder="placeholder"
@@ -15,7 +16,6 @@
         :cols="cols"
         :maxlength="maxlength"
         :name="name"
-        :id="id"
         :autofocus="autofocus"
         :aria-invalid="invalid || undefined"
         :aria-describedby="describedBy || undefined"
@@ -91,7 +91,8 @@ const describedBy = computed(() => {
 });
 
 const bottomVisible = computed(() => {
-  const hasMsg = (props.invalid && !!errorComputed.value) || (!!hintComputed.value && !props.invalid);
+  const hasMsg =
+    (props.invalid && !!errorComputed.value) || (!!hintComputed.value && !props.invalid);
   const hasCount = props.showCount && props.maxlength != null;
   return hasMsg || hasCount;
 });

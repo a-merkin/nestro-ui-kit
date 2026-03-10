@@ -62,7 +62,7 @@ export {
   Heading,
   Label,
   Stack,
-  Text
+  Text,
 };
 
 // Список для глобальной регистрации через install
@@ -94,7 +94,7 @@ const components = [
   Heading,
   Label,
   Stack,
-  Text
+  Text,
 ];
 
 // Default экспорт как Vue плагин

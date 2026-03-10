@@ -1,11 +1,7 @@
 <template>
   <nav class="navbar">
     <ul class="navbar__list">
-      <li
-        v-for="item in items"
-        :key="item.id"
-        class="navbar__item-wrapper"
-      >
+      <li v-for="item in items" :key="item.id" class="navbar__item-wrapper">
         <button
           :class="[
             'navbar__button',

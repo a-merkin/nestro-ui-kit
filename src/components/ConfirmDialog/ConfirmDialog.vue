@@ -1,11 +1,7 @@
 <template>
   <Teleport to="body">
     <Transition name="confirm-dialog">
-      <div
-        v-if="open"
-        class="confirm-dialog"
-        @click.self="handleOverlay"
-      >
+      <div v-if="open" class="confirm-dialog" @click.self="handleOverlay">
         <div
           ref="dialogRef"
           class="confirm-dialog__panel"
@@ -28,19 +24,11 @@
             <NIcon :name="variant === 'danger' ? 'close' : 'check'" size="lg" />
           </div>
 
-          <h3
-            v-if="title"
-            id="cd-title"
-            class="confirm-dialog__title"
-          >
+          <h3 v-if="title" id="cd-title" class="confirm-dialog__title">
             {{ title }}
           </h3>
 
-          <p
-            v-if="description && !$slots.default"
-            id="cd-desc"
-            class="confirm-dialog__description"
-          >
+          <p v-if="description && !$slots.default" id="cd-desc" class="confirm-dialog__description">
             {{ description }}
           </p>
 
@@ -140,7 +128,7 @@ watch(
       document.body.style.overflow = '';
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 onMounted(() => {
@@ -347,13 +335,21 @@ onBeforeUnmount(() => {
 }
 
 @keyframes cd-overlay-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes cd-overlay-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes cd-panel-in {
@@ -379,7 +375,9 @@ onBeforeUnmount(() => {
 }
 
 @keyframes cd-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .fade-enter-active,

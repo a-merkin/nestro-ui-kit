@@ -93,7 +93,9 @@
         </div>
 
         <!-- MENU SHOWCASE -->
-        <div style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: start">
+        <div
+          style="margin-top: 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: start"
+        >
           <div>
             <h3 style="margin-bottom: 12px; font-size: 14px; font-weight: 600">Menu (inline)</h3>
             <NMenu :model="menuItems" style="max-width: 240px" />
@@ -106,17 +108,25 @@
         </div>
 
         <!-- SPEEDDIAL SHOWCASE -->
-        <div style="margin-top: 32px; display: flex; gap: 48px; flex-wrap: wrap; align-items: center">
+        <div
+          style="margin-top: 32px; display: flex; gap: 48px; flex-wrap: wrap; align-items: center"
+        >
           <div style="position: relative; min-height: 240px; display: flex; align-items: flex-end">
             <NSpeedDial :model="speedDialActions" direction="up" type="static" />
           </div>
-          <div style="position: relative; min-height: 240px; display: flex; align-items: flex-start">
+          <div
+            style="position: relative; min-height: 240px; display: flex; align-items: flex-start"
+          >
             <NSpeedDial :model="speedDialActions" direction="down" type="static" />
           </div>
-          <div style="position: relative; min-width: 240px; display: flex; justify-content: flex-end">
+          <div
+            style="position: relative; min-width: 240px; display: flex; justify-content: flex-end"
+          >
             <NSpeedDial :model="speedDialActions" direction="left" type="static" />
           </div>
-          <div style="position: relative; min-width: 240px; display: flex; justify-content: flex-start">
+          <div
+            style="position: relative; min-width: 240px; display: flex; justify-content: flex-start"
+          >
             <NSpeedDial :model="speedDialActions" direction="right" type="static" />
           </div>
         </div>
