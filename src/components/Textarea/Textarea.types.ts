@@ -8,7 +8,10 @@ export type TextareaProps = {
 
   disabled?: boolean;
   readonly?: boolean;
-  invalid?: boolean;
+  required?: boolean;
+
+  error?: boolean;
+  errorMessage?: string;
 
   rows?: number;
   cols?: number;
@@ -18,7 +21,6 @@ export type TextareaProps = {
 
   label?: string;
   hint?: string;
-  error?: string;
 
   autofocus?: boolean;
   resize?: TextareaResize;
