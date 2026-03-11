@@ -1,5 +1,5 @@
 <template>
-  <div class="date-picker" ref="rootRef">
+  <div ref="rootRef" class="date-picker">
     <label v-if="label" class="date-picker__label">{{ label }}</label>
 
     <div class="date-picker__trigger" :class="triggerClasses" @click="handleTriggerClick">
