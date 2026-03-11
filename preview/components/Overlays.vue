@@ -68,7 +68,10 @@
 
     <section class="overlays__section">
       <NText class="overlays__label">BridgeModal</NText>
-      <NText class="overlays__hint">Симуляция дочернего окна. Кнопка «Отправить» посылает init-сообщение через BroadcastChannel.</NText>
+      <NText class="overlays__hint"
+        >Симуляция дочернего окна. Кнопка «Отправить» посылает init-сообщение через
+        BroadcastChannel.</NText
+      >
       <div class="overlays__row">
         <NButton variant="secondary" @click="sendBridgeInit">Отправить init</NButton>
         <NText v-if="bridgeLog" class="overlays__log">{{ bridgeLog }}</NText>
@@ -82,7 +85,9 @@
             <NText v-if="initData">Получено: {{ JSON.stringify(initData) }}</NText>
             <NText v-else>Ожидание данных от родителя...</NText>
             <div class="overlays__row" style="margin-top: 12px">
-              <NButton variant="secondary" @click="postEvent('saved', { ok: true })">Сохранить</NButton>
+              <NButton variant="secondary" @click="postEvent('saved', { ok: true })"
+                >Сохранить</NButton
+              >
               <NButton variant="secondary" @click="close()">Закрыть</NButton>
             </div>
           </template>

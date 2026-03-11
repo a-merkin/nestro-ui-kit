@@ -33,8 +33,18 @@
       <NText class="controls__label">RadioButton</NText>
       <div class="controls__row">
         <NRadioButton v-model="radioValue" value="production" name="well-type" label="Добывающая" />
-        <NRadioButton v-model="radioValue" value="injection" name="well-type" label="Нагнетательная" />
-        <NRadioButton v-model="radioValue" value="exploration" name="well-type" label="Разведочная" />
+        <NRadioButton
+          v-model="radioValue"
+          value="injection"
+          name="well-type"
+          label="Нагнетательная"
+        />
+        <NRadioButton
+          v-model="radioValue"
+          value="exploration"
+          name="well-type"
+          label="Разведочная"
+        />
       </div>
     </section>
 
@@ -55,7 +65,12 @@
 
     <section class="controls__section">
       <NText class="controls__label">MultiSelect</NText>
-      <NMultiSelect v-model="multiSelectValue" :options="multiSelectOptions" searchable placeholder="Выберите месторождения" />
+      <NMultiSelect
+        v-model="multiSelectValue"
+        :options="multiSelectOptions"
+        searchable
+        placeholder="Выберите месторождения"
+      />
     </section>
 
     <section class="controls__section">
