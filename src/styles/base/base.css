@@ -4,16 +4,13 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    var(--color-bg-overlay-white-1),
-    var(--color-bg-overlay-white-2),
-    var(--color-bg-overlay-green),
-    var(--color-bg-overlay-blue),
-    var(--color-bg-primary);
+  background: var(--color-bg-overlay-white-1), var(--color-bg-overlay-white-2),
+    var(--color-bg-overlay-green), var(--color-bg-overlay-blue), var(--color-bg-primary);
   color: var(--color-black);
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
   margin: 0;
   padding: 0;

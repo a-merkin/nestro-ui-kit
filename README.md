@@ -1,16 +1,19 @@
 ## 📦 Установка
 
 ### npm
+
 ```bash
 npm install nestro-ui-kit
 ```
 
 ### yarn
+
 ```bash
 yarn add nestro-ui-kit
 ```
 
 ### pnpm
+
 ```bash
 pnpm add nestro-ui-kit
 ```
@@ -22,11 +25,11 @@ pnpm add nestro-ui-kit
 В вашем главном файле (`main.ts` или `main.js`) импортируйте стили:
 
 ```typescript
-import { createApp } from 'vue'
-import App from './App.vue'
-import 'nestro-ui-kit/nestro-ui-kit.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import 'nestro-ui-kit/nestro-ui-kit.css';
 
-createApp(App).mount('#app')
+createApp(App).mount('#app');
 ```
 
 ### 2. Использование компонентов
@@ -36,31 +39,24 @@ createApp(App).mount('#app')
 ```vue
 <template>
   <div>
-    <Button variant="primary" @click="handleClick">
-      Нажми меня
-    </Button>
-    
-    <Input 
-      v-model="inputValue" 
-      placeholder="Введите текст"
-    />
-    
-    <Checkbox v-model="isChecked">
-      Согласен с условиями
-    </Checkbox>
+    <Button variant="primary" @click="handleClick"> Нажми меня </Button>
+
+    <Input v-model="inputValue" placeholder="Введите текст" />
+
+    <Checkbox v-model="isChecked"> Согласен с условиями </Checkbox>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Button, Input, Checkbox } from 'nestro-ui-kit'
+import { ref } from 'vue';
+import { Button, Input, Checkbox } from 'nestro-ui-kit';
 
-const inputValue = ref('')
-const isChecked = ref(false)
+const inputValue = ref('');
+const isChecked = ref(false);
 
 const handleClick = () => {
-  console.log('Кнопка нажата!')
-}
+  console.log('Кнопка нажата!');
+};
 </script>
 ```
 
@@ -76,17 +72,15 @@ const handleClick = () => {
 
 ```vue
 <template>
-  <Checkbox v-model="agreed">
-    Я согласен с условиями использования
-  </Checkbox>
+  <Checkbox v-model="agreed"> Я согласен с условиями использования </Checkbox>
   <p>Значение: {{ agreed }}</p>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Checkbox } from 'nestro-ui-kit'
+import { ref } from 'vue';
+import { Checkbox } from 'nestro-ui-kit';
 
-const agreed = ref(false)
+const agreed = ref(false);
 </script>
 ```
 
@@ -102,16 +96,16 @@ const agreed = ref(false)
     <Checkbox v-model="selectedFruits" value="banana">Банан</Checkbox>
     <Checkbox v-model="selectedFruits" value="orange">Апельсин</Checkbox>
     <Checkbox v-model="selectedFruits" value="grape">Виноград</Checkbox>
-    
+
     <p>Выбрано: {{ selectedFruits }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Checkbox } from 'nestro-ui-kit'
+import { ref } from 'vue';
+import { Checkbox } from 'nestro-ui-kit';
 
-const selectedFruits = ref<string[]>(['apple']) // Начальное значение
+const selectedFruits = ref<string[]>(['apple']); // Начальное значение
 </script>
 ```
 
@@ -123,41 +117,36 @@ const selectedFruits = ref<string[]>(['apple']) // Начальное значе
 <template>
   <div>
     <h3>Выберите пользователей:</h3>
-    <Checkbox 
-      v-for="user in users" 
-      :key="user.id"
-      v-model="selectedUserIds" 
-      :value="user.id"
-    >
+    <Checkbox v-for="user in users" :key="user.id" v-model="selectedUserIds" :value="user.id">
       {{ user.name }}
     </Checkbox>
-    
+
     <p>Выбраны ID: {{ selectedUserIds }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Checkbox } from 'nestro-ui-kit'
+import { ref } from 'vue';
+import { Checkbox } from 'nestro-ui-kit';
 
-const selectedUserIds = ref<number[]>([1, 3])
+const selectedUserIds = ref<number[]>([1, 3]);
 
 const users = [
   { id: 1, name: 'Иван Иванов' },
   { id: 2, name: 'Петр Петров' },
   { id: 3, name: 'Мария Сидорова' },
   { id: 4, name: 'Анна Кузнецова' },
-]
+];
 </script>
 ```
 
 #### Props
 
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|----------|
-| `modelValue` | `boolean \| any[]` | - | Значение чекбокса (обязательный) |
-| `value` | `any` | `undefined` | Значение для режима массива (опционально) |
-| `disabled` | `boolean` | `false` | Отключить чекбокс |
+| Prop         | Тип                | По умолчанию | Описание                                  |
+| ------------ | ------------------ | ------------ | ----------------------------------------- |
+| `modelValue` | `boolean \| any[]` | -            | Значение чекбокса (обязательный)          |
+| `value`      | `any`              | `undefined`  | Значение для режима массива (опционально) |
+| `disabled`   | `boolean`          | `false`      | Отключить чекбокс                         |
 
 #### Как это работает
 
@@ -230,29 +219,37 @@ Storybook откроется по адресу [http://localhost:6006](http://lo
 ### Что вы найдете в Storybook
 
 #### 1. **Интерактивные примеры**
+
 Каждый компонент представлен с различными вариантами использования:
+
 - Базовые примеры
 - Различные состояния (disabled, loading, error и т.д.)
 - Варианты стилей
 - Примеры с разными пропсами
 
 #### 2. **Панель Controls**
+
 Позволяет динамически изменять пропсы компонента и видеть результат в реальном времени:
+
 - Изменяйте текст, цвета, размеры
 - Включайте/выключайте состояния
 - Тестируйте различные комбинации параметров
 
 #### 3. **Автоматическая документация**
+
 Для каждого компонента доступна документация, включающая:
+
 - Описание всех props с типами
 - Доступные события (events)
 - Слоты (slots)
 - Значения по умолчанию
 
 #### 4. **Actions**
+
 Отслеживайте события компонентов (клики, изменения значений и т.д.) в панели Actions
 
 #### 5. **Код примеров**
+
 Просматривайте код каждого примера, чтобы понять, как его реализовать в вашем проекте
 
 ### Навигация по Storybook
@@ -278,6 +275,7 @@ UI/
 1. Откройте Storybook (`npm run storybook`)
 2. В боковой панели выберите `UI → Button`
 3. Вы увидите различные варианты кнопок:
+
    - Primary - основная кнопка
    - Secondary - вторичная кнопка
    - Text - текстовая кнопка
@@ -287,6 +285,7 @@ UI/
    - WithIcons - кнопка с иконками
 
 4. В панели Controls внизу измените параметры:
+
    - `variant` - выберите другой вариант
    - `disabled` - включите/выключите
    - `loading` - включите индикатор загрузки
@@ -349,23 +348,20 @@ import {
   SegmentedControl,
   RadioButton,
   RadioGroup,
-  Modal
-} from 'nestro-ui-kit'
+  Modal,
+} from 'nestro-ui-kit';
 ```
 
 ### Типы
 
 ```typescript
-import type {
-  SegmentedControlOption,
-  RadioGroupOption
-} from 'nestro-ui-kit'
+import type { SegmentedControlOption, RadioGroupOption } from 'nestro-ui-kit';
 ```
 
 ### Стили
 
 ```typescript
-import 'nestro-ui-kit/nestro-ui-kit.css'
+import 'nestro-ui-kit/nestro-ui-kit.css';
 ```
 
 ## 🎨 Кастомизация
@@ -382,7 +378,7 @@ import 'nestro-ui-kit/nestro-ui-kit.css'
   --color-text-tertiary: #7897a6;
   --color-text-disabled: #e1e1e1;
   --color-text-error: #ed6e1c;
-  
+
   /* Цвета обводки */
   --color-stroke-primary: rgba(162, 177, 184, 0.51);
   --color-stroke-error: #ed6e1c;
@@ -426,6 +422,7 @@ npm run build
 ```
 
 Результат сборки будет находиться в директории `dist/`:
+
 - `nestro-ui-kit.es.js` - ES модуль
 - `nestro-ui-kit.umd.js` - UMD модуль
 - `nestro-ui-kit.css` - Стили
@@ -459,8 +456,8 @@ nestro-ui-kit/
 Библиотека полностью написана на TypeScript и включает все необходимые типы. При использовании компонентов в TypeScript проектах вы получите полную поддержку автодополнения и проверки типов.
 
 ```typescript
-import { Button, Input, Dropdown } from 'nestro-ui-kit'
-import type { SegmentedControlOption, RadioGroupOption } from 'nestro-ui-kit'
+import { Button, Input, Dropdown } from 'nestro-ui-kit';
+import type { SegmentedControlOption, RadioGroupOption } from 'nestro-ui-kit';
 ```
 
 ## 🌐 Браузерная поддержка

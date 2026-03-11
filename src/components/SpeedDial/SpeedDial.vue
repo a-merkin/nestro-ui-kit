@@ -15,7 +15,12 @@
     <Transition name="speed-dial-actions">
       <div v-if="isOpen" class="speed-dial__actions" :class="actionsClasses">
         <template v-for="(action, index) in visibleActions" :key="action.key || index">
-          <slot name="action" :action="action" :index="index" :on-click="() => handleAction(action)">
+          <slot
+            name="action"
+            :action="action"
+            :index="index"
+            :on-click="() => handleAction(action)"
+          >
             <button
               class="speed-dial__action"
               :class="getActionClasses(action)"

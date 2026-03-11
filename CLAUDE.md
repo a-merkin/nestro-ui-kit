@@ -21,6 +21,7 @@ This is a **Vue 3 component library** published as an npm package (`nestro-ui-ki
 ### Entry point and registration
 
 `src/index.ts` is the library entry point. It:
+
 1. Imports global styles (`src/styles/index.css`)
 2. Imports all components
 3. Exports each component by name (for named imports)
@@ -41,6 +42,7 @@ ComponentName/
 ```
 
 `index.ts` pattern:
+
 ```ts
 import ComponentName from './ComponentName.vue';
 export type { ComponentNameProps } from './ComponentName.types';
@@ -51,6 +53,7 @@ export default ComponentName;
 ### Styles system
 
 `src/styles/` is layered:
+
 - **tokens/** — CSS custom properties (colors, spacing, radius, shadows, typography, z-index, motion, borders, scrollbar, layout, sizes). These are the source of truth for all design values.
 - **base/** — reset + base + typography styles
 - **utilities/** — utility classes built on top of the tokens
@@ -60,6 +63,7 @@ All component styles use `<style scoped lang="scss">` and reference CSS variable
 ### SVG icons
 
 SVG files in `src/assets/icons/` are loaded as Vue components via `vite-svg-loader` (configured in both `vite.config.ts` and `.storybook/main.ts`). Import them directly as components:
+
 ```ts
 import SomeIcon from '@/assets/icons/some-icon.svg';
 ```

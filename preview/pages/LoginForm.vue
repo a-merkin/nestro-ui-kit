@@ -31,13 +31,8 @@
         />
       </NField>
 
-      <NField
-        :error="form.hasError('remember')"
-        :error-message="form.errors.remember"
-      >
-        <NCheckbox v-model="form.values.remember">
-          Запомнить меня
-        </NCheckbox>
+      <NField :error="form.hasError('remember')" :error-message="form.errors.remember">
+        <NCheckbox v-model="form.values.remember"> Запомнить меня </NCheckbox>
       </NField>
 
       <div class="login-form__actions">

@@ -8,7 +8,6 @@ export type BorderToken =
   | 'border-width-sm'
   | 'border-width-xl';
 
-
 export type ColorToken =
   | 'color-bg-backdrop'
   | 'color-bg-input'
@@ -47,13 +46,7 @@ export type ColorToken =
   | 'color-text-placeholder'
   | 'color-white';
 
-
-export type LayoutToken =
-  | 'max-width-fullhd'
-  | 'max-width-lg'
-  | 'max-width-md'
-  | 'max-width-sm';
-
+export type LayoutToken = 'max-width-fullhd' | 'max-width-lg' | 'max-width-md' | 'max-width-sm';
 
 export type MotionToken =
   | 'duration-fast'
@@ -72,7 +65,6 @@ export type MotionToken =
   | 'motion-hover-duration'
   | 'motion-standard';
 
-
 export type RadiusToken =
   | 'radius-lg'
   | 'radius-md'
@@ -83,18 +75,9 @@ export type RadiusToken =
   | 'radius-toggle-sm'
   | 'radius-xl';
 
+export type ScrollbarToken = 'scrollbar-thumb-radius' | 'scrollbar-width';
 
-export type ScrollbarToken =
-  | 'scrollbar-thumb-radius'
-  | 'scrollbar-width';
-
-
-export type ShadowToken =
-  | 'shadow-lg'
-  | 'shadow-md'
-  | 'shadow-sm'
-  | 'shadow-xl';
-
+export type ShadowToken = 'shadow-lg' | 'shadow-md' | 'shadow-sm' | 'shadow-xl';
 
 export type SizeToken =
   | 'size-height-lg'
@@ -115,7 +98,6 @@ export type SizeToken =
   | 'size-toggle-md'
   | 'size-toggle-sm';
 
-
 export type SpacingToken =
   | 'space-1'
   | 'space-10'
@@ -125,7 +107,6 @@ export type SpacingToken =
   | 'space-5'
   | 'space-6'
   | 'space-8';
-
 
 export type TypographyToken =
   | 'font-family-base'
@@ -148,7 +129,6 @@ export type TypographyToken =
   | 'line-height-xxl'
   | 'line-height-xxxl';
 
-
 export type ZIndexToken =
   | 'z-base'
   | 'z-dropdown'
@@ -162,5 +142,15 @@ export type ZIndexToken =
   | 'z-toast'
   | 'z-tooltip';
 
-
-export type TokenName = BorderToken | ColorToken | LayoutToken | MotionToken | RadiusToken | ScrollbarToken | ShadowToken | SizeToken | SpacingToken | TypographyToken | ZIndexToken;
+export type TokenName =
+  | BorderToken
+  | ColorToken
+  | LayoutToken
+  | MotionToken
+  | RadiusToken
+  | ScrollbarToken
+  | ShadowToken
+  | SizeToken
+  | SpacingToken
+  | TypographyToken
+  | ZIndexToken;

@@ -17,7 +17,7 @@ export interface UseFormReturn<T extends Record<string, unknown>> {
 }
 
 export function useForm<T extends Record<string, unknown>>(
-  options: UseFormOptions<T>,
+  options: UseFormOptions<T>
 ): UseFormReturn<T> {
   const values = reactive({ ...options.initialValues }) as T;
   const errors: Record<string, string | undefined> = reactive({});

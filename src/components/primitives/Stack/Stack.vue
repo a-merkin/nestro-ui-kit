@@ -1,11 +1,5 @@
 <template>
-  <NFlex
-    :as="as"
-    :align="align"
-    :justify="justify"
-    :gap="gap"
-    class="n-stack"
-  >
+  <NFlex :as="as" :align="align" :justify="justify" :gap="gap" class="n-stack">
     <slot />
   </NFlex>
 </template>

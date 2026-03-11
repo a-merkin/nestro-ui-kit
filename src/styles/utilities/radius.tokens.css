@@ -1,5 +1,15 @@
-.radius-sm { border-radius: var(--radius-sm); }
-.radius-md { border-radius: var(--radius-md); }
-.radius-lg { border-radius: var(--radius-lg); }
-.radius-xl { border-radius: var(--radius-xl); }
-.radius-round { border-radius: var(--radius-round); }
+.radius-sm {
+  border-radius: var(--radius-sm);
+}
+.radius-md {
+  border-radius: var(--radius-md);
+}
+.radius-lg {
+  border-radius: var(--radius-lg);
+}
+.radius-xl {
+  border-radius: var(--radius-xl);
+}
+.radius-round {
+  border-radius: var(--radius-round);
+}
