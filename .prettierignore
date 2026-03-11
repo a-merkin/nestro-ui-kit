@@ -1,0 +1,13 @@
+dist
+node_modules
+storybook-static
+coverage
+.storybook
+.husky
+.vscode
+.eslintrc.cjs
+.prettierrc
+.prettierignore
+.gitignore
+.npmignore
+.npmrc

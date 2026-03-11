@@ -28,10 +28,7 @@
             {{ dropzoneLabelComputed }}
           </div>
 
-          <div
-            v-if="showHint && hintText"
-            class="file-upload__dropzone-subtitle"
-          >
+          <div v-if="showHint && hintText" class="file-upload__dropzone-subtitle">
             {{ hintText }}
           </div>
         </slot>
@@ -51,11 +48,7 @@
 
     <div v-if="files.length" class="file-upload__content">
       <ul class="file-upload__list">
-        <li
-          v-for="f in files"
-          :key="f.__key"
-          class="file-upload__item"
-        >
+        <li v-for="f in files" :key="f.__key" class="file-upload__item">
           <div class="file-upload__file">
             <div class="file-upload__file-name">
               {{ f.name }}
@@ -71,16 +64,8 @@
     </div>
 
     <!-- ERRORS -->
-    <p
-      v-if="errors.length"
-      class="file-upload__errors"
-      role="alert"
-    >
-      <span
-        v-for="(e, i) in errors"
-        :key="i"
-        class="file-upload__error"
-      >
+    <p v-if="errors.length" class="file-upload__errors" role="alert">
+      <span v-for="(e, i) in errors" :key="i" class="file-upload__error">
         {{ e }}
       </span>
     </p>
@@ -140,10 +125,8 @@ const hintText = computed(() => {
   const parts: string[] = [];
 
   if (props.accept) parts.push(`Accept: ${props.accept}`);
-  if (props.maxFileSize != null)
-    parts.push(`Max size: ${formatBytes(props.maxFileSize)}`);
-  if (props.fileLimit != null)
-    parts.push(`Limit: ${props.fileLimit}`);
+  if (props.maxFileSize != null) parts.push(`Max size: ${formatBytes(props.maxFileSize)}`);
+  if (props.fileLimit != null) parts.push(`Limit: ${props.fileLimit}`);
 
   return parts.join(' • ');
 });
@@ -179,9 +162,7 @@ function onDrop(e: DragEvent) {
   if (!props.dragDrop || props.disabled || props.loading) return;
   isDragActive.value = false;
 
-  const list = e.dataTransfer?.files
-    ? Array.from(e.dataTransfer.files)
-    : [];
+  const list = e.dataTransfer?.files ? Array.from(e.dataTransfer.files) : [];
 
   if (!list.length) return;
   handleSelect(list);
@@ -207,9 +188,7 @@ function handleSelect(selected: File[]) {
     validated.splice(available);
 
     if (selected.length > available) {
-      errors.value.push(
-        `File limit exceeded. Max ${props.fileLimit}.`
-      );
+      errors.value.push(`File limit exceeded. Max ${props.fileLimit}.`);
     }
   }
 
@@ -229,9 +208,7 @@ function handleSelect(selected: File[]) {
 
 function validateFile(f: File): string | null {
   if (props.maxFileSize != null && f.size > props.maxFileSize) {
-    return `File "${f.name}" is too large. Max ${formatBytes(
-      props.maxFileSize
-    )}.`;
+    return `File "${f.name}" is too large. Max ${formatBytes(props.maxFileSize)}.`;
   }
 
   if (props.accept) {
@@ -240,9 +217,7 @@ function validateFile(f: File): string | null {
       .map((s) => s.trim())
       .filter(Boolean);
 
-    const ok = acceptList.some((rule) =>
-      matchAccept(f, rule)
-    );
+    const ok = acceptList.some((rule) => matchAccept(f, rule));
 
     if (!ok) return `File "${f.name}" is not allowed.`;
   }
@@ -251,8 +226,7 @@ function validateFile(f: File): string | null {
 }
 
 function matchAccept(file: File, rule: string): boolean {
-  if (rule.startsWith('.'))
-    return file.name.toLowerCase().endsWith(rule.toLowerCase());
+  if (rule.startsWith('.')) return file.name.toLowerCase().endsWith(rule.toLowerCase());
 
   if (rule.endsWith('/*')) {
     const prefix = rule.slice(0, -2);
@@ -266,19 +240,12 @@ function emitModel() {
   emit('update:modelValue', toExternal(files.value));
 }
 
-function toInternal(
-  f: File | FileUploadFileLike
-): FileUploadFileLike {
-  const file =
-    (f as any).file instanceof File
-      ? (f as any).file
-      : (f as any);
+function toInternal(f: File | FileUploadFileLike): FileUploadFileLike {
+  const file = (f as any).file instanceof File ? (f as any).file : (f as any);
 
   const key =
     (f as any).__key ??
-    `${file.name}_${file.size}_${file.lastModified}_${Math.random()
-      .toString(16)
-      .slice(2)}`;
+    `${file.name}_${file.size}_${file.lastModified}_${Math.random().toString(16).slice(2)}`;
 
   return {
     __key: key,
@@ -290,9 +257,7 @@ function toInternal(
   };
 }
 
-function toExternal(
-  list: FileUploadFileLike[]
-): FileUploadFileLike[] {
+function toExternal(list: FileUploadFileLike[]): FileUploadFileLike[] {
   return list.map((x) => ({ ...x }));
 }
 
@@ -308,10 +273,7 @@ function formatBytes(bytes: number): string {
     i++;
   }
 
-  const fixed =
-    i === 0
-      ? String(Math.round(v))
-      : v.toFixed(v >= 10 ? 1 : 2);
+  const fixed = i === 0 ? String(Math.round(v)) : v.toFixed(v >= 10 ? 1 : 2);
 
   return `${fixed} ${units[i]}`;
 }
@@ -337,7 +299,9 @@ function formatBytes(bytes: number): string {
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   cursor: pointer;
-  transition: border-color var(--motion-standard), var(--motion-standard) ease;
+  transition:
+    border-color var(--motion-standard),
+    var(--motion-standard) ease;
 }
 
 .file-upload__dropzone--active {

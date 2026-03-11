@@ -6,6 +6,7 @@
 
     <div class="textarea__control">
       <textarea
+        :id="id"
         class="textarea__field"
         :value="modelValue"
         :placeholder="placeholder"
@@ -15,7 +16,6 @@
         :cols="cols"
         :maxlength="maxlength"
         :name="name"
-        :id="id"
         :autofocus="autofocus"
         :aria-invalid="error || undefined"
         :aria-describedby="describedBy || undefined"

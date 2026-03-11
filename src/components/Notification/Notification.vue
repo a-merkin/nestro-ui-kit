@@ -158,7 +158,9 @@ onBeforeUnmount(() => stopTimer());
 <style lang="scss" scoped>
 .notification-fade-enter-active,
 .notification-fade-leave-active {
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 .notification-fade-enter-from,
 .notification-fade-leave-to {
@@ -249,7 +251,9 @@ onBeforeUnmount(() => stopTimer());
   align-items: center;
   justify-content: center;
 
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .notification__close:hover:not(:disabled) {

@@ -172,7 +172,7 @@ function parseInput(raw: string): number | null {
   // Replace comma with dot
   cleaned = cleaned.replace(',', '.');
   // Remove everything except digits, dot, minus
-  cleaned = cleaned.replace(/[^\d.\-]/g, '');
+  cleaned = cleaned.replace(/[^\d.-]/g, '');
 
   if (cleaned === '' || cleaned === '-' || cleaned === '.') return null;
 
