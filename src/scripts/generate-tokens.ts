@@ -2,8 +2,8 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
 type TokenGroup = {
-  groupName: string;          // e.g. "colors"
-  typeName: string;           // e.g. "ColorToken"
+  groupName: string; // e.g. "colors"
+  typeName: string; // e.g. "ColorToken"
   tokens: Record<string, string>;
 };
 
@@ -32,10 +32,15 @@ function toKebab(s: string) {
 }
 
 function sortKeys(obj: Record<string, string>) {
-  return Object.keys(obj).sort((a, b) => a.localeCompare(b, 'en')).reduce((acc, k) => {
-    acc[k] = obj[k];
-    return acc;
-  }, {} as Record<string, string>);
+  return Object.keys(obj)
+    .sort((a, b) => a.localeCompare(b, 'en'))
+    .reduce(
+      (acc, k) => {
+        acc[k] = obj[k];
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 }
 
 function unionType(typeName: string, keys: string[]) {

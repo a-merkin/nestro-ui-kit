@@ -1,11 +1,6 @@
 <template>
   <div class="n-field" :class="rootClasses">
-    <NLabel
-      v-if="label"
-      :for-id="fieldId"
-      :required="required"
-      class="n-field__label"
-    >
+    <NLabel v-if="label" :for-id="fieldId" :required="required" class="n-field__label">
       {{ label }}
     </NLabel>
 
