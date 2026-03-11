@@ -109,7 +109,6 @@ const files = ref([]);
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4);
-  max-width: 480px;
 }
 
 .controls__section {

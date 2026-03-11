@@ -166,7 +166,6 @@ const sendBridgeInit = () => {
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4);
-  max-width: 480px;
 }
 
 .overlays__section {

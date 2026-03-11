@@ -73,7 +73,6 @@ const avatarUrl =
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4);
-  max-width: 640px;
 }
 
 .misc__section {

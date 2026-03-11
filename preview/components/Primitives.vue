@@ -14,7 +14,9 @@
       <NText size="md" weight="medium">Текст md medium</NText>
       <NText size="sm" weight="normal">Текст sm normal</NText>
       <NText size="xs" color="color-grey-60">Текст xs grey-60</NText>
-      <NText size="md" truncate style="max-width: 200px">Очень длинный текст с truncate — обрезается многоточием</NText>
+      <NText size="md" truncate style="max-width: 200px"
+        >Очень длинный текст с truncate — обрезается многоточием</NText
+      >
     </section>
 
     <section class="primitives__section">
@@ -60,16 +62,21 @@
     <section class="primitives__section">
       <NText class="primitives__label">Stack</NText>
       <NStack gap="space-2">
-        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"><NText>Элемент 1</NText></NBox>
-        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"><NText>Элемент 2</NText></NBox>
-        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"><NText>Элемент 3</NText></NBox>
+        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"
+          ><NText>Элемент 1</NText></NBox
+        >
+        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"
+          ><NText>Элемент 2</NText></NBox
+        >
+        <NBox padding="space-2" bg="color-blue-60" radius="radius-sm"
+          ><NText>Элемент 3</NText></NBox
+        >
       </NStack>
     </section>
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .primitives {
@@ -77,7 +84,6 @@
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4);
-  max-width: 480px;
 }
 
 .primitives__section {
