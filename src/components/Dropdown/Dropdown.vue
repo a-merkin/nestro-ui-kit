@@ -188,7 +188,6 @@ onUnmounted(() => {
   $self: &;
   position: relative;
   width: 100%;
-  max-width: 320px;
   box-sizing: border-box;
 
   &__label {

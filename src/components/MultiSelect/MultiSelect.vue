@@ -8,12 +8,20 @@
         </div>
       </template>
 
+      <span
+        v-if="!searchable && !selectedItems.length && placeholder"
+        class="multiselect__placeholder"
+      >
+        {{ placeholder }}
+      </span>
+
       <input
         v-if="searchable"
         ref="searchInputRef"
         v-model="searchQuery"
         type="text"
         class="multiselect__search"
+        :placeholder="!selectedItems.length ? placeholder : ''"
         @focus="openDropdown"
         @input="onSearchInput"
         @click.stop
@@ -192,6 +200,19 @@ onBeforeUnmount(() => {
     max-height: 100%;
     overflow: hidden;
     cursor: text;
+  }
+
+  &__placeholder {
+    color: var(--color-text-placeholder);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family-base);
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--space-1);
+    display: flex;
+    align-items: center;
   }
 
   &__search {

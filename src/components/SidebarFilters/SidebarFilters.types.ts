@@ -21,6 +21,8 @@ export interface SidebarFiltersProps {
   clearLabel?: string;
   applyDisabled?: boolean;
   allOptionLabels?: Record<string, string>;
+  collapsible?: boolean;
+  collapsed?: boolean;
 }
 
 export interface SidebarFiltersEmits {
@@ -28,4 +30,5 @@ export interface SidebarFiltersEmits {
   (e: 'apply'): void;
   (e: 'clear'): void;
   (e: 'filterChange', key: string, value: FilterValue): void;
+  (e: 'update:collapsed', value: boolean): void;
 }

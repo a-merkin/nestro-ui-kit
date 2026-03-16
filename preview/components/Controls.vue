@@ -16,7 +16,7 @@
 
     <section class="controls__section">
       <NText class="controls__label">InputNumber</NText>
-      <NInputNumber v-model="numberValue" placeholder="0" />
+      <NInputNumber v-model="numberValue" placeholder="0" :max-fraction-digits="2" />
     </section>
 
     <section class="controls__section">
@@ -50,7 +50,7 @@
 
     <section class="controls__section">
       <NText class="controls__label">RadioGroup</NText>
-      <NRadioGroup v-model="radioValue" :options="radioOptions" direction="horizontal" />
+      <NRadioGroup v-model="radioGroupValue" :options="radioOptions" direction="horizontal" />
     </section>
 
     <section class="controls__section">
@@ -90,7 +90,13 @@
 
     <section class="controls__section">
       <NText class="controls__label">FileUpload</NText>
-      <NFileUpload v-model="files" multiple drag-drop />
+      <NFileUpload
+        v-model="files"
+        multiple
+        drag-drop
+        dropzone-label="Перетащите файлы или нажмите для выбора"
+        choose-label="Выбрать файл"
+      />
     </section>
   </div>
 </template>
@@ -109,6 +115,7 @@ const numberValue = ref<number | null>(null);
 const textareaValue = ref('');
 const checkboxValue = ref(false);
 const radioValue = ref('production');
+const radioGroupValue = ref('production');
 const switchValue = ref(false);
 const dropdownValue = ref<string | null>(null);
 const multiSelectValue = ref<string[]>([]);

@@ -50,7 +50,9 @@ const isFirstTabActive = computed(() => {
 }
 
 .header-switcher-bg {
-  background: none;
+  background-color: var(--color-white);
+  position: relative;
+  z-index: var(--z-raised);
 }
 
 .header-switcher {
