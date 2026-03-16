@@ -369,13 +369,12 @@ onUnmounted(() => {
     text-overflow: ellipsis;
 
     &:hover {
-      background: var(--color-green-50);
-      color: var(--color-green-100);
+      background: var(--color-blue-60);
     }
 
     &--selected {
       background: var(--color-green-80);
-      color: var(--color-green-100);
+      color: var(--color-white);
     }
 
     &--no-results {

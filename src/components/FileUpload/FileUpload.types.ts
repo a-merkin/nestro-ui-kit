@@ -1,5 +1,7 @@
 export type FileUploadVariant = 'primary' | 'secondary';
 
+export type FileUploadStatus = 'pending' | 'uploading' | 'done' | 'error';
+
 export type FileUploadFileLike = {
   __key: string;
   name: string;
@@ -7,6 +9,8 @@ export type FileUploadFileLike = {
   type: string;
   lastModified: number;
   file: File;
+  progress?: number;
+  status?: FileUploadStatus;
 };
 
 export type FileUploadSelectEvent = {
@@ -33,12 +37,14 @@ export type FileUploadProps = {
 
   dragDrop?: boolean;
 
-  chooseLabel?: string;
-  dropzoneLabel?: string;
   showHint?: boolean;
+  showFooter?: boolean;
 };
 
 export type FileUploadEmits = {
   (e: 'update:modelValue', value: FileUploadFileLike[]): void;
   (e: 'select', payload: FileUploadSelectEvent): void;
+  (e: 'remove', file: FileUploadFileLike): void;
+  (e: 'cancel'): void;
+  (e: 'add'): void;
 };

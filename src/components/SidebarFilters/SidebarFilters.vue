@@ -3,16 +3,6 @@
     class="sidebar-filters"
     :class="{ 'sidebar-filters--collapsed': collapsible && isCollapsed }"
   >
-    <button
-      v-if="collapsible"
-      class="sidebar-filters__toggle"
-      :class="{ 'sidebar-filters__toggle--collapsed': isCollapsed }"
-      type="button"
-      @click="toggleCollapse"
-    >
-      <NIcon name="chevrons-right" size="sm" />
-    </button>
-
     <template v-if="!isCollapsed">
       <div v-for="filter in filters" :key="filter.key" class="sidebar-filters__item">
         <NDropdown
@@ -37,6 +27,16 @@
         </NButton>
       </div>
     </template>
+
+    <button
+      v-if="collapsible"
+      class="sidebar-filters__toggle"
+      :class="{ 'sidebar-filters__toggle--collapsed': isCollapsed }"
+      type="button"
+      @click="toggleCollapse"
+    >
+      <NIcon name="chevrons-right" size="sm" />
+    </button>
   </div>
 </template>
 
@@ -145,7 +145,6 @@ const handleClear = () => {
     cursor: pointer;
     color: var(--color-white);
     flex-shrink: 0;
-    margin-bottom: calc(-1 * var(--space-3));
     transition:
       transform var(--duration-medium) var(--easing-standard),
       background-color var(--duration-fast) ease;

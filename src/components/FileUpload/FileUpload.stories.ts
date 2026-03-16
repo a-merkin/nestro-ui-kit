@@ -1,7 +1,7 @@
 import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import FileUpload from './FileUpload.vue';
-import type { FileUploadVariant } from './FileUpload.types';
+import type { FileUploadFileLike, FileUploadVariant } from './FileUpload.types';
 
 const meta = {
   title: 'UI/FileUpload',
@@ -41,22 +41,13 @@ const meta = {
       control: 'boolean',
       description: 'Показывать dropzone (если false — будет кнопка)',
     },
-    chooseLabel: {
-      control: 'text',
-      description: 'Текст кнопки (когда dragDrop=false)',
-    },
-    dropzoneLabel: {
-      control: 'text',
-      description: 'Текст dropzone',
+    showFooter: {
+      control: 'boolean',
+      description: 'Показывать футер с кнопками Отмена / Добавить файлы',
     },
     showHint: {
       control: 'boolean',
       description: 'Показывать подсказку (accept/maxFileSize/fileLimit) в dropzone',
-    },
-
-    dropzone: {
-      control: 'text',
-      description: 'Слот зоны перетаскивания (dropzone)',
     },
   },
   args: {
@@ -64,15 +55,16 @@ const meta = {
     disabled: false,
     loading: false,
     multiple: true,
-    accept: 'image/*,.pdf',
-    maxFileSize: 2 * 1024 * 1024,
+    accept: 'image/*,.pdf,.doc,.docx',
+    maxFileSize: 5 * 1024 * 1024,
     fileLimit: 5,
     dragDrop: true,
     showHint: true,
-    chooseLabel: 'Choose file',
-    dropzoneLabel: 'Drag and drop files or click',
-
+    showFooter: true,
     onSelect: fn(),
+    onRemove: fn(),
+    onCancel: fn(),
+    onAdd: fn(),
     'onUpdate:modelValue': fn(),
   },
 } satisfies Meta<typeof FileUpload>;
@@ -81,6 +73,42 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithFiles: Story = {
+  args: {
+    modelValue: [
+      {
+        __key: '1',
+        name: 'report-q4.doc',
+        size: 124 * 1024,
+        type: 'application/msword',
+        lastModified: Date.now(),
+        file: new File([], 'report-q4.doc'),
+        status: 'done',
+      },
+      {
+        __key: '2',
+        name: 'presentation.pdf',
+        size: 2.3 * 1024 * 1024,
+        type: 'application/pdf',
+        lastModified: Date.now(),
+        file: new File([], 'presentation.pdf'),
+        status: 'uploading',
+        progress: 88,
+      },
+      {
+        __key: '3',
+        name: 'image-photo.png',
+        size: 512 * 1024,
+        type: 'image/png',
+        lastModified: Date.now(),
+        file: new File([], 'image-photo.png'),
+        status: 'uploading',
+        progress: 42,
+      },
+    ] as FileUploadFileLike[],
+  },
+};
 
 export const Secondary: Story = {
   args: {
@@ -103,30 +131,13 @@ export const Loading: Story = {
 export const WithoutDropzone: Story = {
   args: {
     dragDrop: false,
-    chooseLabel: 'Select file',
   },
 };
 
-export const WithDropzoneSlot: Story = {
+export const WithoutFooter: Story = {
   args: {
-    dragDrop: true,
+    showFooter: false,
   },
-  render: (args) => ({
-    components: { FileUpload },
-    setup() {
-      return { args };
-    },
-    template: `
-      <FileUpload v-bind="args">
-        <template #dropzone>
-          <div style="display:grid; gap: 6px;">
-            <div style="font-weight: 600;">📎 Перетащите файлы сюда</div>
-            <div style="opacity:.7; font-size: 12px;">или нажмите, чтобы выбрать</div>
-          </div>
-        </template>
-      </FileUpload>
-    `,
-  }),
 };
 
 export const StrictLimits: Story = {
@@ -134,6 +145,5 @@ export const StrictLimits: Story = {
     accept: '.png,.jpg',
     maxFileSize: 300 * 1024,
     fileLimit: 2,
-    dropzoneLabel: 'Only PNG/JPG, up to 300KB (max 2 files)',
   },
 };
