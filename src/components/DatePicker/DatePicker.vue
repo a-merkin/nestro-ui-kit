@@ -327,15 +327,12 @@ useClickOutside(rootRef, () => {
     box-sizing: border-box;
     overflow: hidden;
 
-    &:hover:not(&--disabled) {
-      border-color: var(--color-green-90);
+    &:hover:not(&--disabled):not(&--error):not(&--open) {
+      border-color: var(--color-stroke-hover);
     }
 
-    &--disabled {
-      background: var(--color-bg-input-disabled);
-      border-color: var(--color-stroke-disabled);
-      color: var(--color-text-disabled);
-      cursor: not-allowed;
+    &--open {
+      border-color: var(--color-green-90);
     }
 
     &--error {
@@ -346,8 +343,11 @@ useClickOutside(rootRef, () => {
       border-color: var(--color-stroke-error);
     }
 
-    &--open {
-      border-color: var(--color-green-90);
+    &--disabled {
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
     }
   }
 
@@ -382,7 +382,7 @@ useClickOutside(rootRef, () => {
     cursor: pointer;
     color: var(--color-grey-80);
     border-radius: var(--radius-round);
-    transition: transform 0.15s ease;
+    transition: transform var(--duration-fast) var(--easing-standard);
     padding: 0;
     flex-shrink: 0;
 

@@ -152,7 +152,9 @@ const onBlur = (event: FocusEvent) => {
   background-color: var(--color-bg-input);
   color: var(--color-black);
 
+  font-family: var(--font-family-base);
   font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
   line-height: var(--line-height-md);
 
   outline: none;
@@ -162,7 +164,7 @@ const onBlur = (event: FocusEvent) => {
     background-color var(--motion-standard);
 }
 
-.textarea__field:hover:not(:focus):not(:disabled) {
+.textarea:not(.textarea--invalid):not(.textarea--disabled) .textarea__field:hover:not(:focus) {
   border-color: var(--color-stroke-hover);
 }
 
@@ -222,17 +224,13 @@ const onBlur = (event: FocusEvent) => {
   white-space: nowrap;
 }
 
-.textarea--default .textarea__field {
-  border-color: var(--color-stroke-primary);
-}
-
-.textarea--outlined .textarea__field {
-  border-color: var(--color-stroke-primary);
-}
-
 .textarea--filled .textarea__field {
   background-color: var(--color-bg-input);
   border-color: transparent;
+}
+
+.textarea--filled .textarea__field:focus {
+  border-color: var(--color-green-90);
 }
 
 .textarea--resize-none .textarea__field {

@@ -89,6 +89,8 @@ const noResultsTextComputed = computed(() => props.noResultsText);
 
 const multiselectClasses = computed(() => ({
   'multiselect--open': isDropdownOpen.value,
+  'multiselect--disabled': props.disabled,
+  'multiselect--error': props.error,
 }));
 
 const localSelectedValues = ref<MultiSelectValue[]>([]);
@@ -187,12 +189,23 @@ onBeforeUnmount(() => {
   cursor: pointer;
   transition: all var(--motion-standard);
 
-  &:hover:not(#{$self}--open) {
+  &:hover:not(#{$self}--open):not(#{$self}--disabled):not(#{$self}--error) {
     border-color: var(--color-stroke-hover);
   }
 
   &--open {
     border-color: var(--color-green-90);
+  }
+
+  &--error {
+    border-color: var(--color-stroke-error);
+  }
+
+  &--disabled {
+    background: var(--color-bg-input-disabled);
+    border-color: var(--color-stroke-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
   }
 
   &__chips {

@@ -374,7 +374,7 @@ onUnmounted(() => {
     width: 100%;
     height: var(--size-height-md);
     background: var(--color-bg-input);
-    border: 1px solid var(--color-stroke-primary);
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
     border-radius: var(--radius-xl);
     transition: all var(--motion-standard);
     box-sizing: border-box;

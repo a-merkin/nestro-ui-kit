@@ -97,6 +97,7 @@ const dropdownClasses = computed(() => ({
 
 const triggerClasses = computed(() => ({
   'dropdown__trigger--disabled': isDisabled.value,
+  'dropdown__trigger--error': props.error,
 }));
 
 const searchFieldClasses = computed(() => ({
@@ -217,12 +218,21 @@ onUnmounted(() => {
     transition: all var(--motion-standard);
     box-sizing: border-box;
 
-    &:hover:not(#{$self}__trigger--disabled) {
-      border-color: var(--color-blue-50);
+    #{$self}:not(#{$self}--open)
+      &:hover:not(#{$self}__trigger--disabled):not(#{$self}__trigger--error) {
+      border-color: var(--color-stroke-hover);
     }
 
     #{$self}--open & {
       border-color: var(--color-green-90);
+    }
+
+    &--error {
+      border-color: var(--color-stroke-error);
+    }
+
+    &--error:hover:not(#{$self}__trigger--disabled) {
+      border-color: var(--color-stroke-error);
     }
 
     &--disabled {
