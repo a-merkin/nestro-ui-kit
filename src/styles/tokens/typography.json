@@ -1,0 +1,24 @@
+{
+  "font-family-base": "'Montserrat', sans-serif",
+
+  "font-weight-regular": "400",
+  "font-weight-medium": "500",
+  "font-weight-semibold": "600",
+  "font-weight-bold": "700",
+
+  "font-size-xs": "12px",
+  "font-size-sm": "14px",
+  "font-size-md": "18px",
+  "font-size-lg": "22px",
+  "font-size-xl": "26px",
+  "font-size-xxl": "32px",
+  "font-size-xxxl": "40px",
+
+  "line-height-xs": "16px",
+  "line-height-sm": "20px",
+  "line-height-base": "24px",
+  "line-height-lg": "28px",
+  "line-height-xl": "32px",
+  "line-height-xxl": "40px",
+  "line-height-xxxl": "48px"
+}

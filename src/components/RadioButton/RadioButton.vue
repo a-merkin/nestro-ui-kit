@@ -49,7 +49,7 @@ const handleChange = () => {
 .radio {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   cursor: pointer;
   user-select: none;
 }
@@ -75,41 +75,41 @@ const handleChange = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 16px;
-  block-size: 16px;
-  border: 2px solid #aabdc7;
-  border-radius: 50%;
+  inline-size: var(--size-toggle-sm);
+  block-size: var(--size-toggle-sm);
+  border: var(--border-width-md) solid var(--color-blue-50);
+  border-radius: var(--radius-round);
   background: transparent;
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    border-color var(--motion-standard),
+    background-color var(--motion-standard);
   flex-shrink: 0;
 }
 
 .radio__input:checked + .radio__control {
-  border-color: #0f9d3b;
-  background: #0f9d3b;
+  border-color: var(--color-green-90);
+  background: var(--color-green-90);
 }
 
 .radio__input:disabled + .radio__control {
-  border-color: #d9d9d9;
-  background: #f9f9f9;
+  border-color: var(--color-grey-20);
+  background: var(--color-grey-50);
 }
 
 .radio__input:disabled:checked + .radio__control {
-  border-color: #d9d9d9;
-  background: #d9d9d9;
+  border-color: var(--color-grey-20);
+  background: var(--color-grey-20);
 }
 
 .radio__label {
-  color: #000;
+  color: var(--color-black);
 }
 
 .radio--disabled .radio__label {
-  color: #d9d9d9;
+  color: var(--color-grey-20);
 }
 
 .radio:hover:not(.radio--disabled) .radio__control {
-  border-color: #0f9d3b;
+  border-color: var(--color-green-90);
 }
 </style>

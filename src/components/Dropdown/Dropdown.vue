@@ -214,7 +214,7 @@ onUnmounted(() => {
     color: var(--color-grey-100);
     font-size: var(--font-size-sm);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--motion-standard);
     box-shadow: var(--shadow-sm);
     box-sizing: border-box;
 
@@ -281,7 +281,7 @@ onUnmounted(() => {
     cursor: pointer;
     color: var(--color-grey-80);
     border-radius: var(--radius-round);
-    transition: transform 0.15s ease;
+    transition: transform var(--duration-fast) var(--easing-standard);
     padding: 0;
     flex-shrink: 0;
 
@@ -307,7 +307,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     color: var(--color-grey-80);
-    transition: transform 0.25s ease;
+    transition: transform var(--duration-medium) var(--easing-standard);
     flex-shrink: 0;
 
     #{$self}--open & {
@@ -321,11 +321,11 @@ onUnmounted(() => {
     left: 0;
     width: 100%;
     background: var(--color-white);
-    border: 1px solid var(--color-blue-40);
+    border: var(--border-width-sm) solid var(--color-blue-40);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     z-index: var(--z-dropdown);
-    animation: dropdown-fade-in 0.15s ease;
+    animation: dropdown-fade-in var(--duration-fast) var(--easing-standard);
     max-height: 400px;
     overflow: hidden;
   }
@@ -344,8 +344,8 @@ onUnmounted(() => {
     cursor: pointer;
     font-size: var(--font-size-sm);
     transition:
-      background 0.15s ease,
-      color 0.15s ease;
+      background var(--duration-fast) var(--easing-standard),
+      color var(--duration-fast) var(--easing-standard);
     border-radius: var(--radius-md);
     white-space: nowrap;
     overflow: hidden;
@@ -377,7 +377,7 @@ onUnmounted(() => {
   }
 
   &__loader {
-    animation: spin 1s linear infinite;
+    animation: spin 1s var(--easing-linear) infinite;
   }
 }
 

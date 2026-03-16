@@ -6,6 +6,7 @@
 
     <div class="textarea__control">
       <textarea
+        :id="id"
         class="textarea__field"
         :value="modelValue"
         :placeholder="placeholder"
@@ -15,9 +16,8 @@
         :cols="cols"
         :maxlength="maxlength"
         :name="name"
-        :id="id"
         :autofocus="autofocus"
-        :aria-invalid="invalid || undefined"
+        :aria-invalid="error || undefined"
         :aria-describedby="describedBy || undefined"
         @input="onInput"
         @change="onChange"
@@ -28,7 +28,7 @@
 
     <div v-if="bottomVisible" class="textarea__bottom">
       <div class="textarea__messages">
-        <p v-if="errorComputed" :id="errorId" class="textarea__error" role="alert">
+        <p v-if="error && errorComputed" :id="errorId" class="textarea__error" role="alert">
           <slot name="error">{{ errorComputed }}</slot>
         </p>
 
@@ -55,7 +55,10 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   variant: 'default',
   disabled: false,
   readonly: false,
-  invalid: false,
+  required: false,
+
+  error: false,
+  errorMessage: undefined,
 
   rows: 4,
   cols: undefined,
@@ -64,7 +67,6 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   placeholder: '',
   label: '',
   hint: '',
-  error: '',
 
   autofocus: false,
   resize: 'vertical',
@@ -81,17 +83,16 @@ const errorId = computed(() => (props.id ? `${props.id}__error` : undefined));
 
 const labelComputed = computed(() => props.label || undefined);
 const hintComputed = computed(() => props.hint || undefined);
-const errorComputed = computed(() => props.error || undefined);
+const errorComputed = computed(() => props.errorMessage || undefined);
 
 const describedBy = computed(() => {
-  // приоритет: error -> hint
-  if (props.invalid && errorComputed.value && errorId.value) return errorId.value;
+  if (props.error && errorComputed.value && errorId.value) return errorId.value;
   if (hintComputed.value && hintId.value) return hintId.value;
   return undefined;
 });
 
 const bottomVisible = computed(() => {
-  const hasMsg = (props.invalid && !!errorComputed.value) || (!!hintComputed.value && !props.invalid);
+  const hasMsg = (props.error && !!errorComputed.value) || (!!hintComputed.value && !props.error);
   const hasCount = props.showCount && props.maxlength != null;
   return hasMsg || hasCount;
 });
@@ -102,7 +103,7 @@ const rootClasses = computed(() => ({
   [`textarea--resize-${props.resize}`]: true,
   'textarea--disabled': props.disabled,
   'textarea--readonly': props.readonly,
-  'textarea--invalid': props.invalid,
+  'textarea--invalid': props.error,
 }));
 
 const onInput = (event: Event) => {

@@ -43,7 +43,7 @@ const isFirstTabActive = computed(() => {
 .workplace-container {
   width: 100%;
   max-width: var(--max-width-fullhd);
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

@@ -22,7 +22,12 @@ const meta = {
     },
     position: {
       control: 'select',
-      options: ['top-right', 'top-left', 'bottom-right', 'bottom-left'] satisfies NotificationPosition[],
+      options: [
+        'top-right',
+        'top-left',
+        'bottom-right',
+        'bottom-left',
+      ] satisfies NotificationPosition[],
       description: 'Позиция на экране',
     },
     title: {

@@ -172,7 +172,7 @@ function parseInput(raw: string): number | null {
   // Replace comma with dot
   cleaned = cleaned.replace(',', '.');
   // Remove everything except digits, dot, minus
-  cleaned = cleaned.replace(/[^\d.\-]/g, '');
+  cleaned = cleaned.replace(/[^\d.-]/g, '');
 
   if (cleaned === '' || cleaned === '-' || cleaned === '.') return null;
 
@@ -429,7 +429,7 @@ onUnmounted(() => {
     border: none;
     background: transparent;
     outline: none;
-    color: var(--color-text-primary);
+    color: var(--color-black);
     font-family: var(--font-family-base);
     font-size: 16px;
     font-weight: 400;

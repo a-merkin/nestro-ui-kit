@@ -21,6 +21,10 @@ export type FileUploadProps = {
 
   disabled?: boolean;
   loading?: boolean;
+  required?: boolean;
+
+  error?: boolean;
+  errorMessage?: string;
 
   multiple?: boolean;
   accept?: string;

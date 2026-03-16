@@ -67,36 +67,36 @@ const onChange = (value: RadioGroupValue) => {
 .radio-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .radio-group--horizontal {
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .radio-group__label {
-  color: var(--color-text-tertiary, #464e56);
-  font-size: 16px;
-  line-height: 1.2;
+  color: var(--color-grey-70);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
 }
 
 .radio-group__items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .radio-group--horizontal .radio-group__items {
   flex-direction: row;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
 .radio-group__item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   cursor: pointer;
   user-select: none;
 }
@@ -122,42 +122,42 @@ const onChange = (value: RadioGroupValue) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 16px;
-  block-size: 16px;
-  border: 2px solid #aabdc7;
-  border-radius: 50%;
+  inline-size: var(--size-toggle-sm);
+  block-size: var(--size-toggle-sm);
+  border: var(--border-width-md) solid var(--color-blue-50);
+  border-radius: var(--radius-round);
   background: transparent;
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    border-color var(--motion-standard),
+    background-color var(--motion-standard);
   flex-shrink: 0;
 }
 
 .radio-group__input:checked + .radio-group__control {
-  border-color: #0f9d3b;
-  background: #0f9d3b;
+  border-color: var(--color-green-90);
+  background: var(--color-green-90);
 }
 
 .radio-group__input:disabled + .radio-group__control {
-  border-color: #d9d9d9;
-  background: #f9f9f9;
+  border-color: var(--color-grey-20);
+  background: var(--color-grey-50);
 }
 
 .radio-group__input:disabled:checked + .radio-group__control {
-  border-color: #d9d9d9;
-  background: #d9d9d9;
+  border-color: var(--color-grey-20);
+  background: var(--color-grey-20);
 }
 
 .radio-group__text {
-  color: #000;
+  color: var(--color-black);
   line-height: 1.4;
 }
 
 .radio-group__item--disabled .radio-group__text {
-  color: #d9d9d9;
+  color: var(--color-grey-20);
 }
 
 .radio-group__item:hover:not(.radio-group__item--disabled) .radio-group__control {
-  border-color: #0f9d3b;
+  border-color: var(--color-green-90);
 }
 </style>

@@ -1,11 +1,7 @@
 <template>
   <nav class="navbar">
     <ul class="navbar__list">
-      <li
-        v-for="item in items"
-        :key="item.id"
-        class="navbar__item-wrapper"
-      >
+      <li v-for="item in items" :key="item.id" class="navbar__item-wrapper">
         <button
           :class="[
             'navbar__button',
@@ -46,8 +42,8 @@ const handleClick = (id: string) => {
 
 <style scoped>
 .navbar {
-  --_btn-size: 50px;
-  --_sidebar-w: 78px;
+  --_btn-size: var(--size-height-md);
+  --_sidebar-w: var(--size-min-width-sm);
   --_sidebar-pad-x: var(--space-4);
   --_btn-radius: var(--radius-md);
 
@@ -55,13 +51,13 @@ const handleClick = (id: string) => {
   flex-direction: column;
   align-items: center;
   width: var(--_sidebar-w);
-  height: 100%;
-  padding: var(--space-8) 0 var(--space-6);
+  padding: 0;
   box-sizing: border-box;
   background: transparent;
   position: relative;
   z-index: var(--z-raised);
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .navbar__list {
@@ -80,7 +76,7 @@ const handleClick = (id: string) => {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 var(--_sidebar-pad-x);
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -90,7 +86,7 @@ const handleClick = (id: string) => {
   justify-content: center;
   width: var(--_btn-size);
   height: var(--_btn-size);
-  border: none;
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
   cursor: pointer;
   position: relative;
   z-index: var(--z-base);
@@ -127,10 +123,11 @@ const handleClick = (id: string) => {
 .navbar__button--active {
   background: var(--color-white);
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
+  border-right-color: transparent;
   color: var(--color-grey-70);
-  margin-right: calc(-1 * var(--_sidebar-pad-x));
-  padding-right: calc(var(--space-3) + var(--_sidebar-pad-x));
-  width: calc(var(--_btn-size) + var(--_sidebar-pad-x));
+  margin-right: calc(-1 * var(--space-2));
+  padding-right: calc(var(--space-3) + var(--space-2));
+  width: calc(var(--_btn-size) + var(--space-2));
   z-index: var(--z-raised);
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="multiselect" :class="multiselectClasses" @click="handleCardClick">
-    <div ref="chipsRef" class="multiselect__chips">
+    <div class="multiselect__chips">
       <template v-for="item in selectedItems" :key="item.value">
         <div class="multiselect__chip">
           <span class="multiselect__chip-close" @click.stop="removeSelected(item.value)">×</span>
@@ -20,7 +20,7 @@
       />
     </div>
 
-    <div ref="arrowRef" class="multiselect__arrow" @click.stop="toggleDropdown">
+    <div class="multiselect__arrow" @click.stop="toggleDropdown">
       <Icon
         name="arrow-down"
         size="md"
@@ -28,7 +28,7 @@
       />
     </div>
 
-    <div v-if="isDropdownOpen" ref="dropdownRef" class="multiselect__dropdown">
+    <div v-if="isDropdownOpen" class="multiselect__dropdown">
       <div class="multiselect__options">
         <div
           v-for="item in filteredOptions"
@@ -46,7 +46,7 @@
         </div>
 
         <div v-if="filteredOptions.length === 0" class="multiselect__no-results">
-          Ничего не найдено
+          {{ noResultsTextComputed }}
         </div>
       </div>
     </div>
@@ -63,19 +63,21 @@ defineOptions({ name: 'NMultiSelect' });
 
 const props = withDefaults(defineProps<MultiSelectProps>(), {
   searchable: false,
+  disabled: false,
+  error: false,
+  noResultsText: 'No results found',
 });
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: MultiSelectValue[]): void;
 }>();
 
-const chipsRef = ref<HTMLElement | null>(null);
-const dropdownRef = ref<HTMLElement | null>(null);
-const arrowRef = ref<HTMLElement | null>(null);
 const searchInputRef = ref<HTMLInputElement | null>(null);
 
 const isDropdownOpen = ref(false);
 const searchQuery = ref('');
+
+const noResultsTextComputed = computed(() => props.noResultsText);
 
 const multiselectClasses = computed(() => ({
   'multiselect--open': isDropdownOpen.value,
@@ -165,13 +167,13 @@ onBeforeUnmount(() => {
 .multiselect {
   $self: &;
   width: 100%;
-  height: 85px;
+  min-height: var(--size-height-md);
   background: var(--color-bg-input);
   border: var(--border-width-sm) solid var(--color-stroke-primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   display: flex;
   align-items: flex-start;
-  padding: var(--space-3) var(--space-8) var(--space-3) var(--space-3);
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
   position: relative;
   box-sizing: border-box;
   cursor: pointer;
@@ -198,11 +200,10 @@ onBeforeUnmount(() => {
     border: none;
     background: transparent;
     outline: none;
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     font-family: var(--font-family-base);
-    color: var(--color-blue-50);
+    color: var(--color-black);
     padding: 0 var(--space-1);
-    height: 13px;
 
     &::placeholder {
       color: var(--color-text-placeholder);
@@ -213,16 +214,15 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     background: var(--color-blue-70);
-    border-radius: var(--radius-toggle-md);
+    border-radius: var(--radius-xl);
     min-width: 0;
-    max-width: 82px;
+    max-width: 160px;
     flex-shrink: 1;
-    height: 13px;
+    height: var(--size-height-sm);
     padding: 0 var(--space-2) 0 var(--space-1);
     font-family: var(--font-family-base);
     font-size: var(--font-size-xs);
-    color: var(--color-blue-50);
-    margin-bottom: 0;
+    color: var(--color-grey-70);
     box-sizing: border-box;
   }
 
@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
     transition: color var(--motion-standard);
 
     &:hover {
-      color: var(--color-blue-50);
+      color: var(--color-black);
     }
   }
 
@@ -246,7 +246,7 @@ onBeforeUnmount(() => {
     text-overflow: ellipsis;
     font-family: var(--font-family-base);
     font-size: var(--font-size-xs);
-    color: var(--color-blue-50);
+    color: var(--color-grey-70);
     line-height: 1.22;
     display: flex;
     align-items: center;
@@ -261,7 +261,7 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--color-blue-50);
+    color: var(--color-black);
     transition: transform var(--duration-medium) var(--easing-standard);
 
     #{$self}--open & {
@@ -316,17 +316,16 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     font-family: var(--font-family-base);
-    color: var(--color-blue-50);
+    color: var(--color-black);
     padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all var(--duration-fast) var(--easing-standard);
+    transition: background-color var(--motion-standard);
 
     &:hover {
-      background: var(--color-blue-60);
-      color: var(--color-green-100);
+      background: var(--color-grey-10);
     }
   }
 
@@ -337,11 +336,6 @@ onBeforeUnmount(() => {
     font-size: var(--font-size-sm);
     font-family: var(--font-family-base);
     cursor: default;
-
-    &:hover {
-      background: transparent;
-      color: var(--color-text-placeholder);
-    }
   }
 }
 

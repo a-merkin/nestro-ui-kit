@@ -3,10 +3,7 @@
     <template v-for="(item, index) in visibleItems" :key="item.key || index">
       <li v-if="item.separator" class="menu-list__separator" />
 
-      <li
-        v-else-if="item.items && item.items.length"
-        class="menu-list__group"
-      >
+      <li v-else-if="item.items && item.items.length" class="menu-list__group">
         <span v-if="item.label" class="menu-list__group-label">
           {{ item.label }}
         </span>
