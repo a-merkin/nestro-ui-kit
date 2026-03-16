@@ -28,6 +28,7 @@
   --color-text-disabled: #e1e1e1;
   --color-text-placeholder: rgba(120, 151, 166, 0.6);
   --color-stroke-primary: rgba(162, 177, 184, 0.51);
+  --color-stroke-hover: rgba(162, 177, 184, 0.8);
   --color-stroke-error: #ed6e1c;
   --color-stroke-disabled: rgba(225, 225, 225, 0.51);
 

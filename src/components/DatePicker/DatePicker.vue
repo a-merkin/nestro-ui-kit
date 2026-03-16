@@ -317,15 +317,19 @@ useClickOutside(rootRef, () => {
     height: var(--size-height-md);
     padding: 0 var(--space-3) 0 var(--size-padding-horizontal-md);
     background: var(--color-bg-input);
-    border: 1px solid var(--color-stroke-primary);
-    border-radius: 60px;
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
+    border-radius: var(--radius-xl);
     color: var(--color-grey-100);
     font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--motion-standard);
     box-sizing: border-box;
     overflow: hidden;
+
+    &:hover:not(&--disabled) {
+      border-color: var(--color-green-90);
+    }
 
     &--disabled {
       background: var(--color-bg-input-disabled);
@@ -335,6 +339,10 @@ useClickOutside(rootRef, () => {
     }
 
     &--error {
+      border-color: var(--color-stroke-error);
+    }
+
+    &--error:hover:not(#{$self}__trigger--disabled) {
       border-color: var(--color-stroke-error);
     }
 

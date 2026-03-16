@@ -148,8 +148,8 @@ const onBlur = (event: FocusEvent) => {
   padding: var(--space-3) var(--space-3);
 
   border-radius: var(--radius-xl);
-  border: 1px solid var(--color-grey-20);
-  background-color: var(--color-white);
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
+  background-color: var(--color-bg-input);
   color: var(--color-black);
 
   font-size: var(--font-size-sm);
@@ -162,27 +162,31 @@ const onBlur = (event: FocusEvent) => {
     background-color var(--motion-standard);
 }
 
+.textarea__field:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-stroke-hover);
+}
+
 .textarea__field:focus {
   border-color: var(--color-green-90);
-  box-shadow: var(--shadow-sm) var(--color-bg-input);
 }
 
 .textarea--disabled .textarea__field {
-  background-color: var(--color-grey-10);
-  color: var(--color-grey-80);
+  background-color: var(--color-bg-input-disabled);
+  border-color: var(--color-stroke-disabled);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
 .textarea--readonly .textarea__field {
-  background-color: var(--color-grey-10);
+  background-color: var(--color-bg-input-disabled);
 }
 
 .textarea--invalid .textarea__field {
-  border-color: var(--color-red-80);
+  border-color: var(--color-stroke-error);
 }
 
 .textarea--invalid .textarea__field:focus {
-  box-shadow: var(--shadow-sm) var(--color-bg-input);
+  border-color: var(--color-stroke-error);
 }
 
 .textarea__bottom {
@@ -219,15 +223,15 @@ const onBlur = (event: FocusEvent) => {
 }
 
 .textarea--default .textarea__field {
-  border-color: var(--color-grey-20);
+  border-color: var(--color-stroke-primary);
 }
 
 .textarea--outlined .textarea__field {
-  border-color: var(--color-grey-30);
+  border-color: var(--color-stroke-primary);
 }
 
 .textarea--filled .textarea__field {
-  background-color: var(--color-grey-10);
+  background-color: var(--color-bg-input);
   border-color: transparent;
 }
 

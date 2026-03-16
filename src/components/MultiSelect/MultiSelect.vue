@@ -187,8 +187,12 @@ onBeforeUnmount(() => {
   cursor: pointer;
   transition: all var(--motion-standard);
 
+  &:hover:not(#{$self}--open) {
+    border-color: var(--color-stroke-hover);
+  }
+
   &--open {
-    border-color: var(--color-stroke-primary);
+    border-color: var(--color-green-90);
   }
 
   &__chips {

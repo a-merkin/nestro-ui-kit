@@ -93,6 +93,15 @@ const handleChange = (event: Event) => {
   transition: all var(--duration-medium) ease;
 }
 
+.checkbox:hover .checkbox__input:not(:checked):not(:disabled) + .checkbox__box {
+  border-color: var(--color-green-90);
+}
+
+.checkbox__input:focus-visible + .checkbox__box {
+  outline: var(--border-width-md) solid var(--color-green-90);
+  outline-offset: var(--border-width-md);
+}
+
 .checkbox__input:checked + .checkbox__box {
   background: var(--color-green-100);
   border-color: var(--color-green-100);

@@ -208,20 +208,28 @@ onUnmounted(() => {
     width: 100%;
     height: var(--size-height-md);
     padding: 0 var(--size-padding-horizontal-md);
-    background: var(--color-blue-60);
+    background: var(--color-bg-input);
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
     border-radius: var(--radius-xl);
     color: var(--color-grey-100);
     font-size: var(--font-size-sm);
     cursor: pointer;
     transition: all var(--motion-standard);
-    box-shadow: var(--shadow-sm);
     box-sizing: border-box;
 
+    &:hover:not(#{$self}__trigger--disabled) {
+      border-color: var(--color-blue-50);
+    }
+
+    #{$self}--open & {
+      border-color: var(--color-green-90);
+    }
+
     &--disabled {
-      background: var(--color-grey-50);
-      color: var(--color-grey-40);
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
-      opacity: 0.7;
     }
   }
 

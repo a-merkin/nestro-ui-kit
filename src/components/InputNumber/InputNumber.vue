@@ -380,6 +380,12 @@ onUnmounted(() => {
     box-sizing: border-box;
     overflow: hidden;
 
+    &:hover:not(#{$self}__wrapper--focused):not(#{$self}__wrapper--disabled):not(
+        #{$self}__wrapper--error
+      ) {
+      border-color: var(--color-stroke-hover);
+    }
+
     &--focused {
       border-color: var(--color-green-90);
     }
