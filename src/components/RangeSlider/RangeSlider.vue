@@ -21,41 +21,65 @@
         :style="{ left: leftPx + 'px', width: widthPx + 'px' }"
       />
 
-      <div
-        v-if="isRange"
-        class="range-slider__thumb"
-        :style="{ left: leftPx + 'px' }"
-        role="slider"
-        :aria-valuemin="0"
-        :aria-valuemax="maxIndex"
-        :aria-valuenow="leftIndex"
-        tabindex="0"
-        @mousedown.stop="startDrag('left', $event)"
-      />
+      <div v-if="isRange" class="range-slider__thumb-wrapper" :style="{ left: leftPx + 'px' }">
+        <div
+          class="range-slider__tooltip"
+          :class="{ 'range-slider__tooltip--visible': leftTooltipVisible }"
+        >
+          {{ values[leftIndex] }}
+        </div>
+        <div
+          class="range-slider__thumb"
+          role="slider"
+          :aria-valuemin="0"
+          :aria-valuemax="maxIndex"
+          :aria-valuenow="leftIndex"
+          tabindex="0"
+          @mousedown.stop="startDrag('left', $event)"
+          @mouseenter="leftHovered = true"
+          @mouseleave="leftHovered = false"
+        />
+      </div>
 
-      <div
-        v-if="isRange"
-        class="range-slider__thumb"
-        :style="{ left: rightPx + 'px' }"
-        role="slider"
-        :aria-valuemin="0"
-        :aria-valuemax="maxIndex"
-        :aria-valuenow="rightIndex"
-        tabindex="0"
-        @mousedown.stop="startDrag('right', $event)"
-      />
+      <div v-if="isRange" class="range-slider__thumb-wrapper" :style="{ left: rightPx + 'px' }">
+        <div
+          class="range-slider__tooltip"
+          :class="{ 'range-slider__tooltip--visible': rightTooltipVisible }"
+        >
+          {{ values[rightIndex] }}
+        </div>
+        <div
+          class="range-slider__thumb"
+          role="slider"
+          :aria-valuemin="0"
+          :aria-valuemax="maxIndex"
+          :aria-valuenow="rightIndex"
+          tabindex="0"
+          @mousedown.stop="startDrag('right', $event)"
+          @mouseenter="rightHovered = true"
+          @mouseleave="rightHovered = false"
+        />
+      </div>
 
-      <div
-        v-if="!isRange"
-        class="range-slider__thumb range-slider__thumb--single"
-        :style="{ left: singlePx + 'px' }"
-        role="slider"
-        :aria-valuemin="0"
-        :aria-valuemax="maxIndex"
-        :aria-valuenow="singleIndex"
-        tabindex="0"
-        @mousedown.stop="startDragSingle"
-      />
+      <div v-if="!isRange" class="range-slider__thumb-wrapper" :style="{ left: singlePx + 'px' }">
+        <div
+          class="range-slider__tooltip"
+          :class="{ 'range-slider__tooltip--visible': singleTooltipVisible }"
+        >
+          {{ values[singleIndex] }}
+        </div>
+        <div
+          class="range-slider__thumb range-slider__thumb--single"
+          role="slider"
+          :aria-valuemin="0"
+          :aria-valuemax="maxIndex"
+          :aria-valuenow="singleIndex"
+          tabindex="0"
+          @mousedown.stop="startDragSingle"
+          @mouseenter="singleHovered = true"
+          @mouseleave="singleHovered = false"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -79,6 +103,20 @@ const track = ref<HTMLElement | null>(null);
 const trackWidth = ref(200);
 const isDragging = ref(false);
 const dragging = ref<'left' | 'right' | null>(null);
+
+const leftHovered = ref(false);
+const rightHovered = ref(false);
+const singleHovered = ref(false);
+
+const leftTooltipVisible = computed(
+  () => leftHovered.value || (isDragging.value && dragging.value === 'left')
+);
+const rightTooltipVisible = computed(
+  () => rightHovered.value || (isDragging.value && dragging.value === 'right')
+);
+const singleTooltipVisible = computed(
+  () => singleHovered.value || (isDragging.value && !isRange.value)
+);
 
 const isRange = computed(() => Array.isArray(props.modelValue));
 const leftIndex = ref(0);
@@ -220,6 +258,7 @@ const emitRange = () => {
   position: relative;
   height: var(--size-toggle-sm);
   margin: 0 var(--space-2);
+  overflow: visible;
 }
 
 .range-slider__track {
@@ -252,16 +291,53 @@ const emitRange = () => {
   pointer-events: none;
 }
 
-.range-slider__thumb {
+.range-slider__thumb-wrapper {
   position: absolute;
   top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.range-slider__tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-grey-70);
+  color: var(--color-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-sm);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-standard);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: var(--space-1);
+    border-style: solid;
+    border-color: var(--color-grey-70) transparent transparent transparent;
+  }
+}
+
+.range-slider__tooltip--visible {
+  opacity: 1;
+}
+
+.range-slider__thumb {
   width: var(--size-toggle-sm);
   height: var(--size-toggle-sm);
   background: var(--color-white);
   border: var(--border-width-md) solid var(--color-green-90);
   border-radius: var(--radius-round);
   cursor: grab;
-  transform: translate(-50%, -50%);
 }
 
 .range-slider__thumb--single {

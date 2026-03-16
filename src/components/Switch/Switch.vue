@@ -5,16 +5,18 @@
       'switch--disabled': disabled,
     }"
   >
-    <span v-if="$slots.before" class="switch__label switch__label--before">
-      <slot name="before" />
+    <span v-if="$slots.before || labelBefore" class="switch__label switch__label--before">
+      <slot name="before">{{ labelBefore }}</slot>
     </span>
 
     <input
       v-bind="$attrs"
       type="checkbox"
+      role="switch"
       class="switch__input"
       :checked="modelValue"
       :disabled="disabled"
+      :aria-checked="modelValue"
       @change="onChange"
     />
 
@@ -22,9 +24,12 @@
       <span class="switch__thumb" />
     </span>
 
-    <span v-if="$slots.after || $slots.default" class="switch__label switch__label--after">
+    <span
+      v-if="$slots.after || $slots.default || labelAfter"
+      class="switch__label switch__label--after"
+    >
       <slot name="after">
-        <slot />
+        <slot>{{ labelAfter }}</slot>
       </slot>
     </span>
   </label>
@@ -37,6 +42,8 @@ import type { SwitchProps } from './Switch.types';
 
 withDefaults(defineProps<SwitchProps>(), {
   disabled: false,
+  labelBefore: undefined,
+  labelAfter: undefined,
 });
 
 const emit = defineEmits<{
@@ -106,7 +113,7 @@ const onChange = (event: Event) => {
 
   &__label {
     font-size: var(--font-size-sm);
-    line-height: 1.4;
+    line-height: var(--line-height-sm);
     color: var(--switch-label, var(--color-black));
 
     &--before,

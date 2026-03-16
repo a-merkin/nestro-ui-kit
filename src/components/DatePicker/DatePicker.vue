@@ -296,7 +296,6 @@ useClickOutside(rootRef, () => {
   $self: &;
   position: relative;
   width: 100%;
-  max-width: 320px;
   box-sizing: border-box;
 
   &__label {
@@ -318,29 +317,37 @@ useClickOutside(rootRef, () => {
     height: var(--size-height-md);
     padding: 0 var(--space-3) 0 var(--size-padding-horizontal-md);
     background: var(--color-bg-input);
-    border: 1px solid var(--color-stroke-primary);
-    border-radius: 60px;
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
+    border-radius: var(--radius-xl);
     color: var(--color-grey-100);
     font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--motion-standard);
     box-sizing: border-box;
     overflow: hidden;
 
-    &--disabled {
-      background: var(--color-bg-input-disabled);
-      border-color: var(--color-stroke-disabled);
-      color: var(--color-text-disabled);
-      cursor: not-allowed;
+    &:hover:not(&--disabled):not(&--error):not(&--open) {
+      border-color: var(--color-stroke-hover);
+    }
+
+    &--open {
+      border-color: var(--color-green-90);
     }
 
     &--error {
       border-color: var(--color-stroke-error);
     }
 
-    &--open {
-      border-color: var(--color-green-90);
+    &--error:hover:not(#{$self}__trigger--disabled) {
+      border-color: var(--color-stroke-error);
+    }
+
+    &--disabled {
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
     }
   }
 
@@ -375,7 +382,7 @@ useClickOutside(rootRef, () => {
     cursor: pointer;
     color: var(--color-grey-80);
     border-radius: var(--radius-round);
-    transition: transform 0.15s ease;
+    transition: transform var(--duration-fast) var(--easing-standard);
     padding: 0;
     flex-shrink: 0;
 

@@ -97,6 +97,7 @@ const dropdownClasses = computed(() => ({
 
 const triggerClasses = computed(() => ({
   'dropdown__trigger--disabled': isDisabled.value,
+  'dropdown__trigger--error': props.error,
 }));
 
 const searchFieldClasses = computed(() => ({
@@ -188,7 +189,6 @@ onUnmounted(() => {
   $self: &;
   position: relative;
   width: 100%;
-  max-width: 320px;
   box-sizing: border-box;
 
   &__label {
@@ -209,20 +209,37 @@ onUnmounted(() => {
     width: 100%;
     height: var(--size-height-md);
     padding: 0 var(--size-padding-horizontal-md);
-    background: var(--color-blue-60);
+    background: var(--color-bg-input);
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
     border-radius: var(--radius-xl);
     color: var(--color-grey-100);
     font-size: var(--font-size-sm);
     cursor: pointer;
     transition: all var(--motion-standard);
-    box-shadow: var(--shadow-sm);
     box-sizing: border-box;
 
+    #{$self}:not(#{$self}--open)
+      &:hover:not(#{$self}__trigger--disabled):not(#{$self}__trigger--error) {
+      border-color: var(--color-stroke-hover);
+    }
+
+    #{$self}--open & {
+      border-color: var(--color-green-90);
+    }
+
+    &--error {
+      border-color: var(--color-stroke-error);
+    }
+
+    &--error:hover:not(#{$self}__trigger--disabled) {
+      border-color: var(--color-stroke-error);
+    }
+
     &--disabled {
-      background: var(--color-grey-50);
-      color: var(--color-grey-40);
+      background: var(--color-bg-input-disabled);
+      border-color: var(--color-stroke-disabled);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
-      opacity: 0.7;
     }
   }
 
@@ -352,13 +369,12 @@ onUnmounted(() => {
     text-overflow: ellipsis;
 
     &:hover {
-      background: var(--color-green-50);
-      color: var(--color-green-100);
+      background: var(--color-blue-60);
     }
 
     &--selected {
       background: var(--color-green-80);
-      color: var(--color-green-100);
+      color: var(--color-white);
     }
 
     &--no-results {

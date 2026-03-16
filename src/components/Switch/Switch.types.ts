@@ -4,4 +4,6 @@ export interface SwitchProps {
   error?: boolean;
   errorMessage?: string;
   required?: boolean;
+  labelBefore?: string;
+  labelAfter?: string;
 }

@@ -15,6 +15,14 @@ const meta = {
       control: 'boolean',
       description: 'Отключённое состояние',
     },
+    labelBefore: {
+      control: 'text',
+      description: 'Текстовая метка перед переключателем',
+    },
+    labelAfter: {
+      control: 'text',
+      description: 'Текстовая метка после переключателя',
+    },
   },
 } satisfies Meta<typeof Switch>;
 
@@ -33,6 +41,23 @@ export const Default: Story = {
     },
     template: `
       <Switch v-model="value" />
+      <p style="margin-top: 12px;">Значение: <strong>{{ value }}</strong></p>
+    `,
+  }),
+};
+
+export const WithLabelProps: Story = {
+  args: {
+    modelValue: false,
+  },
+  render: (args) => ({
+    components: { Switch },
+    setup() {
+      const value = ref(args.modelValue);
+      return { args, value };
+    },
+    template: `
+      <Switch v-model="value" label-before="Выкл" label-after="Вкл" />
       <p style="margin-top: 12px;">Значение: <strong>{{ value }}</strong></p>
     `,
   }),
@@ -77,5 +102,16 @@ export const Disabled: Story = {
   args: {
     modelValue: true,
     disabled: true,
+    labelAfter: 'Заблокировано',
   },
+  render: (args) => ({
+    components: { Switch },
+    setup() {
+      const value = ref(args.modelValue);
+      return { args, value };
+    },
+    template: `
+      <Switch v-model="value" :disabled="args.disabled" :label-after="args.labelAfter" />
+    `,
+  }),
 };

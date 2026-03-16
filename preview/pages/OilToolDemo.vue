@@ -26,6 +26,7 @@
           v-model="filterValues"
           :filters="oilToolFilters"
           show-actions
+          collapsible
           @apply="onApply"
           @clear="onClear"
         />

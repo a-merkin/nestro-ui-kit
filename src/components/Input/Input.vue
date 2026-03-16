@@ -112,7 +112,19 @@ const inputStyles = computed(() => ({
   color: var(--color-text-placeholder);
 }
 
+.input__control:hover:not(:focus):not(.input__control--disabled):not(.input__control--error) {
+  border-color: var(--color-stroke-hover);
+}
+
+.input__control:focus {
+  border-color: var(--color-green-90);
+}
+
 .input__control--error {
+  border-color: var(--color-stroke-error);
+}
+
+.input__control--error:focus {
   border-color: var(--color-stroke-error);
 }
 

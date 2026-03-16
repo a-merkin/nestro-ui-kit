@@ -356,7 +356,6 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 320px;
 
   &__label {
     display: block;
@@ -375,11 +374,17 @@ onUnmounted(() => {
     width: 100%;
     height: var(--size-height-md);
     background: var(--color-bg-input);
-    border: 1px solid var(--color-stroke-primary);
-    border-radius: 60px;
-    transition: all 0.2s ease;
+    border: var(--border-width-sm) solid var(--color-stroke-primary);
+    border-radius: var(--radius-xl);
+    transition: all var(--motion-standard);
     box-sizing: border-box;
     overflow: hidden;
+
+    &:hover:not(#{$self}__wrapper--focused):not(#{$self}__wrapper--disabled):not(
+        #{$self}__wrapper--error
+      ) {
+      border-color: var(--color-stroke-hover);
+    }
 
     &--focused {
       border-color: var(--color-green-90);
@@ -431,8 +436,8 @@ onUnmounted(() => {
     outline: none;
     color: var(--color-black);
     font-family: var(--font-family-base);
-    font-size: 16px;
-    font-weight: 400;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
     padding: 0;
     min-width: 0;
 
@@ -455,8 +460,8 @@ onUnmounted(() => {
     cursor: pointer;
     color: var(--color-grey-70);
     transition:
-      background-color 0.15s ease,
-      color 0.15s ease;
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
     padding: 0;
     flex-shrink: 0;
 

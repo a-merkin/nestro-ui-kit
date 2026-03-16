@@ -8,12 +8,20 @@
         </div>
       </template>
 
+      <span
+        v-if="!searchable && !selectedItems.length && placeholder"
+        class="multiselect__placeholder"
+      >
+        {{ placeholder }}
+      </span>
+
       <input
         v-if="searchable"
         ref="searchInputRef"
         v-model="searchQuery"
         type="text"
         class="multiselect__search"
+        :placeholder="!selectedItems.length ? placeholder : ''"
         @focus="openDropdown"
         @input="onSearchInput"
         @click.stop
@@ -81,6 +89,8 @@ const noResultsTextComputed = computed(() => props.noResultsText);
 
 const multiselectClasses = computed(() => ({
   'multiselect--open': isDropdownOpen.value,
+  'multiselect--disabled': props.disabled,
+  'multiselect--error': props.error,
 }));
 
 const localSelectedValues = ref<MultiSelectValue[]>([]);
@@ -179,8 +189,23 @@ onBeforeUnmount(() => {
   cursor: pointer;
   transition: all var(--motion-standard);
 
+  &:hover:not(#{$self}--open):not(#{$self}--disabled):not(#{$self}--error) {
+    border-color: var(--color-stroke-hover);
+  }
+
   &--open {
-    border-color: var(--color-stroke-primary);
+    border-color: var(--color-green-90);
+  }
+
+  &--error {
+    border-color: var(--color-stroke-error);
+  }
+
+  &--disabled {
+    background: var(--color-bg-input-disabled);
+    border-color: var(--color-stroke-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
   }
 
   &__chips {
@@ -192,6 +217,19 @@ onBeforeUnmount(() => {
     max-height: 100%;
     overflow: hidden;
     cursor: text;
+  }
+
+  &__placeholder {
+    color: var(--color-text-placeholder);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family-base);
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--space-1);
+    display: flex;
+    align-items: center;
   }
 
   &__search {

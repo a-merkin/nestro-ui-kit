@@ -1,6 +1,7 @@
 <template>
-  <label class="checkbox">
+  <label :for="inputId" class="checkbox">
     <input
+      :id="inputId"
       type="checkbox"
       :checked="checked"
       :disabled="props.disabled"
@@ -17,11 +18,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useId } from 'vue';
 import type { CheckboxProps, CheckboxEmits } from './Checkbox.types';
 import Icon from '@/components/Icon/Icon.vue';
 
 defineOptions({ name: 'NCheckbox' });
+
+const inputId = useId();
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   disabled: false,
@@ -84,10 +87,19 @@ const handleChange = (event: Event) => {
   justify-content: center;
   width: var(--size-toggle-md);
   height: var(--size-toggle-md);
-  border: 1px solid var(--color-grey-70);
+  border: var(--border-width-sm) solid var(--color-grey-70);
   border-radius: var(--radius-toggle-md);
   background: transparent;
-  transition: all 0.3s ease;
+  transition: all var(--duration-medium) ease;
+}
+
+.checkbox:hover .checkbox__input:not(:checked):not(:disabled) + .checkbox__box {
+  border-color: var(--color-green-90);
+}
+
+.checkbox__input:focus-visible + .checkbox__box {
+  outline: var(--border-width-md) solid var(--color-green-90);
+  outline-offset: var(--border-width-md);
 }
 
 .checkbox__input:checked + .checkbox__box {
