@@ -16,7 +16,7 @@
 
     <section class="controls__section">
       <NText class="controls__label">InputNumber</NText>
-      <NInputNumber v-model="numberValue" placeholder="0" :max-fraction-digits="2" />
+      <NInputNumber v-model="numberValue" placeholder="0" />
     </section>
 
     <section class="controls__section">
@@ -79,8 +79,26 @@
     </section>
 
     <section class="controls__section">
-      <NText class="controls__label">RangeSlider</NText>
-      <NRangeSlider v-model="rangeValue" />
+      <NText class="controls__label">RangeSlider (давление, атм): {{ rangeValue }}</NText>
+      <NRangeSlider
+        v-model="rangeValue"
+        :values="pressureValues"
+        min-label="0 атм"
+        max-label="100 атм"
+      />
+    </section>
+
+    <section class="controls__section">
+      <NText class="controls__label">
+        RangeSlider (диапазон температур, °C): {{ rangeRangeValue[0] }}–{{ rangeRangeValue[1] }}
+      </NText>
+      <NRangeSlider
+        v-model="rangeRangeValue"
+        :values="temperatureValues"
+        min-label="0 °C"
+        max-label="200 °C"
+        :cutoffs="[4, 8]"
+      />
     </section>
 
     <section class="controls__section">
@@ -120,7 +138,10 @@ const switchValue = ref(false);
 const dropdownValue = ref<string | null>(null);
 const multiSelectValue = ref<string[]>([]);
 const segmentedValue = ref('day');
-const rangeValue = ref(0);
+const pressureValues = Array.from({ length: 21 }, (_, i) => i * 5);
+const temperatureValues = Array.from({ length: 21 }, (_, i) => i * 10);
+const rangeValue = ref(50);
+const rangeRangeValue = ref<[number, number]>([60, 140]);
 const dateValue = ref<string | null>(null);
 const files = ref([]);
 </script>
