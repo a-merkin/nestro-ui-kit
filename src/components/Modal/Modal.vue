@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
   &__loading {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--color-white-60);
     backdrop-filter: blur(2px);
     display: flex;
     align-items: center;

@@ -11,7 +11,7 @@
         @mouseleave="resumeAutoClose"
         @click="handleClick"
       >
-        <div class="notification__icon" aria-hidden="true">
+        <div v-if="iconPrev" class="notification__icon" aria-hidden="true">
           <slot name="icon" />
         </div>
 
@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<NotificationProps>(), {
 
   title: '',
   message: '',
-
+  iconPrev: false,
   closable: true,
   disabled: false,
 
@@ -159,8 +159,8 @@ onBeforeUnmount(() => stopTimer());
 .notification-fade-enter-active,
 .notification-fade-leave-active {
   transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
+    opacity var(--motion-standard),
+    transform var(--motion-standard);
 }
 .notification-fade-enter-from,
 .notification-fade-leave-to {
@@ -252,8 +252,8 @@ onBeforeUnmount(() => stopTimer());
   justify-content: center;
 
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    border-color var(--motion-standard),
+    background-color var(--motion-standard);
 }
 
 .notification__close:hover:not(:disabled) {
@@ -267,13 +267,13 @@ onBeforeUnmount(() => stopTimer());
 }
 
 .notification--info {
-  border-color: var(--color-blue-30);
+  border-color: var(--color-blue-50);
 }
 .notification--success {
-  border-color: var(--color-green-60);
+  border-color: var(--color-green-50);
 }
 .notification--warn {
-  border-color: var(--color-yellow-60);
+  border-color: var(--color-orange);
 }
 .notification--error {
   border-color: var(--color-red-60);

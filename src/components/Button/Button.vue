@@ -59,7 +59,7 @@ const buttonClasses = computed(() => ({
   min-width: var(--size-min-width-md);
 
   border-radius: var(--radius-xl);
-  border: 1px solid transparent;
+  border: var(--border-width-sm) solid transparent;
 
   font-family: var(--font-family-base);
   font-size: var(--font-size-sm);
@@ -68,9 +68,9 @@ const buttonClasses = computed(() => ({
 
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    background-color var(--motion-standard),
+    color var(--motion-standard),
+    border-color var(--motion-standard);
 }
 
 .button--primary {
@@ -144,8 +144,8 @@ const buttonClasses = computed(() => ({
 .button__spinner {
   width: var(--size-icon-lg);
   height: var(--size-icon-lg);
-  border: 3px solid var(--color-white);
-  border-top: 3px solid var(--color-green-90);
+  border: var(--border-width-lg) solid var(--color-white);
+  border-top: var(--border-width-lg) solid var(--color-green-90);
   border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
   box-sizing: border-box;
