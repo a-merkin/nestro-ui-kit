@@ -86,13 +86,13 @@ const handleClick = (id: string) => {
   justify-content: center;
   width: var(--_btn-size);
   height: var(--_btn-size);
-  border: var(--border-width-sm) solid var(--color-stroke-primary);
   cursor: pointer;
   position: relative;
   z-index: var(--z-base);
   padding: var(--space-3);
   box-sizing: border-box;
   background: var(--color-blue-60);
+  border: var(--border-width-sm) solid var(--color-stroke-primary);
   border-radius: var(--_btn-radius);
   color: var(--color-blue-50);
   transition:
@@ -121,13 +121,13 @@ const handleClick = (id: string) => {
 }
 
 .navbar__button--active {
-  background: var(--color-white);
+  background: var(--color-blue-60);
   border-radius: var(--_btn-radius) 0 0 var(--_btn-radius);
   border-right-color: transparent;
   color: var(--color-grey-70);
-  margin-right: calc(-1 * var(--space-2));
-  padding-right: calc(var(--space-3) + var(--space-2));
-  width: calc(var(--_btn-size) + var(--space-2));
+  margin-right: calc(-1 * var(--space-4));
+  padding-right: calc(var(--space-3) + var(--space-4));
+  width: calc(var(--_btn-size) + var(--space-6) + 2px);
   z-index: var(--z-raised);
 }
 

@@ -36,6 +36,7 @@ export type ColorToken =
   | 'color-grey-70'
   | 'color-grey-80'
   | 'color-orange'
+  | 'color-red-60'
   | 'color-scrollbar-thumb'
   | 'color-scrollbar-track'
   | 'color-stroke-disabled'

@@ -16,6 +16,7 @@ export type NotificationProps = {
   title?: string;
   message?: string;
 
+  iconPrev?: boolean;
   closable?: boolean;
   disabled?: boolean;
 

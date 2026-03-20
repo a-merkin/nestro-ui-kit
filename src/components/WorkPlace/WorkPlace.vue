@@ -88,7 +88,7 @@ const isFirstTabActive = computed(() => {
     transform var(--motion-hover-duration) var(--easing-standard);
 }
 
-.header-switcher__tab:hover {
+.header-switcher__tab:not(.header-switcher__tab--active):hover {
   box-shadow: var(--shadow-md);
 }
 

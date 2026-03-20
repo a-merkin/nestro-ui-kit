@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
 .confirm-dialog {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--color-bg-backdrop);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,8 +158,8 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: 420px;
     background: var(--color-white, #fff);
-    border-radius: 16px;
-    padding: 32px 24px 24px;
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-6) var(--space-6);
     box-shadow: var(--shadow-xl);
     text-align: center;
     outline: none;
@@ -226,9 +226,9 @@ onBeforeUnmount(() => {
     font-weight: var(--font-weight-medium, 500);
     cursor: pointer;
     transition:
-      background-color 0.2s ease,
-      color 0.2s ease,
-      border-color 0.2s ease;
+      background-color var(--motion-standard),
+      color var(--motion-standard),
+      border-color var(--motion-standard);
 
     &:disabled {
       cursor: not-allowed;
@@ -287,7 +287,7 @@ onBeforeUnmount(() => {
   &__btn-spinner {
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.4);
+    border: var(--border-width-md) solid rgba(255, 255, 255, 0.4);
     border-top-color: var(--color-white, #fff);
     border-radius: 50%;
     animation: cd-spin 0.7s linear infinite;
