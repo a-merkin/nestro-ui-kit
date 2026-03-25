@@ -1,6 +1,6 @@
 {
-  "name": "nestro-ui-kit",
-  "version": "1.0.12",
+  "name": "nestro-ui-kit_v2",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
@@ -34,9 +34,6 @@
     "pack": "npm run build && npm pack",
     "prepare": "husky"
   },
-  "workspaces": [
-    "preview"
-  ],
   "lint-staged": {
     "*.{js,ts,vue,css,scss,md,json}": [
       "prettier --write"
